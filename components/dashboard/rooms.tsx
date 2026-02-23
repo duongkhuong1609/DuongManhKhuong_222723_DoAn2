@@ -203,7 +203,6 @@ export function RoomsModule() {
                 <SelectItem value="all">Tất cả</SelectItem>
                 <SelectItem value="theory">Lý thuyết</SelectItem>
                 <SelectItem value="practice">Thực hành</SelectItem>
-                <SelectItem value="hall">Hội trường</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -212,11 +211,9 @@ export function RoomsModule() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mã phòng</TableHead>
-                <TableHead>Tòa nhà</TableHead>
-                <TableHead>Sức chứa</TableHead>
+                <TableHead>Khu học</TableHead>
+                <TableHead>Tên Phòng học</TableHead>
                 <TableHead>Loại phòng</TableHead>
-                <TableHead>Thiết bị</TableHead>
                 <TableHead>Trạng thái</TableHead>
                 <TableHead className="text-right">Thao tác</TableHead>
               </TableRow>
@@ -224,22 +221,13 @@ export function RoomsModule() {
             <TableBody>
               {filteredRooms.map((room) => (
                 <TableRow key={room.id}>
-                  <TableCell className="font-medium">{room.code}</TableCell>
-                  <TableCell>{room.building}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <Users className="h-3 w-3 text-muted-foreground" />
-                      {room.capacity}
-                    </div>
-                  </TableCell>
+                  <TableCell className="font-medium">{room.building}</TableCell>
+                  <TableCell>{room.code}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <Monitor className="h-3 w-3 text-muted-foreground" />
                       {room.type}
                     </div>
-                  </TableCell>
-                  <TableCell className="max-w-[200px] truncate text-muted-foreground">
-                    {room.equipment}
                   </TableCell>
                   <TableCell>
                     <Badge variant={room.status === "available" ? "default" : "secondary"}>

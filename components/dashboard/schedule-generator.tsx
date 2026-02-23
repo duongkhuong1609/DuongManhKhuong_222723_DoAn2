@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Sparkles, Play, RotateCcw, CheckCircle2, AlertCircle, Settings2 } from "lucide-react"
+import { Sparkles, Play, RotateCcw, CheckCircle2, AlertCircle, Settings2, ChevronsUpDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -15,6 +15,9 @@ import {
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { cn } from "@/lib/utils"
 
 type GenerationStatus = "idle" | "running" | "completed" | "error"
 
@@ -24,12 +27,30 @@ interface GenerationStep {
   message?: string
 }
 
+const faculties = [
+  "Công nghệ thông tin",
+  "Khoa học máy tính",
+  "Công nghệ phần mềm",
+  "Mạng và truyền thông",
+]
+
+const majors = {
+  "Công nghệ thông tin": ["Lập trình", "Cơ sở dữ liệu", "An niệm mạng"],
+  "Khoa học máy tính": ["Khoa học dữ liệu", "Trí tuệ nhân tạo", "Thị giác máy tính"],
+  "Công nghệ phần mềm": ["Phát triển phần mềm", "Kiểm thử phần mềm", "Quản lý dự án"],
+  "Mạng và truyền thông": ["Mạng máy tính", "Truyền thông", "Hệ thống viễn thông"],
+}
+
 export function ScheduleGenerator() {
   const [status, setStatus] = useState<GenerationStatus>("idle")
   const [progress, setProgress] = useState(0)
   const [currentStep, setCurrentStep] = useState(0)
-  const [semester, setSemester] = useState("hk1")
+  const [semester, setSemester] = useState("1")
   const [year, setYear] = useState("2024")
+  const [selectedFaculty, setSelectedFaculty] = useState("")
+  const [selectedMajor, setSelectedMajor] = useState("")
+  const [openFacultyPopover, setOpenFacultyPopover] = useState(false)
+  const [openMajorPopover, setOpenMajorPopover] = useState(false)
   const [settings, setSettings] = useState({
     avoidConflicts: true,
     optimizeRooms: true,
@@ -201,31 +222,124 @@ export function ScheduleGenerator() {
               <CardTitle className="text-base">Chọn học kỳ</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid gap-2">
-                <Label>Năm học</Label>
-                <Select value={year} onValueChange={setYear}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2024">2024 - 2025</SelectItem>
-                    <SelectItem value="2025">2025 - 2026</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label>Năm học</Label>
+                  <Select value={year} onValueChange={setYear}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2024">2024 - 2025</SelectItem>
+                      <SelectItem value="2025">2025 - 2026</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label>Học kỳ</Label>
+                  <Select value={semester} onValueChange={setSemester}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Học kì 1</SelectItem>
+                      <SelectItem value="2">Học kì 2</SelectItem>
+                      <SelectItem value="3">Học kì 3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               <div className="grid gap-2">
-                <Label>Học kỳ</Label>
-                <Select value={semester} onValueChange={setSemester}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="hk1">Học kỳ 1</SelectItem>
-                    <SelectItem value="hk2">Học kỳ 2</SelectItem>
-                    <SelectItem value="hkhe">Học kỳ hè</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label>Khoa</Label>
+                <Popover open={openFacultyPopover} onOpenChange={setOpenFacultyPopover}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openFacultyPopover}
+                      className="w-full justify-between"
+                    >
+                      {selectedFaculty || "Chọn khoa..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput placeholder="Tìm kiếm khoa..." />
+                      <CommandEmpty>Không tìm thấy khoa.</CommandEmpty>
+                      <CommandList>
+                        <CommandGroup>
+                          {faculties.map((faculty) => (
+                            <CommandItem
+                              key={faculty}
+                              value={faculty}
+                              onSelect={(currentValue) => {
+                                setSelectedFaculty(currentValue === selectedFaculty ? "" : currentValue)
+                                setSelectedMajor("")
+                                setOpenFacultyPopover(false)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  selectedFaculty === faculty ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {faculty}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
+              {selectedFaculty && (
+                <div className="grid gap-2">
+                  <Label>Ngành</Label>
+                  <Popover open={openMajorPopover} onOpenChange={setOpenMajorPopover}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={openMajorPopover}
+                        className="w-full justify-between"
+                      >
+                        {selectedMajor || "Chọn ngành..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Tìm kiếm ngành..." />
+                        <CommandEmpty>Không tìm thấy ngành.</CommandEmpty>
+                        <CommandList>
+                          <CommandGroup>
+                            {majors[selectedFaculty as keyof typeof majors]?.map((major) => (
+                              <CommandItem
+                                key={major}
+                                value={major}
+                                onSelect={(currentValue) => {
+                                  setSelectedMajor(currentValue === selectedMajor ? "" : currentValue)
+                                  setOpenMajorPopover(false)
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    selectedMajor === major ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {major}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )}
             </CardContent>
           </Card>
 

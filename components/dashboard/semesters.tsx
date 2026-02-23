@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import useSWR from "swr"
 import {
   CalendarDays,
@@ -11,6 +11,8 @@ import {
   CheckCircle2,
   Clock,
   CalendarCheck,
+  ChevronsUpDown,
+  Check,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -40,9 +42,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
 import { useSemester } from "@/contexts/semester-context"
+import { cn } from "@/lib/utils"
 
 interface Semester {
   _id: string
@@ -60,29 +76,54 @@ interface Semester {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-// Generate academic years (current year - 2 to current year + 2)
+// Generate academic years (2025-2026 to 2029-2030, 5 years total)
 const generateAcademicYears = () => {
-  const currentYear = new Date().getFullYear()
   const years: string[] = []
-  for (let i = -2; i <= 2; i++) {
-    years.push(`${currentYear + i}-${currentYear + i + 1}`)
+  for (let i = 0; i < 5; i++) {
+    const year = 2025 + i
+    years.push(`${year}-${year + 1}`)
   }
   return years
 }
 
 export function SemestersModule() {
   const { data: semesters = [], mutate } = useSWR<Semester[]>("/api/semesters", fetcher)
+  const { data: instructors = [] } = useSWR("/api/instructors", fetcher)
   const { refetch: refetchContext } = useSemester()
   const [searchTerm, setSearchTerm] = useState("")
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [openMajorPopover, setOpenMajorPopover] = useState(false)
+  const [majors, setMajors] = useState<string[]>([])
   const [newSemester, setNewSemester] = useState({
     semesterNumber: "1" as "1" | "2" | "3",
-    academicYear: generateAcademicYears()[2], // Current year
+    academicYear: generateAcademicYears()[0], // 2025-2026
+    classYear: "1",
+    major: "",
     startDate: "",
     endDate: "",
     status: "upcoming" as "upcoming" | "ongoing" | "completed",
     isCurrent: false,
   })
+
+  // Extract unique majors from instructors
+  useEffect(() => {
+    if (instructors && Array.isArray(instructors) && instructors.length > 0) {
+      const uniqueMajors = Array.from(
+        new Set(
+          instructors
+            .filter((instr: any) => instr.department)
+            .map((instr: any) => instr.department)
+        )
+      ).sort() as string[]
+      
+      // Only update if majors have actually changed
+      setMajors(prevMajors => {
+        const newString = JSON.stringify(uniqueMajors)
+        const prevString = JSON.stringify(prevMajors)
+        return newString === prevString ? prevMajors : uniqueMajors
+      })
+    }
+  }, [instructors])
 
   const filteredSemesters = semesters.filter(
     (semester) =>
@@ -121,7 +162,9 @@ export function SemestersModule() {
         setIsAddDialogOpen(false)
         setNewSemester({
           semesterNumber: "1",
-          academicYear: generateAcademicYears()[2],
+          academicYear: generateAcademicYears()[0],
+          classYear: "1",
+          major: "",
           startDate: "",
           endDate: "",
           status: "upcoming",
@@ -270,7 +313,7 @@ export function SemestersModule() {
                         <SelectContent>
                           <SelectItem value="1">Học kỳ 1</SelectItem>
                           <SelectItem value="2">Học kỳ 2</SelectItem>
-                          <SelectItem value="3">Học kỳ hè</SelectItem>
+                          <SelectItem value="3">Học kỳ 3</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -293,6 +336,74 @@ export function SemestersModule() {
                           ))}
                         </SelectContent>
                       </Select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Năm học (Khóa)</Label>
+                      <Select
+                        value={newSemester.classYear}
+                        onValueChange={(value) =>
+                          setNewSemester({ ...newSemester, classYear: value })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Chọn năm" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Năm 1</SelectItem>
+                          <SelectItem value="2">Năm 2</SelectItem>
+                          <SelectItem value="3">Năm 3</SelectItem>
+                          <SelectItem value="4">Năm 4</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Ngành học</Label>
+                      <Popover open={openMajorPopover} onOpenChange={setOpenMajorPopover}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openMajorPopover}
+                            className="w-full justify-between"
+                          >
+                            {newSemester.major || "Chọn ngành học..."}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                          <Command>
+                            <CommandInput placeholder="Tìm kiếm ngành học..." />
+                            <CommandList>
+                              <CommandEmpty>Không tìm thấy ngành học.</CommandEmpty>
+                              <CommandGroup>
+                                {majors.map((major) => (
+                                  <CommandItem
+                                    key={major}
+                                    value={major}
+                                    onSelect={(currentValue) => {
+                                      setNewSemester({
+                                        ...newSemester,
+                                        major: currentValue,
+                                      })
+                                      setOpenMajorPopover(false)
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        newSemester.major === major ? "opacity-100" : "opacity-0"
+                                      )}
+                                    />
+                                    {major}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -372,10 +483,10 @@ export function SemestersModule() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Mã học kỳ</TableHead>
                   <TableHead>Tên học kỳ</TableHead>
                   <TableHead>Năm học</TableHead>
-                  <TableHead>Thời gian</TableHead>
+                  <TableHead>Từ ngày</TableHead>
+                  <TableHead>Đến ngày</TableHead>
                   <TableHead>Trạng thái</TableHead>
                   <TableHead className="text-right">Thao tác</TableHead>
                 </TableRow>
@@ -390,15 +501,21 @@ export function SemestersModule() {
                 ) : (
                   filteredSemesters.map((semester) => (
                     <TableRow key={semester._id}>
-                      <TableCell className="font-medium">{semester.code}</TableCell>
-                      <TableCell>{semester.name}</TableCell>
+                      <TableCell className="font-medium">{semester.name}</TableCell>
                       <TableCell>{semester.academicYear}</TableCell>
-                      <TableCell>
-                        {formatDate(semester.startDate)} - {formatDate(semester.endDate)}
-                      </TableCell>
+                      <TableCell>{formatDate(semester.startDate)}</TableCell>
+                      <TableCell>{formatDate(semester.endDate)}</TableCell>
                       <TableCell>{getStatusBadge(semester.status, semester.isCurrent)}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleSetCurrent(semester)}
+                            title="Chỉnh sửa học kỳ"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
                           {!semester.isCurrent && (
                             <Button
                               variant="ghost"

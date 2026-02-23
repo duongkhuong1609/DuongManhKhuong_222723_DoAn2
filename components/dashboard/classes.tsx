@@ -33,11 +33,11 @@ import {
 import { Badge } from "@/components/ui/badge"
 
 const initialClasses = [
-  { id: 1, code: "CNTT-K20A", name: "CNTT Khóa 20 - Lớp A", department: "Công nghệ thông tin", studentCount: 45, year: 2024, semester: "Học kỳ 1" },
-  { id: 2, code: "CNTT-K20B", name: "CNTT Khóa 20 - Lớp B", department: "Công nghệ thông tin", studentCount: 42, year: 2024, semester: "Học kỳ 1" },
-  { id: 3, code: "KHMT-K21A", name: "KHMT Khóa 21 - Lớp A", department: "Khoa học máy tính", studentCount: 38, year: 2024, semester: "Học kỳ 1" },
-  { id: 4, code: "CNPM-K20A", name: "CNPM Khóa 20 - Lớp A", department: "Công nghệ phần mềm", studentCount: 40, year: 2024, semester: "Học kỳ 1" },
-  { id: 5, code: "HTTT-K21A", name: "HTTT Khóa 21 - Lớp A", department: "Hệ thống thông tin", studentCount: 35, year: 2024, semester: "Học kỳ 1" },
+  { id: 1, code: "CNTT-K20A", name: "CNTT Khóa 20 - Lớp A", department: "Công nghệ thông tin", major: "Công nghệ thông tin", studentCount: 45, classYear: 1, year: 2024, semester: "Học kỳ 1" },
+  { id: 2, code: "CNTT-K20B", name: "CNTT Khóa 20 - Lớp B", department: "Công nghệ thông tin", major: "Công nghệ thông tin", studentCount: 42, classYear: 1, year: 2024, semester: "Học kỳ 1" },
+  { id: 3, code: "KHMT-K21A", name: "KHMT Khóa 21 - Lớp A", department: "Khoa học máy tính", major: "Khoa học máy tính", studentCount: 38, classYear: 2, year: 2024, semester: "Học kỳ 1" },
+  { id: 4, code: "CNPM-K20A", name: "CNPM Khóa 20 - Lớp A", department: "Công nghệ phần mềm", major: "Công nghệ phần mềm", studentCount: 40, classYear: 1, year: 2024, semester: "Học kỳ 1" },
+  { id: 5, code: "HTTT-K21A", name: "HTTT Khóa 21 - Lớp A", department: "Hệ thống thông tin", major: "Hệ thống thông tin", studentCount: 35, classYear: 2, year: 2024, semester: "Học kỳ 1" },
 ]
 
 export function ClassesModule() {
@@ -48,7 +48,9 @@ export function ClassesModule() {
     code: "",
     name: "",
     department: "",
+    major: "",
     studentCount: "",
+    classYear: "1",
     year: "2024",
     semester: "Học kỳ 1"
   })
@@ -64,9 +66,9 @@ export function ClassesModule() {
     if (newClass.code && newClass.name) {
       setClasses([
         ...classes,
-        { ...newClass, id: classes.length + 1, studentCount: parseInt(newClass.studentCount) || 0, year: parseInt(newClass.year) }
+        { ...newClass, id: classes.length + 1, studentCount: parseInt(newClass.studentCount) || 0, classYear: parseInt(newClass.classYear), year: parseInt(newClass.year) }
       ])
-      setNewClass({ code: "", name: "", department: "", studentCount: "", year: "2024", semester: "Học kỳ 1" })
+      setNewClass({ code: "", name: "", department: "", major: "", studentCount: "", classYear: "1", year: "2024", semester: "Học kỳ 1" })
       setIsAddOpen(false)
     }
   }
@@ -216,34 +218,22 @@ export function ClassesModule() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mã lớp</TableHead>
                 <TableHead>Tên lớp</TableHead>
-                <TableHead>Khoa/Bộ môn</TableHead>
-                <TableHead>Sĩ số</TableHead>
-                <TableHead>Học kỳ</TableHead>
+                <TableHead>Tên ngành</TableHead>
+                <TableHead>Khoa</TableHead>
+                <TableHead>Năm</TableHead>
                 <TableHead className="text-right">Thao tác</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredClasses.map((c) => (
                 <TableRow key={c.id}>
-                  <TableCell className="font-medium">{c.code}</TableCell>
-                  <TableCell>{c.name}</TableCell>
+                  <TableCell className="font-medium">{c.name}</TableCell>
+                  <TableCell>{c.major || c.department}</TableCell>
                   <TableCell>
                     <Badge variant="outline">{c.department}</Badge>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <Users className="h-3 w-3 text-muted-foreground" />
-                      {c.studentCount} sinh viên
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3 text-muted-foreground" />
-                      {c.semester} ({c.year})
-                    </div>
-                  </TableCell>
+                  <TableCell>Năm {c.classYear}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon" className="h-8 w-8">

@@ -1,10 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Search, Edit, Trash2, Clock, BookOpen } from "lucide-react"
+import { Plus, Search, Edit, Trash2, Clock, BookOpen, ChevronsUpDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { cn } from "@/lib/utils"
 import {
   Table,
   TableBody,
@@ -33,17 +36,26 @@ import {
 import { Badge } from "@/components/ui/badge"
 
 const initialCourses = [
-  { id: 1, code: "IT101", name: "Cơ sở dữ liệu", credits: 3, theoryHours: 30, practiceHours: 15, department: "Công nghệ thông tin", type: "Bắt buộc" },
-  { id: 2, code: "IT102", name: "Lập trình web", credits: 3, theoryHours: 30, practiceHours: 30, department: "Công nghệ thông tin", type: "Bắt buộc" },
-  { id: 3, code: "IT201", name: "Trí tuệ nhân tạo", credits: 3, theoryHours: 45, practiceHours: 0, department: "Khoa học máy tính", type: "Tự chọn" },
-  { id: 4, code: "IT202", name: "Mạng máy tính", credits: 3, theoryHours: 30, practiceHours: 15, department: "Mạng và truyền thông", type: "Bắt buộc" },
-  { id: 5, code: "IT301", name: "Công nghệ phần mềm", credits: 4, theoryHours: 45, practiceHours: 30, department: "Công nghệ phần mềm", type: "Bắt buộc" },
+  { id: 1, code: "IT101", name: "Cơ sở dữ liệu", credits: 3, theoryHours: 30, practiceHours: 15, department: "Công nghệ thông tin", type: "Lý thuyết" },
+  { id: 2, code: "IT102", name: "Lập trình web", credits: 3, theoryHours: 30, practiceHours: 30, department: "Công nghệ thông tin", type: "Thực hành" },
+  { id: 3, code: "IT201", name: "Trí tuệ nhân tạo", credits: 3, theoryHours: 45, practiceHours: 0, department: "Khoa học máy tính", type: "Lý thuyết" },
+  { id: 4, code: "IT202", name: "Mạng máy tính", credits: 3, theoryHours: 30, practiceHours: 15, department: "Mạng và truyền thông", type: "Thực hành" },
+  { id: 5, code: "IT301", name: "Công nghệ phần mềm", credits: 4, theoryHours: 45, practiceHours: 30, department: "Công nghệ phần mềm", type: "Lý thuyết" },
+]
+
+const departments = [
+  "Công nghệ thông tin",
+  "Khoa học máy tính",
+  "Công nghệ phần mềm",
+  "Mạng và truyền thông",
 ]
 
 export function CoursesModule() {
   const [courses, setCourses] = useState(initialCourses)
   const [searchTerm, setSearchTerm] = useState("")
   const [isAddOpen, setIsAddOpen] = useState(false)
+  const [selectedDepartment, setSelectedDepartment] = useState("")
+  const [openDepartmentPopover, setOpenDepartmentPopover] = useState(false)
   const [newCourse, setNewCourse] = useState({
     code: "",
     name: "",
@@ -51,14 +63,20 @@ export function CoursesModule() {
     theoryHours: "",
     practiceHours: "",
     department: "",
-    type: "Bắt buộc"
+    type: "Lý thuyết"
   })
 
   const filteredCourses = courses.filter(
-    (course) =>
-      course.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.department.toLowerCase().includes(searchTerm.toLowerCase())
+    (course) => {
+      const matchesSearch =
+        course.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.department.toLowerCase().includes(searchTerm.toLowerCase())
+      
+      const matchesDepartment = selectedDepartment === "" || course.department === selectedDepartment
+      
+      return matchesSearch && matchesDepartment
+    }
   )
 
   const handleAddCourse = () => {
@@ -73,7 +91,7 @@ export function CoursesModule() {
           practiceHours: parseInt(newCourse.practiceHours) || 0
         }
       ])
-      setNewCourse({ code: "", name: "", credits: "", theoryHours: "", practiceHours: "", department: "", type: "Bắt buộc" })
+      setNewCourse({ code: "", name: "", credits: "", theoryHours: "", practiceHours: "", department: "", type: "Lý thuyết" })
       setIsAddOpen(false)
     }
   }
@@ -183,8 +201,8 @@ export function CoursesModule() {
                       <SelectValue placeholder="Chọn loại" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Bắt buộc">Bắt buộc</SelectItem>
-                      <SelectItem value="Tự chọn">Tự chọn</SelectItem>
+                      <SelectItem value="Lý thuyết">Lý thuyết</SelectItem>
+                      <SelectItem value="Thực hành">Thực hành</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -212,25 +230,70 @@ export function CoursesModule() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Select defaultValue="all">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Khoa" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tất cả khoa</SelectItem>
-                <SelectItem value="cntt">Công nghệ thông tin</SelectItem>
-                <SelectItem value="khmt">Khoa học máy tính</SelectItem>
-                <SelectItem value="cnpm">Công nghệ phần mềm</SelectItem>
-              </SelectContent>
-            </Select>
+            <Popover open={openDepartmentPopover} onOpenChange={setOpenDepartmentPopover}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={openDepartmentPopover}
+                  className="w-[180px] justify-between"
+                >
+                  {selectedDepartment || "Chọn khoa..."}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[180px] p-0" align="start">
+                <Command>
+                  <CommandInput placeholder="Tìm kiếm khoa..." />
+                  <CommandEmpty>Không tìm thấy khoa.</CommandEmpty>
+                  <CommandList>
+                    <CommandGroup>
+                      <CommandItem
+                        value="all"
+                        onSelect={() => {
+                          setSelectedDepartment("")
+                          setOpenDepartmentPopover(false)
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedDepartment === "" ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        Tất cả
+                      </CommandItem>
+                      {departments.map((dept) => (
+                        <CommandItem
+                          key={dept}
+                          value={dept}
+                          onSelect={(currentValue) => {
+                            setSelectedDepartment(currentValue === selectedDepartment ? "" : currentValue)
+                            setOpenDepartmentPopover(false)
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              selectedDepartment === dept ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {dept}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
             <Select defaultValue="all">
               <SelectTrigger className="w-[150px]">
                 <SelectValue placeholder="Loại" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tất cả</SelectItem>
-                <SelectItem value="required">Bắt buộc</SelectItem>
-                <SelectItem value="elective">Tự chọn</SelectItem>
+                <SelectItem value="theory">Lý thuyết</SelectItem>
+                <SelectItem value="practice">Thực hành</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -239,10 +302,9 @@ export function CoursesModule() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mã môn</TableHead>
                 <TableHead>Tên môn học</TableHead>
                 <TableHead>Tín chỉ</TableHead>
-                <TableHead>Giờ học</TableHead>
+                <TableHead>Số tiết học</TableHead>
                 <TableHead>Khoa/Bộ môn</TableHead>
                 <TableHead>Loại</TableHead>
                 <TableHead className="text-right">Thao tác</TableHead>
@@ -251,8 +313,7 @@ export function CoursesModule() {
             <TableBody>
               {filteredCourses.map((course) => (
                 <TableRow key={course.id}>
-                  <TableCell className="font-medium">{course.code}</TableCell>
-                  <TableCell>
+                  <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
                       <BookOpen className="h-4 w-4 text-primary" />
                       {course.name}
@@ -264,12 +325,12 @@ export function CoursesModule() {
                   <TableCell>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
                       <Clock className="h-3 w-3" />
-                      {course.theoryHours}LT + {course.practiceHours}TH
+                      {course.theoryHours + course.practiceHours} tiết
                     </div>
                   </TableCell>
                   <TableCell className="text-muted-foreground">{course.department}</TableCell>
                   <TableCell>
-                    <Badge variant={course.type === "Bắt buộc" ? "default" : "outline"}>
+                    <Badge variant={course.type === "Lý thuyết" ? "default" : "secondary"}>
                       {course.type}
                     </Badge>
                   </TableCell>
