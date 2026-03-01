@@ -262,9 +262,9 @@ export function InstructorsModule() {
                     <SelectValue placeholder="Chọn trạng thái" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Đang giảng dạy</SelectItem>
-                    <SelectItem value="inactive">Tạm dừng</SelectItem>
-                    <SelectItem value="on_leave">Tạm nghỉ</SelectItem>
+                    <SelectItem value="Có thể dạy">Có thể dạy</SelectItem>
+                    <SelectItem value="Tạm dừng">Tạm dừng</SelectItem>
+                    <SelectItem value="Tạm nghỉ">Tạm nghỉ</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -332,8 +332,8 @@ export function InstructorsModule() {
                   <TableCell>{instructor.position}</TableCell>
                   <TableCell>{instructor.department}</TableCell>
                   <TableCell>
-                    <Badge variant={instructor.status === "active" ? "default" : instructor.status === "on_leave" ? "secondary" : "outline"}>
-                      {instructor.status === "active" ? "Đang giảng dạy" : instructor.status === "on_leave" ? "Tạm nghỉ" : "Tạm dừng"}
+                    <Badge variant={instructor.status === "Có thể dạy" ? "default" : instructor.status === "Tạm nghỉ" ? "secondary" : "outline"}>
+                      {instructor.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -445,9 +445,9 @@ export function InstructorsModule() {
                   <SelectValue placeholder="Chọn trạng thái" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="active">Đang giảng dạy</SelectItem>
-                  <SelectItem value="inactive">Tạm dừng</SelectItem>
-                  <SelectItem value="on_leave">Tạm nghỉ</SelectItem>
+                  <SelectItem value="Có thể dạy">Có thể dạy</SelectItem>
+                  <SelectItem value="Tạm dừng">Tạm dừng</SelectItem>
+                  <SelectItem value="Tạm nghỉ">Tạm nghỉ</SelectItem>
                 </SelectContent>
               </Select>
             </div>
