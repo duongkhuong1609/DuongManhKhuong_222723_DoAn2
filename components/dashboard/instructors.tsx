@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Plus, Search, Edit, Trash2, Mail, Phone, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Plus, Search, Edit, Trash2, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -31,7 +31,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -42,109 +41,84 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 
-const initialInstructors = [
-  { 
-    id: 1, 
-    code: "GV001",
-    name: "PGS.TS. Nguyễn Văn An", 
-    email: "an.nguyen@uni.edu.vn", 
-    phone: "0901234567", 
-    department: "Công nghệ thông tin", 
-    position: "Phó Giáo sư",
-    maxHoursPerWeek: 20,
-    specializations: ["Lập trình", "Cấu trúc dữ liệu"],
-    teachingNotes: "",
-    status: "active" 
-  },
-  { 
-    id: 2, 
-    code: "GV002",
-    name: "TS. Trần Thị Bình", 
-    email: "binh.tran@uni.edu.vn", 
-    phone: "0912345678", 
-    department: "Khoa học máy tính", 
-    position: "Tiến sĩ",
-    maxHoursPerWeek: 18,
-    specializations: ["Trí tuệ nhân tạo"],
-    teachingNotes: "",
-    status: "active" 
-  },
-  { 
-    id: 3, 
-    code: "GV003",
-    name: "ThS. Lê Văn Cường", 
-    email: "cuong.le@uni.edu.vn", 
-    phone: "0923456789", 
-    department: "Công nghệ phần mềm", 
-    position: "Giảng viên",
-    maxHoursPerWeek: 24,
-    specializations: ["Phát triển web"],
-    teachingNotes: "",
-    status: "active" 
-  },
-]
+const initialInstructors: any[] = []
 
 interface Instructor {
-  id: number
+  id?: number // only used locally for added entries
   code: string
   name: string
   email: string
-  phone: string
-  department: string
   position: string
-  maxHoursPerWeek: number
-  specializations: string[]
-  teachingNotes: string
-  status: "active" | "inactive" | "on_leave"
+  department: string
+  status: string
 }
 
 export function InstructorsModule() {
   const [instructors, setInstructors] = useState(initialInstructors)
   const [searchTerm, setSearchTerm] = useState("")
+  const [loadError, setLoadError] = useState<string | null>(null)
+
+  // fetch instructors from API once when component mounts
+  useEffect(() => {
+    fetch('/api/instructors')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setInstructors(json.data)
+          if (!json.data || json.data.length === 0) {
+            setLoadError('Không thể tải dữ liệu giảng viên. Kiểm tra kết nối cơ sở dữ liệu.')
+          }
+        } else {
+          setLoadError(json.error || 'Lỗi không xác định khi tải giảng viên')
+        }
+      })
+      .catch(err => {
+        console.error('Error loading instructors:', err)
+        setLoadError(err.message || 'Lỗi khi gọi API')
+      })
+  }, [])
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
   const [selectedInstructor, setSelectedInstructor] = useState<Instructor | null>(null)
-  const [newInstructor, setNewInstructor] = useState({
+  const [newInstructor, setNewInstructor] = useState<Partial<Instructor>>({
     code: "",
     name: "",
     email: "",
-    phone: "",
     department: "",
-    position: "Giảng viên",
-    maxHoursPerWeek: 20,
-    specializations: [] as string[],
-    teachingNotes: "",
-    status: "active" as "active" | "inactive" | "on_leave"
+    position: "",
+    status: "",
   })
 
   const filteredInstructors = instructors.filter(
     (instructor) =>
-      instructor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      instructor.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      instructor.department.toLowerCase().includes(searchTerm.toLowerCase())
+      String(instructor.code)?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      instructor.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      instructor.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      instructor.department?.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  // derive list of departments (TenKhoa) for selects
+  const departmentOptions = Array.from(
+    new Set(instructors.map(i => i.department).filter(Boolean))
+  ) as string[];
 
   const handleAddInstructor = () => {
     if (newInstructor.name && newInstructor.email && newInstructor.code) {
       setInstructors([
         ...instructors,
         { 
-          ...newInstructor, 
-          id: Math.max(...instructors.map(i => i.id), 0) + 1
+          ...newInstructor as Instructor, 
+          id: Date.now() // temporary id
         }
       ])
-      setNewInstructor({ 
+      setNewInstructor({
         code: "",
-        name: "", 
-        email: "", 
-        phone: "", 
-        department: "", 
-        position: "Giảng viên",
-        maxHoursPerWeek: 20,
-        specializations: [],
-        teachingNotes: "",
-        status: "active" 
+        name: "",
+        email: "",
+        department: "",
+        position: "",
+        status: "",
       })
       setIsAddOpen(false)
     }
@@ -160,31 +134,27 @@ export function InstructorsModule() {
     if (selectedInstructor && newInstructor.name && newInstructor.email) {
       setInstructors(
         instructors.map((i) =>
-          i.id === selectedInstructor.id
-            ? { ...newInstructor, id: selectedInstructor.id }
+          i.code === selectedInstructor.code
+            ? { ...(newInstructor as Instructor) }
             : i
         )
       )
       setIsEditOpen(false)
       setSelectedInstructor(null)
-      setNewInstructor({ 
+      setNewInstructor({
         code: "",
-        name: "", 
-        email: "", 
-        phone: "", 
-        department: "", 
-        position: "Giảng viên",
-        maxHoursPerWeek: 20,
-        specializations: [],
-        teachingNotes: "",
-        status: "active" 
+        name: "",
+        email: "",
+        department: "",
+        position: "",
+        status: "",
       })
     }
   }
 
   const handleDeleteInstructor = () => {
     if (selectedInstructor) {
-      setInstructors(instructors.filter((i) => i.id !== selectedInstructor.id))
+      setInstructors(instructors.filter((i) => i.code !== selectedInstructor.code))
       setDeleteConfirmOpen(false)
       setSelectedInstructor(null)
     }
@@ -236,26 +206,15 @@ export function InstructorsModule() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="email@uni.edu.vn"
-                    value={newInstructor.email}
-                    onChange={(e) => setNewInstructor({ ...newInstructor, email: e.target.value })}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="phone">Số điện thoại</Label>
-                  <Input
-                    id="phone"
-                    placeholder="0901234567"
-                    value={newInstructor.phone}
-                    onChange={(e) => setNewInstructor({ ...newInstructor, phone: e.target.value })}
-                  />
-                </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="email@uni.edu.vn"
+                  value={newInstructor.email}
+                  onChange={(e) => setNewInstructor({ ...newInstructor, email: e.target.value })}
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
@@ -268,11 +227,9 @@ export function InstructorsModule() {
                       <SelectValue placeholder="Chọn khoa/bộ môn" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Công nghệ thông tin">Công nghệ thông tin</SelectItem>
-                      <SelectItem value="Khoa học máy tính">Khoa học máy tính</SelectItem>
-                      <SelectItem value="Công nghệ phần mềm">Công nghệ phần mềm</SelectItem>
-                      <SelectItem value="Hệ thống thông tin">Hệ thống thông tin</SelectItem>
-                      <SelectItem value="Mạng và truyền thông">Mạng và truyền thông</SelectItem>
+                      {departmentOptions.map((d) => (
+                        <SelectItem key={d} value={d}>{d}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -294,27 +251,6 @@ export function InstructorsModule() {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="maxHours">Giờ dạy tối đa/tuần (0-40)</Label>
-                <Input
-                  id="maxHours"
-                  type="number"
-                  min="0"
-                  max="40"
-                  value={newInstructor.maxHoursPerWeek}
-                  onChange={(e) => setNewInstructor({ ...newInstructor, maxHoursPerWeek: parseInt(e.target.value) })}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="notes">Ghi chú dạy theo nguyện vọng</Label>
-                <Textarea
-                  id="notes"
-                  placeholder="Nhập ghi chú về nguyện vọng dạy (ví dụ: không dạy buổi chiều, ưu tiên lớp nào...)"
-                  value={newInstructor.teachingNotes}
-                  onChange={(e) => setNewInstructor({ ...newInstructor, teachingNotes: e.target.value })}
-                  rows={3}
-                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="status">Trạng thái</Label>
@@ -344,6 +280,7 @@ export function InstructorsModule() {
       </div>
 
       <Card className="border-border/50">
+        {loadError && <div className="p-4 text-red-600">{loadError}</div>}
         <CardHeader>
           <div className="flex items-center gap-4">
             <div className="relative flex-1 max-w-sm">
@@ -361,9 +298,9 @@ export function InstructorsModule() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tất cả khoa</SelectItem>
-                <SelectItem value="Công nghệ thông tin">Công nghệ thông tin</SelectItem>
-                <SelectItem value="Khoa học máy tính">Khoa học máy tính</SelectItem>
-                <SelectItem value="Công nghệ phần mềm">Công nghệ phần mềm</SelectItem>
+                {departmentOptions.map((dep) => (
+                  <SelectItem key={dep} value={dep}>{dep}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -377,14 +314,13 @@ export function InstructorsModule() {
                 <TableHead>Email</TableHead>
                 <TableHead>Chức vụ</TableHead>
                 <TableHead>Khoa/Bộ môn</TableHead>
-                <TableHead>Giờ/tuần</TableHead>
                 <TableHead>Trạng thái</TableHead>
                 <TableHead className="text-right">Thao tác</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredInstructors.map((instructor) => (
-                <TableRow key={instructor.id}>
+                <TableRow key={instructor.code}>
                   <TableCell className="font-medium">{instructor.code}</TableCell>
                   <TableCell className="font-medium">{instructor.name}</TableCell>
                   <TableCell>
@@ -395,7 +331,6 @@ export function InstructorsModule() {
                   </TableCell>
                   <TableCell>{instructor.position}</TableCell>
                   <TableCell>{instructor.department}</TableCell>
-                  <TableCell>{instructor.maxHoursPerWeek}</TableCell>
                   <TableCell>
                     <Badge variant={instructor.status === "active" ? "default" : instructor.status === "on_leave" ? "secondary" : "outline"}>
                       {instructor.status === "active" ? "Đang giảng dạy" : instructor.status === "on_leave" ? "Tạm nghỉ" : "Tạm dừng"}
@@ -407,7 +342,7 @@ export function InstructorsModule() {
                         variant="ghost" 
                         size="icon" 
                         className="h-8 w-8"
-                        onClick={() => handleEditInstructor(instructor as any)}
+                        onClick={() => handleEditInstructor(instructor)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
@@ -415,7 +350,7 @@ export function InstructorsModule() {
                         variant="ghost" 
                         size="icon" 
                         className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => openDeleteConfirm(instructor as any)}
+                        onClick={() => openDeleteConfirm(instructor)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -463,14 +398,6 @@ export function InstructorsModule() {
                   onChange={(e) => setNewInstructor({ ...newInstructor, email: e.target.value })}
                 />
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit-phone">Số điện thoại</Label>
-                <Input
-                  id="edit-phone"
-                  value={newInstructor.phone}
-                  onChange={(e) => setNewInstructor({ ...newInstructor, phone: e.target.value })}
-                />
-              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
@@ -483,11 +410,9 @@ export function InstructorsModule() {
                     <SelectValue placeholder="Chọn khoa/bộ môn" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Công nghệ thông tin">Công nghệ thông tin</SelectItem>
-                    <SelectItem value="Khoa học máy tính">Khoa học máy tính</SelectItem>
-                    <SelectItem value="Công nghệ phần mềm">Công nghệ phần mềm</SelectItem>
-                    <SelectItem value="Hệ thống thông tin">Hệ thống thông tin</SelectItem>
-                    <SelectItem value="Mạng và truyền thông">Mạng và truyền thông</SelectItem>
+                    {departmentOptions.map((d) => (
+                      <SelectItem key={d} value={d}>{d}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -509,27 +434,6 @@ export function InstructorsModule() {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="edit-maxHours">Giờ dạy tối đa/tuần (0-40)</Label>
-              <Input
-                id="edit-maxHours"
-                type="number"
-                min="0"
-                max="40"
-                value={newInstructor.maxHoursPerWeek}
-                onChange={(e) => setNewInstructor({ ...newInstructor, maxHoursPerWeek: parseInt(e.target.value) })}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="edit-notes">Ghi chú dạy theo nguyện vọng</Label>
-              <Textarea
-                id="edit-notes"
-                placeholder="Nhập ghi chú về nguyện vọng dạy (ví dụ: không dạy buổi chiều, ưu tiên lớp nào...)"
-                value={newInstructor.teachingNotes}
-                onChange={(e) => setNewInstructor({ ...newInstructor, teachingNotes: e.target.value })}
-                rows={3}
-              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="edit-status">Trạng thái</Label>

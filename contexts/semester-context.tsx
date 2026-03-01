@@ -29,7 +29,7 @@ interface SemesterContextType {
 
 const SemesterContext = createContext<SemesterContextType | undefined>(undefined)
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const fetcher = (url: string) => fetch(url).then((res) => res.json()).then((r) => r.data || [])
 
 export function SemesterProvider({ children }: { children: ReactNode }) {
   const { data: semesters = [], error, isLoading, mutate } = useSWR<Semester[]>("/api/semesters", fetcher)

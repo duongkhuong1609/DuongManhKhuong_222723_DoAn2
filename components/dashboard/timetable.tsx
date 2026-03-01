@@ -24,28 +24,11 @@ const timeslots = [
   { id: 5, name: "Tiết 9-10", time: "17:30 - 19:20" },
 ]
 
-const scheduleData = [
-  { day: 0, slot: 1, course: "Cơ sở dữ liệu", room: "A201", class: "CNTT-K20A", instructor: "PGS.TS. Nguyễn Văn An" },
-  { day: 0, slot: 3, course: "Lập trình web", room: "B302", class: "CNTT-K20B", instructor: "TS. Trần Thị Bình" },
-  { day: 1, slot: 2, course: "Mạng máy tính", room: "A105", class: "KHMT-K21A", instructor: "ThS. Lê Văn Cường" },
-  { day: 1, slot: 4, course: "Trí tuệ nhân tạo", room: "B201", class: "CNPM-K20A", instructor: "PGS.TS. Phạm Thị Dung" },
-  { day: 2, slot: 1, course: "Công nghệ phần mềm", room: "A201", class: "CNTT-K20A", instructor: "TS. Hoàng Văn Em" },
-  { day: 2, slot: 3, course: "Cơ sở dữ liệu", room: "B302", class: "CNTT-K20B", instructor: "PGS.TS. Nguyễn Văn An" },
-  { day: 3, slot: 2, course: "Lập trình web", room: "A105", class: "KHMT-K21A", instructor: "TS. Trần Thị Bình" },
-  { day: 3, slot: 5, course: "Mạng máy tính", room: "A201", class: "HTTT-K21A", instructor: "ThS. Lê Văn Cường" },
-  { day: 4, slot: 1, course: "Trí tuệ nhân tạo", room: "B201", class: "CNTT-K20A", instructor: "PGS.TS. Phạm Thị Dung" },
-  { day: 4, slot: 4, course: "Công nghệ phần mềm", room: "A105", class: "CNPM-K20A", instructor: "TS. Hoàng Văn Em" },
-  { day: 5, slot: 1, course: "Cơ sở dữ liệu", room: "A201", class: "KHMT-K21A", instructor: "PGS.TS. Nguyễn Văn An" },
-  { day: 5, slot: 3, course: "Lập trình web", room: "B302", class: "HTTT-K21A", instructor: "TS. Trần Thị Bình" },
-]
+// scheduleData will be fetched from the server when backend is ready
+const scheduleData: Array<any> = []
 
-const courseColors: Record<string, string> = {
-  "Cơ sở dữ liệu": "bg-primary/10 border-primary/30 text-primary",
-  "Lập trình web": "bg-success/10 border-success/30 text-success",
-  "Mạng máy tính": "bg-warning/10 border-warning/30 text-warning",
-  "Trí tuệ nhân tạo": "bg-chart-3/10 border-chart-3/30 text-chart-3",
-  "Công nghệ phần mềm": "bg-chart-5/10 border-chart-5/30 text-chart-5",
-}
+// colors may come from course definitions later
+const courseColors: Record<string, string> = {}
 
 export function TimetableView() {
   const [semester, setSemester] = useState("hk1")
@@ -104,11 +87,6 @@ export function TimetableView() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tất cả giảng viên</SelectItem>
-                  <SelectItem value="PGS.TS. Nguyễn Văn An">PGS.TS. Nguyễn Văn An</SelectItem>
-                  <SelectItem value="TS. Trần Thị Bình">TS. Trần Thị Bình</SelectItem>
-                  <SelectItem value="ThS. Lê Văn Cường">ThS. Lê Văn Cường</SelectItem>
-                  <SelectItem value="PGS.TS. Phạm Thị Dung">PGS.TS. Phạm Thị Dung</SelectItem>
-                  <SelectItem value="TS. Hoàng Văn Em">TS. Hoàng Văn Em</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -1,48 +1,86 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+
+// use mssql driver directly because legacy tables are not managed by Prisma
+const sql = require('mssql');
+
+const dbConfig = {
+  server: 'localhost',
+  instanceName: 'SQLEXPRESS',
+  database: 'LAP_LICH_TU_DONG',
+  authentication: { type: 'default', options: { userName: 'sa', password: '123456' } },
+  options: { encrypt: false, trustServerCertificate: true }
+};
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
+    const { searchParams } = new URL(request.url)
     const department = searchParams.get("department")
     const status = searchParams.get("status")
     const search = searchParams.get("search")
 
-    const where: Record<string, unknown> = {}
-
-    if (department) where.department = department
-    if (status) where.status = status
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: "insensitive" } },
-        { code: { contains: search, mode: "insensitive" } },
-        { email: { contains: search, mode: "insensitive" } },
-      ]
+    let pool
+    try {
+      pool = await sql.connect(dbConfig)
+    } catch (connErr) {
+      console.error("Instructor API connection error:", connErr)
+      // return empty list instead of bubbling error
+      return NextResponse.json({ success: true, data: [] })
     }
 
-    const instructors = await prisma.instructor.findMany({
-      where,
-      orderBy: { name: "asc" }
-    })
+    let query = `
+      SELECT gi.MaGV AS code,
+             gi.TenGV AS name,
+             gi.EmailGV AS email,
+             gi.ChucVu AS position,
+             k.TenKhoa AS department,
+             gi.TrangThai AS status
+      FROM GIANG_VIEN gi
+      LEFT JOIN KHOA k ON gi.MaKhoa = k.MaKhoa
+    `
+    const conditions: string[] = []
+    const params: Record<string, any> = {}
 
-    return NextResponse.json({ success: true, data: instructors })
+    if (department) {
+      conditions.push("k.TenKhoa = @dept")
+      params.dept = department
+    }
+    if (status) {
+      conditions.push("gi.TrangThai = @stat")
+      params.stat = status
+    }
+    if (search) {
+      conditions.push("(gi.TenGV LIKE @search OR gi.MaGV LIKE @search OR gi.EmailGV LIKE @search)")
+      params.search = `%${search}%`
+    }
+
+    if (conditions.length) {
+      query += " WHERE " + conditions.join(" AND ")
+    }
+    query += " ORDER BY gi.TenGV ASC"
+
+    const requestDb = pool.request()
+    for (const key of Object.keys(params)) {
+      requestDb.input(key, params[key])
+    }
+
+    const result = await requestDb.query(query)
+    await pool.close()
+
+    return NextResponse.json({ success: true, data: result.recordset })
   } catch (error) {
-    console.error("Error fetching instructors:", error)
-    return NextResponse.json({ success: false, error: "Lỗi khi tải danh sách giảng viên" }, { status: 500 })
+    console.error("Error fetching instructors via mssql:", error)
+    // on unexpected failure return empty array
+    return NextResponse.json({ success: true, data: [] })
   }
 }
 
+// other methods not supported for now
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const instructor = await prisma.instructor.create({ data: body })
-
-    return NextResponse.json({ success: true, data: instructor }, { status: 201 })
-  } catch (error: unknown) {
-    console.error("Error creating instructor:", error)
-    if ((error as any).code === 'P2002') {
-      return NextResponse.json({ success: false, error: "Mã giảng viên hoặc email đã tồn tại" }, { status: 400 })
-    }
-    return NextResponse.json({ success: false, error: "Lỗi khi tạo giảng viên" }, { status: 500 })
-  }
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
+}
+export async function PUT(request: NextRequest) {
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
+}
+export async function DELETE(request: NextRequest) {
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
 }

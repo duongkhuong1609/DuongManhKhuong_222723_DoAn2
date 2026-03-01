@@ -32,13 +32,7 @@ import {
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 
-const initialClasses = [
-  { id: 1, code: "CNTT-K20A", name: "CNTT Khóa 20 - Lớp A", department: "Công nghệ thông tin", major: "Công nghệ thông tin", studentCount: 45, classYear: 1, year: 2024, semester: "Học kỳ 1" },
-  { id: 2, code: "CNTT-K20B", name: "CNTT Khóa 20 - Lớp B", department: "Công nghệ thông tin", major: "Công nghệ thông tin", studentCount: 42, classYear: 1, year: 2024, semester: "Học kỳ 1" },
-  { id: 3, code: "KHMT-K21A", name: "KHMT Khóa 21 - Lớp A", department: "Khoa học máy tính", major: "Khoa học máy tính", studentCount: 38, classYear: 2, year: 2024, semester: "Học kỳ 1" },
-  { id: 4, code: "CNPM-K20A", name: "CNPM Khóa 20 - Lớp A", department: "Công nghệ phần mềm", major: "Công nghệ phần mềm", studentCount: 40, classYear: 1, year: 2024, semester: "Học kỳ 1" },
-  { id: 5, code: "HTTT-K21A", name: "HTTT Khóa 21 - Lớp A", department: "Hệ thống thông tin", major: "Hệ thống thông tin", studentCount: 35, classYear: 2, year: 2024, semester: "Học kỳ 1" },
-]
+const initialClasses: any[] = []
 
 export function ClassesModule() {
   const [classes, setClasses] = useState(initialClasses)

@@ -32,14 +32,7 @@ import {
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 
-const initialTimeslots = [
-  { id: 1, name: "Tiết 1-2", startTime: "07:00", endTime: "08:50", period: "Sáng", duration: 110 },
-  { id: 2, name: "Tiết 3-4", startTime: "09:00", endTime: "10:50", period: "Sáng", duration: 110 },
-  { id: 3, name: "Tiết 5-6", startTime: "13:00", endTime: "14:50", period: "Chiều", duration: 110 },
-  { id: 4, name: "Tiết 7-8", startTime: "15:00", endTime: "16:50", period: "Chiều", duration: 110 },
-  { id: 5, name: "Tiết 9-10", startTime: "17:30", endTime: "19:20", period: "Tối", duration: 110 },
-  { id: 6, name: "Tiết 11-12", startTime: "19:30", endTime: "21:20", period: "Tối", duration: 110 },
-]
+const initialTimeslots: any[] = []
 
 export function TimeslotsModule() {
   const [timeslots, setTimeslots] = useState(initialTimeslots)

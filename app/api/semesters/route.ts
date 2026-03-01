@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+// use mssql driver directly to query database without Prisma
+const sql = require('mssql');
+
+const dbConfig = {
+  server: 'localhost',
+  instanceName: 'SQLEXPRESS',
+  database: 'LAP_LICH_TU_DONG',
+  authentication: { type: 'default', options: { userName: 'sa', password: '123456' } },
+  options: { encrypt: false, trustServerCertificate: true }
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -8,71 +17,73 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status")
     const current = searchParams.get("current")
 
-    const where: Record<string, unknown> = { isActive: true }
-    if (academicYear) where.academicYear = academicYear
-    if (status) where.status = status
-    if (current === "true") where.isCurrent = true
+    const pool = await sql.connect(dbConfig)
+    // legacy table HOC_KY stores semesters
+    let query = `
+      SELECT MaHK AS code,
+             TenHK AS name,
+             NamHK AS academicYear,
+             TuNgay AS startDate,
+             DenNgay AS endDate,
+             TrangThai AS status
+      FROM HOC_KY
+    `;
+    const conditions: string[] = [];
+    const params: Record<string, any> = {};
 
-    const semesters = await prisma.semester.findMany({
-      where,
-      orderBy: [{ academicYear: "desc" }, { semesterNumber: "asc" }]
-    })
-    return NextResponse.json({ success: true, data: semesters })
+    if (academicYear) {
+      conditions.push("NamHK = @ay")
+      params.ay = academicYear
+    }
+    if (status) {
+      conditions.push("TrangThai = @st")
+      params.st = status
+    }
+    // current filter can't be applied easily w/o an isCurrent column
+
+    if (conditions.length) {
+      query += " WHERE " + conditions.join(" AND ")
+    }
+    query += " ORDER BY NamHK DESC"
+
+    const requestDb = pool.request()
+    for (const key of Object.keys(params)) {
+      requestDb.input(key, params[key])
+    }
+
+    const result = await requestDb.query(query)
+    await pool.close()
+
+    // map fields to expected Semester interface, adding defaults
+    const mapped = result.recordset.map((row: any) => ({
+      _id: row.code,
+      code: row.code,
+      name: row.name,
+      shortName: row.name,
+      semesterNumber: 0, // unknown
+      academicYear: row.academicYear,
+      startDate: row.startDate,
+      endDate: row.endDate,
+      isActive: true,
+      isCurrent: false,
+      status: row.status || 'upcoming',
+    }))
+
+    return NextResponse.json({ success: true, data: mapped })
   } catch (error) {
-    console.error("Error fetching semesters:", error)
+    console.error("Error fetching semesters via mssql:", error)
     return NextResponse.json({ success: false, error: "Lỗi khi tải danh sách học kỳ" }, { status: 500 })
   }
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const semester = await prisma.semester.create({ data: body })
-    return NextResponse.json({ success: true, data: semester }, { status: 201 })
-  } catch (error) {
-    console.error("Error creating semester:", error)
-    return NextResponse.json({ success: false, error: "Lỗi khi tạo học kỳ" }, { status: 500 })
-  }
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
 }
 
 export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const { id, ...updateData } = body
-
-    const semester = await prisma.semester.update({
-      where: { id: parseInt(id) },
-      data: updateData,
-    })
-    return NextResponse.json({ success: true, data: semester })
-  } catch (error) {
-    console.error("Error updating semester:", error)
-    if ((error as any).code === 'P2025') {
-      return NextResponse.json({ success: false, error: "Học kỳ không tồn tại" }, { status: 404 })
-    }
-    return NextResponse.json({ success: false, error: "Lỗi khi cập nhật học kỳ" }, { status: 500 })
-  }
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
 }
 
 export async function DELETE(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const id = searchParams.get("id")
-
-    if (!id) {
-      return NextResponse.json({ success: false, error: "Mã học kỳ bắt buộc" }, { status: 400 })
-    }
-
-    const semester = await prisma.semester.update({
-      where: { id: parseInt(id) },
-      data: { isActive: false },
-    })
-    return NextResponse.json({ success: true, message: "Xóa học kỳ thành công", data: semester })
-  } catch (error) {
-    console.error("Error deleting semester:", error)
-    if ((error as any).code === 'P2025') {
-      return NextResponse.json({ success: false, error: "Học kỳ không tồn tại" }, { status: 404 })
-    }
-    return NextResponse.json({ success: false, error: "Lỗi khi xóa học kỳ" }, { status: 500 })
-  }
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
 }

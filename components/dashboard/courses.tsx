@@ -35,13 +35,7 @@ import {
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 
-const initialCourses = [
-  { id: 1, code: "IT101", name: "Cơ sở dữ liệu", credits: 3, theoryHours: 30, practiceHours: 15, department: "Công nghệ thông tin", type: "Lý thuyết" },
-  { id: 2, code: "IT102", name: "Lập trình web", credits: 3, theoryHours: 30, practiceHours: 30, department: "Công nghệ thông tin", type: "Thực hành" },
-  { id: 3, code: "IT201", name: "Trí tuệ nhân tạo", credits: 3, theoryHours: 45, practiceHours: 0, department: "Khoa học máy tính", type: "Lý thuyết" },
-  { id: 4, code: "IT202", name: "Mạng máy tính", credits: 3, theoryHours: 30, practiceHours: 15, department: "Mạng và truyền thông", type: "Thực hành" },
-  { id: 5, code: "IT301", name: "Công nghệ phần mềm", credits: 4, theoryHours: 45, practiceHours: 30, department: "Công nghệ phần mềm", type: "Lý thuyết" },
-]
+const initialCourses: any[] = []
 
 const departments = [
   "Công nghệ thông tin",

@@ -32,13 +32,7 @@ import {
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 
-const initialRooms = [
-  { id: 1, code: "A201", building: "Tòa A", capacity: 50, type: "Lý thuyết", equipment: "Máy chiếu, Điều hòa", status: "available" },
-  { id: 2, code: "A202", building: "Tòa A", capacity: 50, type: "Lý thuyết", equipment: "Máy chiếu, Điều hòa", status: "available" },
-  { id: 3, code: "B301", building: "Tòa B", capacity: 40, type: "Thực hành", equipment: "30 máy tính, Máy chiếu", status: "maintenance" },
-  { id: 4, code: "B302", building: "Tòa B", capacity: 35, type: "Thực hành", equipment: "25 máy tính, Máy chiếu", status: "available" },
-  { id: 5, code: "C101", building: "Tòa C", capacity: 100, type: "Hội trường", equipment: "Hệ thống âm thanh, 2 máy chiếu", status: "available" },
-]
+const initialRooms: any[] = []
 
 export function RoomsModule() {
   const [rooms, setRooms] = useState(initialRooms)
