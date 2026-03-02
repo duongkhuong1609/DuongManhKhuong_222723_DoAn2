@@ -1,44 +1,50 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+const sql = require('mssql')
+
+const dbConfig = {
+  server: 'localhost',
+  instanceName: 'SQLEXPRESS',
+  database: 'LAP_LICH_TU_DONG',
+  authentication: { type: 'default', options: { userName: 'sa', password: '123456' } },
+  options: { encrypt: false, trustServerCertificate: true }
+}
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const building = searchParams.get("building")
-    const type = searchParams.get("type")
-    const status = searchParams.get("status")
-    const minCapacity = searchParams.get("minCapacity")
+    const pool = await sql.connect(dbConfig)
+    const result = await pool.request().query(`
+      SELECT ph.TenPhong AS roomName,
+             kh.TenKhu AS building,
+             ph.LoaiPhong AS type,
+             ph.TrangThai AS status
+      FROM PHONG ph
+      LEFT JOIN KHU kh ON ph.MaKhu = kh.MaKhu
+    `)
+    await pool.close()
 
-    const where: Record<string, unknown> = {}
+    const mapped = result.recordset.map((row: any) => ({
+      code: row.roomName,
+      building: row.building,
+      type: row.type,
+      status: row.status,
+    }))
 
-    if (building) where.building = building
-    if (type) where.type = type
-    if (status) where.status = status
-    if (minCapacity) where.capacity = { gte: parseInt(minCapacity) }
-
-    const rooms = await prisma.room.findMany({
-      where,
-      orderBy: [{ building: "asc" }, { code: "asc" }]
-    })
-
-    return NextResponse.json({ success: true, data: rooms })
+    return NextResponse.json({ success: true, data: mapped })
   } catch (error) {
-    console.error("Error fetching rooms:", error)
-    return NextResponse.json({ success: false, error: "Lỗi khi tải danh sách phòng học" }, { status: 500 })
+    console.error("Error fetching rooms via mssql:", error)
+    // return empty list so UI doesn't crash
+    return NextResponse.json({ success: false, data: [] })
   }
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const room = await prisma.room.create({ data: body })
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
+}
 
-    return NextResponse.json({ success: true, data: room }, { status: 201 })
-  } catch (error: unknown) {
-    console.error("Error creating room:", error)
-    if ((error as any).code === 'P2002') {
-      return NextResponse.json({ success: false, error: "Mã phòng đã tồn tại" }, { status: 400 })
-    }
-    return NextResponse.json({ success: false, error: "Lỗi khi tạo phòng học" }, { status: 500 })
-  }
+export async function PUT(request: NextRequest) {
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
+}
+
+export async function DELETE(request: NextRequest) {
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
 }

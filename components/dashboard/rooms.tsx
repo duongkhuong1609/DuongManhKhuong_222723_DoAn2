@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Plus, Search, Edit, Trash2, Monitor, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,35 +32,63 @@ import {
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 
-const initialRooms: any[] = []
+// component state is populated from the database via API
+interface Room {
+  code: string // we'll store TenPhong here
+  building: string // TenKhu
+  type: string // LoaiPhong
+  status: string // TrangThai
+  id?: number // temporary for local operations if any
+}
 
 export function RoomsModule() {
-  const [rooms, setRooms] = useState(initialRooms)
+  const [rooms, setRooms] = useState<Room[]>([])
   const [searchTerm, setSearchTerm] = useState("")
+  const [loadError, setLoadError] = useState<string | null>(null)
+  // fetch data from API when component mounts
+  useEffect(() => {
+    fetch('/api/rooms')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setRooms(json.data)
+          if (!json.data || json.data.length === 0) {
+            setLoadError('Không thể tải dữ liệu phòng học. Kiểm tra kết nối cơ sở dữ liệu.')
+          }
+        } else {
+          setLoadError(json.error || 'Lỗi không xác định khi tải phòng học')
+        }
+      })
+      .catch(err => {
+        console.error('Error loading rooms:', err)
+        setLoadError(err.message || 'Lỗi khi gọi API')
+      })
+  }, [])
+
+  // keep add/edit state if desired, but they won't persist to DB
   const [isAddOpen, setIsAddOpen] = useState(false)
-  const [newRoom, setNewRoom] = useState({
+  const [newRoom, setNewRoom] = useState<Partial<Room>>({
     code: "",
     building: "",
-    capacity: "",
     type: "",
-    equipment: "",
-    status: "available"
+    status: ""
   })
 
   const filteredRooms = rooms.filter(
     (room) =>
-      room.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      room.building.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      room.type.toLowerCase().includes(searchTerm.toLowerCase())
+      String(room.code).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(room.building).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(room.type).toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  // (client-only) add a room to local state
   const handleAddRoom = () => {
     if (newRoom.code && newRoom.building) {
       setRooms([
         ...rooms,
-        { ...newRoom, id: rooms.length + 1, capacity: parseInt(newRoom.capacity) || 0 }
+        { ...newRoom, id: Date.now() } as Room
       ])
-      setNewRoom({ code: "", building: "", capacity: "", type: "", equipment: "", status: "available" })
+      setNewRoom({ code: "", building: "", type: "", status: "" })
       setIsAddOpen(false)
     }
   }
@@ -167,6 +195,7 @@ export function RoomsModule() {
       </div>
 
       <Card className="border-border/50">
+        {loadError && <div className="p-4 text-red-600">{loadError}</div>}
         <CardHeader>
           <div className="flex items-center gap-4">
             <div className="relative flex-1 max-w-sm">
@@ -214,7 +243,7 @@ export function RoomsModule() {
             </TableHeader>
             <TableBody>
               {filteredRooms.map((room) => (
-                <TableRow key={room.id}>
+                <TableRow key={room.code || `${room.building}-${room.type}-${room.status}`}> 
                   <TableCell className="font-medium">{room.building}</TableCell>
                   <TableCell>{room.code}</TableCell>
                   <TableCell>
@@ -224,8 +253,8 @@ export function RoomsModule() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={room.status === "available" ? "default" : "secondary"}>
-                      {room.status === "available" ? "Sẵn sàng" : "Bảo trì"}
+                    <Badge variant="default">
+                      {room.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -237,7 +266,7 @@ export function RoomsModule() {
                         variant="ghost" 
                         size="icon" 
                         className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => handleDeleteRoom(room.id)}
+                        onClick={() => handleDeleteRoom(room.id ?? 0)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

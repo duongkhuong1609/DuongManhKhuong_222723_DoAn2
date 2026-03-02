@@ -74,7 +74,10 @@ interface Semester {
   status: "upcoming" | "ongoing" | "completed"
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const fetcher = (url: string) =>
+  fetch(url)
+    .then((res) => res.json())
+    .then((r) => r.data || [])
 
 // Generate academic years (2025-2026 to 2029-2030, 5 years total)
 const generateAcademicYears = () => {
