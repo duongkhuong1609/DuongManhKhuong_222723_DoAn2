@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Plus, Search, Edit, Trash2, Users, Calendar } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Plus, Search, Edit, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -37,6 +37,7 @@ const initialClasses: any[] = []
 export function ClassesModule() {
   const [classes, setClasses] = useState(initialClasses)
   const [searchTerm, setSearchTerm] = useState("")
+  const [loadError, setLoadError] = useState<string | null>(null)
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [newClass, setNewClass] = useState({
     code: "",
@@ -49,11 +50,32 @@ export function ClassesModule() {
     semester: "Học kỳ 1"
   })
 
+  useEffect(() => {
+    fetch('/api/classes')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setClasses(json.data || [])
+          if (!json.data || json.data.length === 0) {
+            setLoadError('Không thể tải dữ liệu lớp học. Kiểm tra kết nối cơ sở dữ liệu.')
+          }
+        } else {
+          setLoadError(json.error || 'Lỗi không xác định khi tải lớp học')
+          setClasses([])
+        }
+      })
+      .catch(err => {
+        console.error('Error loading classes:', err)
+        setLoadError(err.message || 'Lỗi khi gọi API')
+        setClasses([])
+      })
+  }, [])
+
   const filteredClasses = classes.filter(
     (c) =>
-      c.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.department.toLowerCase().includes(searchTerm.toLowerCase())
+      String(c.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(c.major || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(c.department || "").toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   const handleAddClass = () => {
@@ -184,6 +206,7 @@ export function ClassesModule() {
       </div>
 
       <Card className="border-border/50">
+        {loadError && <div className="p-4 text-red-600">{loadError}</div>}
         <CardHeader>
           <div className="flex items-center gap-4">
             <div className="relative flex-1 max-w-sm">
@@ -221,13 +244,13 @@ export function ClassesModule() {
             </TableHeader>
             <TableBody>
               {filteredClasses.map((c) => (
-                <TableRow key={c.id}>
+                <TableRow key={c.id || `${c.name}-${c.major}-${c.department}-${c.year}`}>
                   <TableCell className="font-medium">{c.name}</TableCell>
-                  <TableCell>{c.major || c.department}</TableCell>
+                  <TableCell>{c.major}</TableCell>
                   <TableCell>
                     <Badge variant="outline">{c.department}</Badge>
                   </TableCell>
-                  <TableCell>Năm {c.classYear}</TableCell>
+                  <TableCell>{c.year}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -237,7 +260,7 @@ export function ClassesModule() {
                         variant="ghost" 
                         size="icon" 
                         className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => handleDeleteClass(c.id)}
+                        onClick={() => handleDeleteClass(c.id ?? 0)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

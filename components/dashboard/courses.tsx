@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Plus, Search, Edit, Trash2, Clock, BookOpen, ChevronsUpDown, Check } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Plus, Search, Edit, Trash2, BookOpen, ChevronsUpDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -37,19 +37,13 @@ import { Badge } from "@/components/ui/badge"
 
 const initialCourses: any[] = []
 
-const departments = [
-  "Công nghệ thông tin",
-  "Khoa học máy tính",
-  "Công nghệ phần mềm",
-  "Mạng và truyền thông",
-]
-
 export function CoursesModule() {
   const [courses, setCourses] = useState(initialCourses)
   const [searchTerm, setSearchTerm] = useState("")
+  const [loadError, setLoadError] = useState<string | null>(null)
   const [isAddOpen, setIsAddOpen] = useState(false)
-  const [selectedDepartment, setSelectedDepartment] = useState("")
-  const [openDepartmentPopover, setOpenDepartmentPopover] = useState(false)
+  const [selectedMajor, setSelectedMajor] = useState("")
+  const [openMajorPopover, setOpenMajorPopover] = useState(false)
   const [newCourse, setNewCourse] = useState({
     code: "",
     name: "",
@@ -60,16 +54,39 @@ export function CoursesModule() {
     type: "Lý thuyết"
   })
 
+  useEffect(() => {
+    fetch('/api/courses')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setCourses(json.data || [])
+          if (!json.data || json.data.length === 0) {
+            setLoadError('Không thể tải dữ liệu môn học. Kiểm tra kết nối cơ sở dữ liệu.')
+          }
+        } else {
+          setLoadError(json.error || 'Lỗi không xác định khi tải môn học')
+          setCourses([])
+        }
+      })
+      .catch(err => {
+        console.error('Error loading courses:', err)
+        setLoadError(err.message || 'Lỗi khi gọi API')
+        setCourses([])
+      })
+  }, [])
+
+  const majorOptions = Array.from(new Set(courses.map((c) => c.major).filter(Boolean))) as string[]
+
   const filteredCourses = courses.filter(
     (course) => {
       const matchesSearch =
-        course.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.department.toLowerCase().includes(searchTerm.toLowerCase())
+        String(course.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(course.major || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(course.type || '').toLowerCase().includes(searchTerm.toLowerCase())
       
-      const matchesDepartment = selectedDepartment === "" || course.department === selectedDepartment
+      const matchesMajor = selectedMajor === "" || course.major === selectedMajor
       
-      return matchesSearch && matchesDepartment
+      return matchesSearch && matchesMajor
     }
   )
 
@@ -213,6 +230,7 @@ export function CoursesModule() {
       </div>
 
       <Card className="border-border/50">
+        {loadError && <div className="p-4 text-red-600">{loadError}</div>}
         <CardHeader>
           <div className="flex items-center gap-4">
             <div className="relative flex-1 max-w-sm">
@@ -224,55 +242,55 @@ export function CoursesModule() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Popover open={openDepartmentPopover} onOpenChange={setOpenDepartmentPopover}>
+            <Popover open={openMajorPopover} onOpenChange={setOpenMajorPopover}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
                   role="combobox"
-                  aria-expanded={openDepartmentPopover}
+                  aria-expanded={openMajorPopover}
                   className="w-[180px] justify-between"
                 >
-                  {selectedDepartment || "Chọn khoa..."}
+                  {selectedMajor || "Chọn ngành..."}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[180px] p-0" align="start">
                 <Command>
-                  <CommandInput placeholder="Tìm kiếm khoa..." />
-                  <CommandEmpty>Không tìm thấy khoa.</CommandEmpty>
+                  <CommandInput placeholder="Tìm kiếm ngành..." />
+                  <CommandEmpty>Không tìm thấy ngành.</CommandEmpty>
                   <CommandList>
                     <CommandGroup>
                       <CommandItem
                         value="all"
                         onSelect={() => {
-                          setSelectedDepartment("")
-                          setOpenDepartmentPopover(false)
+                          setSelectedMajor("")
+                          setOpenMajorPopover(false)
                         }}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            selectedDepartment === "" ? "opacity-100" : "opacity-0"
+                            selectedMajor === "" ? "opacity-100" : "opacity-0"
                           )}
                         />
                         Tất cả
                       </CommandItem>
-                      {departments.map((dept) => (
+                      {majorOptions.map((major) => (
                         <CommandItem
-                          key={dept}
-                          value={dept}
+                          key={major}
+                          value={major}
                           onSelect={(currentValue) => {
-                            setSelectedDepartment(currentValue === selectedDepartment ? "" : currentValue)
-                            setOpenDepartmentPopover(false)
+                            setSelectedMajor(currentValue === selectedMajor ? "" : currentValue)
+                            setOpenMajorPopover(false)
                           }}
                         >
                           <Check
                             className={cn(
                               "mr-2 h-4 w-4",
-                              selectedDepartment === dept ? "opacity-100" : "opacity-0"
+                              selectedMajor === major ? "opacity-100" : "opacity-0"
                             )}
                           />
-                          {dept}
+                          {major}
                         </CommandItem>
                       ))}
                     </CommandGroup>
@@ -299,14 +317,16 @@ export function CoursesModule() {
                 <TableHead>Tên môn học</TableHead>
                 <TableHead>Tín chỉ</TableHead>
                 <TableHead>Số tiết học</TableHead>
-                <TableHead>Khoa/Bộ môn</TableHead>
-                <TableHead>Loại</TableHead>
+                <TableHead>Loại học phần</TableHead>
+                <TableHead>Tên Ngành</TableHead>
+                <TableHead>Năm</TableHead>
+                <TableHead>Học Kỳ</TableHead>
                 <TableHead className="text-right">Thao tác</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredCourses.map((course) => (
-                <TableRow key={course.id}>
+                <TableRow key={course.id || `${course.name}-${course.major}-${course.semester}-${course.year}`}>
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
                       <BookOpen className="h-4 w-4 text-primary" />
@@ -314,20 +334,17 @@ export function CoursesModule() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary">{course.credits} TC</Badge>
+                    <Badge variant="secondary">{course.credits}</Badge>
                   </TableCell>
+                  <TableCell>{course.periods}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Clock className="h-3 w-3" />
-                      {course.theoryHours + course.practiceHours} tiết
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{course.department}</TableCell>
-                  <TableCell>
-                    <Badge variant={course.type === "Lý thuyết" ? "default" : "secondary"}>
+                    <Badge variant="default">
                       {course.type}
                     </Badge>
                   </TableCell>
+                  <TableCell className="text-muted-foreground">{course.major}</TableCell>
+                  <TableCell>{course.year}</TableCell>
+                  <TableCell>{course.semester}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -337,7 +354,7 @@ export function CoursesModule() {
                         variant="ghost" 
                         size="icon" 
                         className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => handleDeleteCourse(course.id)}
+                        onClick={() => handleDeleteCourse(course.id ?? 0)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

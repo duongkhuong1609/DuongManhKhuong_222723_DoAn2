@@ -1,48 +1,54 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+const sql = require('mssql')
+
+const dbConfig = {
+  server: 'localhost',
+  instanceName: 'SQLEXPRESS',
+  database: 'LAP_LICH_TU_DONG',
+  authentication: { type: 'default', options: { userName: 'sa', password: '123456' } },
+  options: { encrypt: false, trustServerCertificate: true }
+}
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const semester = searchParams.get("semester")
-    const academicYear = searchParams.get("academicYear")
-    const instructor = searchParams.get("instructor")
-    const status = searchParams.get("status")
+    const pool = await sql.connect(dbConfig)
+    const result = await pool.request().query(`
+      SELECT
+        l.MaLop AS id,
+        l.TenLop AS name,
+        n.TenNganh AS major,
+        k.TenKhoa AS department,
+        l.Nam AS year
+      FROM LOP l
+      LEFT JOIN NGANH n ON l.MaNganh = n.MaNganh
+      LEFT JOIN KHOA k ON n.MaKhoa = k.MaKhoa
+      ORDER BY l.TenLop ASC
+    `)
+    await pool.close()
 
-    const where: Record<string, unknown> = {}
+    const mapped = result.recordset.map((row: any) => ({
+      id: row.id,
+      name: String(row.name || '').trim(),
+      major: String(row.major || '').trim(),
+      department: String(row.department || '').trim(),
+      year: String(row.year || '').trim(),
+    }))
 
-    if (semester) where.semester = semester
-    if (academicYear) where.academicYear = academicYear
-    if (instructor) where.instructorId = parseInt(instructor)
-    if (status) where.status = status
-
-    const classes = await prisma.class.findMany({
-      where,
-      include: {
-        course: { select: { code: true, name: true, credits: true } },
-        instructor: { select: { code: true, name: true, department: true } },
-      },
-      orderBy: { code: "asc" }
-    })
-
-    return NextResponse.json({ success: true, data: classes })
+    return NextResponse.json({ success: true, data: mapped })
   } catch (error) {
-    console.error("Error fetching classes:", error)
-    return NextResponse.json({ success: false, error: "Lỗi khi tải danh sách lớp học" }, { status: 500 })
+    console.error("Error fetching classes via mssql:", error)
+    return NextResponse.json({ success: false, data: [], error: "Lỗi khi tải danh sách lớp học" }, { status: 500 })
   }
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const newClass = await prisma.class.create({ data: body })
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
+}
 
-    return NextResponse.json({ success: true, data: newClass }, { status: 201 })
-  } catch (error: unknown) {
-    console.error("Error creating class:", error)
-    if ((error as any).code === 'P2002') {
-      return NextResponse.json({ success: false, error: "Mã lớp đã tồn tại" }, { status: 400 })
-    }
-    return NextResponse.json({ success: false, error: "Lỗi khi tạo lớp học" }, { status: 500 })
-  }
+export async function PUT(request: NextRequest) {
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
+}
+
+export async function DELETE(request: NextRequest) {
+  return NextResponse.json({ success: false, error: "Chức năng chưa được hỗ trợ" }, { status: 501 })
 }
