@@ -31,12 +31,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { Check, ChevronsUpDown } from "lucide-react"
+import { cn } from "@/lib/utils"
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
@@ -45,7 +50,7 @@ const initialInstructors: any[] = []
 
 interface Instructor {
   id?: number // only used locally for added entries
-  code: string
+  code?: string
   name: string
   email: string
   position: string
@@ -55,18 +60,24 @@ interface Instructor {
 
 export function InstructorsModule() {
   const [instructors, setInstructors] = useState(initialInstructors)
+  const [departments, setDepartments] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState("")
+  const [selectedDepartmentFilter, setSelectedDepartmentFilter] = useState("")
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState("")
+  const [openDepartmentFilterPopover, setOpenDepartmentFilterPopover] = useState(false)
+  const [openAddDepartmentPopover, setOpenAddDepartmentPopover] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
 
-  // fetch instructors from API once when component mounts
-  useEffect(() => {
+  const loadInstructors = () => {
     fetch('/api/instructors')
       .then(res => res.json())
       .then(json => {
         if (json.success) {
-          setInstructors(json.data)
+          setInstructors(json.data || [])
           if (!json.data || json.data.length === 0) {
             setLoadError('Không thể tải dữ liệu giảng viên. Kiểm tra kết nối cơ sở dữ liệu.')
+          } else {
+            setLoadError(null)
           }
         } else {
           setLoadError(json.error || 'Lỗi không xác định khi tải giảng viên')
@@ -76,13 +87,28 @@ export function InstructorsModule() {
         console.error('Error loading instructors:', err)
         setLoadError(err.message || 'Lỗi khi gọi API')
       })
+  }
+
+  // fetch instructors from API once when component mounts
+  useEffect(() => {
+    loadInstructors()
+
+    fetch('/api/departments')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setDepartments(json.data || [])
+        }
+      })
+      .catch(err => {
+        console.error('Error loading departments:', err)
+      })
   }, [])
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
   const [selectedInstructor, setSelectedInstructor] = useState<Instructor | null>(null)
   const [newInstructor, setNewInstructor] = useState<Partial<Instructor>>({
-    code: "",
     name: "",
     email: "",
     department: "",
@@ -90,41 +116,76 @@ export function InstructorsModule() {
     status: "",
   })
 
+  const resetAddForm = () => {
+    setNewInstructor({
+      name: "",
+      email: "",
+      department: "",
+      position: "",
+      status: "",
+    })
+    setOpenAddDepartmentPopover(false)
+  }
+
+  const getInstructorKey = (instructor: Instructor) =>
+    instructor.code ? `code-${instructor.code}` : `id-${instructor.id}`
+
   const filteredInstructors = instructors.filter(
     (instructor) =>
-      String(instructor.code)?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       instructor.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       instructor.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      instructor.department?.toLowerCase().includes(searchTerm.toLowerCase())
+      instructor.position?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const sortedInstructors = [...filteredInstructors].sort((a, b) =>
+  const visibleInstructors = filteredInstructors.filter(
+    (instructor) =>
+      (selectedDepartmentFilter === "" || instructor.department === selectedDepartmentFilter) &&
+      (selectedStatusFilter === "" || instructor.status === selectedStatusFilter)
+  )
+
+  const departmentOptions = departments.length
+    ? departments
+    : (Array.from(new Set(instructors.map(i => i.department).filter(Boolean))) as string[])
+
+  const sortedVisibleInstructors = [...visibleInstructors].sort((a, b) =>
     String(a.name || "").localeCompare(String(b.name || ""), "vi", { sensitivity: "base" })
   )
 
-  // derive list of departments (TenKhoa) for selects
-  const departmentOptions = Array.from(
-    new Set(instructors.map(i => i.department).filter(Boolean))
-  ) as string[];
+  const totalInstructorCount = instructors.length
+  const visibleInstructorCount = sortedVisibleInstructors.length
 
-  const handleAddInstructor = () => {
-    if (newInstructor.name && newInstructor.email && newInstructor.code) {
-      setInstructors([
-        ...instructors,
-        { 
-          ...newInstructor as Instructor, 
-          id: Date.now() // temporary id
-        }
-      ])
-      setNewInstructor({
-        code: "",
-        name: "",
-        email: "",
-        department: "",
-        position: "",
-        status: "",
+  const handleAddInstructor = async () => {
+    if (!newInstructor.name || !newInstructor.email || !newInstructor.department || !newInstructor.position || !newInstructor.status) {
+      alert('Vui lòng nhập đầy đủ thông tin bắt buộc')
+      return
+    }
+
+    try {
+      const res = await fetch('/api/instructors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newInstructor.name,
+          email: newInstructor.email,
+          position: newInstructor.position,
+          status: newInstructor.status,
+          department: newInstructor.department,
+        }),
       })
+
+      const json = await res.json()
+      if (!res.ok || !json.success) {
+        alert(json.error || 'Thêm giảng viên thất bại')
+        return
+      }
+
+      alert('Thêm giảng viên thành công')
+      resetAddForm()
       setIsAddOpen(false)
+      loadInstructors()
+    } catch (error) {
+      console.error('Error creating instructor:', error)
+      alert('Lỗi khi thêm giảng viên')
     }
   }
 
@@ -135,33 +196,80 @@ export function InstructorsModule() {
   }
 
   const handleUpdateInstructor = () => {
-    if (selectedInstructor && newInstructor.name && newInstructor.email) {
-      setInstructors(
-        instructors.map((i) =>
-          i.code === selectedInstructor.code
-            ? { ...(newInstructor as Instructor) }
-            : i
-        )
-      )
-      setIsEditOpen(false)
-      setSelectedInstructor(null)
-      setNewInstructor({
-        code: "",
-        name: "",
-        email: "",
-        department: "",
-        position: "",
-        status: "",
-      })
+    if (!selectedInstructor?.code || !newInstructor.name || !newInstructor.email || !newInstructor.department || !newInstructor.position || !newInstructor.status) {
+      alert('Vui lòng nhập đầy đủ thông tin cập nhật')
+      return
     }
+
+    const confirmMessage = `Xác nhận cập nhật giảng viên:\n- Họ tên: ${newInstructor.name}\n- Email: ${newInstructor.email}\n- Chức vụ: ${newInstructor.position}\n- Khoa/Bộ môn: ${newInstructor.department}\n- Trạng thái: ${newInstructor.status}`
+    if (!confirm(confirmMessage)) {
+      return
+    }
+
+    fetch('/api/instructors', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: selectedInstructor.code,
+        name: newInstructor.name,
+        email: newInstructor.email,
+        department: newInstructor.department,
+        position: newInstructor.position,
+        status: newInstructor.status,
+      }),
+    })
+      .then(async (res) => {
+        const json = await res.json()
+        if (!res.ok || !json.success) {
+          throw new Error(json.error || 'Cập nhật giảng viên thất bại')
+        }
+
+        alert('Cập nhật giảng viên thành công')
+        setIsEditOpen(false)
+        setSelectedInstructor(null)
+        setNewInstructor({
+          name: "",
+          email: "",
+          department: "",
+          position: "",
+          status: "",
+        })
+        loadInstructors()
+      })
+      .catch((err) => {
+        console.error('Error updating instructor:', err)
+        alert(err.message || 'Lỗi khi cập nhật giảng viên')
+      })
   }
 
   const handleDeleteInstructor = () => {
-    if (selectedInstructor) {
-      setInstructors(instructors.filter((i) => i.code !== selectedInstructor.code))
-      setDeleteConfirmOpen(false)
-      setSelectedInstructor(null)
+    if (!selectedInstructor?.code) return
+
+    const confirmMessage = `Xác nhận xóa giảng viên:\n- Họ tên: ${selectedInstructor.name}\n- Email: ${selectedInstructor.email}\n- Chức vụ: ${selectedInstructor.position}\n- Khoa/Bộ môn: ${selectedInstructor.department}`
+    if (!confirm(confirmMessage)) {
+      return
     }
+
+    fetch('/api/instructors', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: selectedInstructor.code }),
+    })
+      .then(async (res) => {
+        const json = await res.json()
+        if (!res.ok || !json.success) {
+          throw new Error(json.error || 'Xóa giảng viên thất bại')
+        }
+
+        alert('Xóa giảng viên thành công')
+        setDeleteConfirmOpen(false)
+        setSelectedInstructor(null)
+        loadInstructors()
+      })
+      .catch((err) => {
+        console.error('Error deleting instructor:', err)
+        alert(err.message || 'Lỗi khi xóa giảng viên')
+      })
   }
 
   const openDeleteConfirm = (instructor: Instructor) => {
@@ -178,7 +286,13 @@ export function InstructorsModule() {
             Thêm, sửa, xóa thông tin giảng viên trong hệ thống
           </p>
         </div>
-        <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
+        <Dialog
+          open={isAddOpen}
+          onOpenChange={(open) => {
+            setIsAddOpen(open)
+            resetAddForm()
+          }}
+        >
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
@@ -190,25 +304,14 @@ export function InstructorsModule() {
               <DialogTitle>Thêm giảng viên mới</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="code">Mã giảng viên</Label>
-                  <Input
-                    id="code"
-                    placeholder="VD: GV001"
-                    value={newInstructor.code}
-                    onChange={(e) => setNewInstructor({ ...newInstructor, code: e.target.value })}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Họ và tên</Label>
-                  <Input
-                    id="name"
-                    placeholder="VD: PGS.TS. Nguyễn Văn A"
-                    value={newInstructor.name}
-                    onChange={(e) => setNewInstructor({ ...newInstructor, name: e.target.value })}
-                  />
-                </div>
+              <div className="grid gap-2">
+                <Label htmlFor="name">Họ và tên</Label>
+                <Input
+                  id="name"
+                  placeholder="VD: Nguyễn Văn A"
+                  value={newInstructor.name}
+                  onChange={(e) => setNewInstructor({ ...newInstructor, name: e.target.value })}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -223,19 +326,47 @@ export function InstructorsModule() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="department">Khoa/Bộ môn</Label>
-                  <Select
-                    value={newInstructor.department}
-                    onValueChange={(value) => setNewInstructor({ ...newInstructor, department: value })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Chọn khoa/bộ môn" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {departmentOptions.map((d) => (
-                        <SelectItem key={d} value={d}>{d}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Popover open={openAddDepartmentPopover} onOpenChange={setOpenAddDepartmentPopover}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={openAddDepartmentPopover}
+                        className="w-full justify-between"
+                      >
+                        {newInstructor.department || "Chọn khoa/bộ môn"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Tìm kiếm khoa..." />
+                        <CommandList>
+                          <CommandEmpty>Không tìm thấy khoa.</CommandEmpty>
+                          <CommandGroup>
+                            {departmentOptions.map((d) => (
+                              <CommandItem
+                                key={d}
+                                value={d}
+                                onSelect={() => {
+                                  setNewInstructor({ ...newInstructor, department: d })
+                                  setOpenAddDepartmentPopover(false)
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    newInstructor.department === d ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {d}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="position">Chức vụ</Label>
@@ -247,7 +378,6 @@ export function InstructorsModule() {
                       <SelectValue placeholder="Chọn chức vụ" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Giảng viên">Giảng viên</SelectItem>
                       <SelectItem value="Thạc sĩ">Thạc sĩ</SelectItem>
                       <SelectItem value="Tiến sĩ">Tiến sĩ</SelectItem>
                       <SelectItem value="Phó Giáo sư">Phó Giáo sư</SelectItem>
@@ -268,7 +398,6 @@ export function InstructorsModule() {
                   <SelectContent>
                     <SelectItem value="Có thể dạy">Có thể dạy</SelectItem>
                     <SelectItem value="Tạm dừng">Tạm dừng</SelectItem>
-                    <SelectItem value="Tạm nghỉ">Tạm nghỉ</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -277,7 +406,11 @@ export function InstructorsModule() {
               <DialogClose asChild>
                 <Button variant="outline">Hủy</Button>
               </DialogClose>
-              <Button onClick={handleAddInstructor}>Thêm giảng viên</Button>
+              <Button
+                onClick={handleAddInstructor}
+              >
+                Thêm giảng viên
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -290,23 +423,86 @@ export function InstructorsModule() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Tìm kiếm giảng viên..."
+                placeholder="Tìm kiếm theo tên, email hoặc chức vụ..."
                 className="pl-9"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Select defaultValue="all">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Lọc theo khoa" />
+            <Popover open={openDepartmentFilterPopover} onOpenChange={setOpenDepartmentFilterPopover}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={openDepartmentFilterPopover}
+                  className="w-[220px] justify-between"
+                >
+                  {selectedDepartmentFilter || "Lọc theo khoa"}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[220px] p-0" align="start">
+                <Command>
+                  <CommandInput placeholder="Tìm kiếm khoa..." />
+                  <CommandList>
+                    <CommandEmpty>Không tìm thấy khoa.</CommandEmpty>
+                    <CommandGroup>
+                      <CommandItem
+                        value="all"
+                        onSelect={() => {
+                          setSelectedDepartmentFilter("")
+                          setOpenDepartmentFilterPopover(false)
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedDepartmentFilter === "" ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        Tất cả khoa
+                      </CommandItem>
+                      {departmentOptions.map((dep) => (
+                        <CommandItem
+                          key={dep}
+                          value={dep}
+                          onSelect={() => {
+                            setSelectedDepartmentFilter(dep === selectedDepartmentFilter ? "" : dep)
+                            setOpenDepartmentFilterPopover(false)
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              selectedDepartmentFilter === dep ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {dep}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+            <Select
+              value={selectedStatusFilter || "all"}
+              onValueChange={(value) => setSelectedStatusFilter(value === "all" ? "" : value)}
+            >
+              <SelectTrigger className="w-[170px]">
+                <SelectValue placeholder="Lọc trạng thái" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả khoa</SelectItem>
-                {departmentOptions.map((dep) => (
-                  <SelectItem key={dep} value={dep}>{dep}</SelectItem>
-                ))}
+                <SelectItem value="all">Tất cả trạng thái</SelectItem>
+                <SelectItem value="Có thể dạy">Có thể dạy</SelectItem>
+                <SelectItem value="Tạm dừng">Tạm dừng</SelectItem>
               </SelectContent>
             </Select>
+            <div className="ml-auto">
+              <Badge variant="secondary" className="text-sm font-medium">
+                Tổng giảng viên: {visibleInstructorCount}/{totalInstructorCount}
+              </Badge>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
@@ -322,8 +518,8 @@ export function InstructorsModule() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedInstructors.map((instructor) => (
-                <TableRow key={instructor.code}>
+              {sortedVisibleInstructors.map((instructor) => (
+                <TableRow key={getInstructorKey(instructor)}>
                   <TableCell className="font-medium">{instructor.name}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1 text-muted-foreground">
@@ -374,14 +570,6 @@ export function InstructorsModule() {
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-code">Mã giảng viên</Label>
-                <Input
-                  id="edit-code"
-                  disabled
-                  value={newInstructor.code}
-                />
-              </div>
-              <div className="grid gap-2">
                 <Label htmlFor="edit-name">Họ và tên</Label>
                 <Input
                   id="edit-name"
@@ -428,7 +616,6 @@ export function InstructorsModule() {
                     <SelectValue placeholder="Chọn chức vụ" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Giảng viên">Giảng viên</SelectItem>
                     <SelectItem value="Thạc sĩ">Thạc sĩ</SelectItem>
                     <SelectItem value="Tiến sĩ">Tiến sĩ</SelectItem>
                     <SelectItem value="Phó Giáo sư">Phó Giáo sư</SelectItem>
@@ -449,7 +636,6 @@ export function InstructorsModule() {
                 <SelectContent>
                   <SelectItem value="Có thể dạy">Có thể dạy</SelectItem>
                   <SelectItem value="Tạm dừng">Tạm dừng</SelectItem>
-                  <SelectItem value="Tạm nghỉ">Tạm nghỉ</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -469,10 +655,10 @@ export function InstructorsModule() {
           <AlertDialogHeader>
             <AlertDialogTitle>Xác nhận xóa giảng viên</AlertDialogTitle>
             <AlertDialogDescription>
-              Bạn có chắc chắn muốn xóa giảng viên <strong>{selectedInstructor?.name}</strong>? Hành động này không thể hoàn tác.
+              Bạn có chắc chắn muốn xóa giảng viên <strong>{selectedInstructor?.name}</strong> ({selectedInstructor?.email})? Hành động này không thể hoàn tác.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialog>
+          <AlertDialogFooter>
             <AlertDialogCancel>Hủy</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -480,7 +666,7 @@ export function InstructorsModule() {
             >
               Xóa
             </AlertDialogAction>
-          </AlertDialog>
+          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </div>
