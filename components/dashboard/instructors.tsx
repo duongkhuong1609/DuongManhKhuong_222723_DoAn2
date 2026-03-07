@@ -98,6 +98,10 @@ export function InstructorsModule() {
       instructor.department?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  const sortedInstructors = [...filteredInstructors].sort((a, b) =>
+    String(a.name || "").localeCompare(String(b.name || ""), "vi", { sensitivity: "base" })
+  )
+
   // derive list of departments (TenKhoa) for selects
   const departmentOptions = Array.from(
     new Set(instructors.map(i => i.department).filter(Boolean))
@@ -309,7 +313,6 @@ export function InstructorsModule() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mã GV</TableHead>
                 <TableHead>Họ và tên</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Chức vụ</TableHead>
@@ -319,9 +322,8 @@ export function InstructorsModule() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredInstructors.map((instructor) => (
+              {sortedInstructors.map((instructor) => (
                 <TableRow key={instructor.code}>
-                  <TableCell className="font-medium">{instructor.code}</TableCell>
                   <TableCell className="font-medium">{instructor.name}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1 text-muted-foreground">

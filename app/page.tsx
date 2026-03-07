@@ -32,7 +32,7 @@ const sectionTitles: Record<string, string> = {
   rooms: "Quản lý Phòng học",
   classes: "Quản lý Lớp học",
   courses: "Quản lý Môn học",
-  timeslots: "Quản lý Giờ học",
+  timeslots: "Xem giờ dạy",
   "schedule-generator": "Lập lịch tự động",
   timetable: "Xem thời khóa biểu",
   statistics: "Thống kê giờ dạy",

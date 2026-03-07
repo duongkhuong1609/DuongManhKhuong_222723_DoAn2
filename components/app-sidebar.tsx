@@ -64,7 +64,7 @@ const managementItems = [
     id: "courses",
   },
   {
-    title: "Giờ học",
+    title: "Giờ dạy",
     icon: Clock,
     id: "timeslots",
   },
