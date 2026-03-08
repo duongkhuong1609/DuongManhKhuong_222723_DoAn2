@@ -23,7 +23,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SemesterProvider } from "@/contexts/semester-context"
-import { SemesterSelector } from "@/components/semester-selector"
 
 const sectionTitles: Record<string, string> = {
   dashboard: "Tổng quan",
@@ -92,7 +91,6 @@ export default function DashboardPage() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <SemesterSelector />
           </header>
           <main className="flex-1 overflow-auto p-6">
             {renderContent()}

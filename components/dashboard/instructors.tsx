@@ -45,6 +45,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 
 const initialInstructors: any[] = []
 
@@ -58,6 +59,15 @@ interface Instructor {
   status: string
 }
 
+interface InstructorCourse {
+  id: number
+  name: string
+  type: string
+  year: string
+  semester: string
+  credits: number
+}
+
 export function InstructorsModule() {
   const [instructors, setInstructors] = useState(initialInstructors)
   const [departments, setDepartments] = useState<string[]>([])
@@ -67,6 +77,8 @@ export function InstructorsModule() {
   const [openDepartmentFilterPopover, setOpenDepartmentFilterPopover] = useState(false)
   const [openAddDepartmentPopover, setOpenAddDepartmentPopover] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
+  const [coursesByInstructor, setCoursesByInstructor] = useState<Record<string, InstructorCourse[]>>({})
+  const [loadingInstructorCoursesCode, setLoadingInstructorCoursesCode] = useState<string | null>(null)
 
   const loadInstructors = () => {
     fetch('/api/instructors')
@@ -275,6 +287,33 @@ export function InstructorsModule() {
   const openDeleteConfirm = (instructor: Instructor) => {
     setSelectedInstructor(instructor)
     setDeleteConfirmOpen(true)
+  }
+
+  const loadInstructorCourses = async (instructorCode?: string) => {
+    const code = String(instructorCode || '').trim()
+    if (!code) return
+    if (coursesByInstructor[code]) return
+
+    try {
+      setLoadingInstructorCoursesCode(code)
+      const res = await fetch(`/api/instructors/courses?code=${encodeURIComponent(code)}`)
+      const json = await res.json()
+
+      if (!res.ok || !json.success) {
+        setCoursesByInstructor((prev) => ({ ...prev, [code]: [] }))
+        return
+      }
+
+      setCoursesByInstructor((prev) => ({
+        ...prev,
+        [code]: json.data || [],
+      }))
+    } catch (error) {
+      console.error('Error loading instructor courses:', error)
+      setCoursesByInstructor((prev) => ({ ...prev, [code]: [] }))
+    } finally {
+      setLoadingInstructorCoursesCode((prev) => (prev === code ? null : prev))
+    }
   }
 
   return (
@@ -520,7 +559,42 @@ export function InstructorsModule() {
             <TableBody>
               {sortedVisibleInstructors.map((instructor) => (
                 <TableRow key={getInstructorKey(instructor)}>
-                  <TableCell className="font-medium">{instructor.name}</TableCell>
+                  <TableCell className="font-medium">
+                    <HoverCard openDelay={120} closeDelay={120}>
+                      <HoverCardTrigger asChild>
+                        <button
+                          type="button"
+                          className="text-left hover:underline"
+                          onMouseEnter={() => loadInstructorCourses(instructor.code)}
+                          onFocus={() => loadInstructorCourses(instructor.code)}
+                          onClick={() => loadInstructorCourses(instructor.code)}
+                        >
+                          {instructor.name}
+                        </button>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="w-[360px]">
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold">Môn giảng viên phụ trách</p>
+                          {loadingInstructorCoursesCode === instructor.code ? (
+                            <p className="text-sm text-muted-foreground">Đang tải dữ liệu...</p>
+                          ) : (coursesByInstructor[instructor.code || ''] || []).length === 0 ? (
+                            <p className="text-sm text-muted-foreground">Giảng viên chưa được phân công môn phụ trách.</p>
+                          ) : (
+                            <div className="space-y-2">
+                              {(coursesByInstructor[instructor.code || ''] || []).map((course) => (
+                                <div key={`${instructor.code}-${course.id}`} className="rounded-md border p-2">
+                                  <p className="text-sm font-medium">{course.name}</p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {course.type || 'Chưa rõ loại'} • {course.credits} tín chỉ • Năm {course.year} • Học kỳ {course.semester}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1 text-muted-foreground">
                       <Mail className="h-3 w-3" />

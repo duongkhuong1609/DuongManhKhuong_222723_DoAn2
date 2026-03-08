@@ -123,6 +123,55 @@ export async function PUT(request: NextRequest) {
   let pool: any
   try {
     const body = await request.json()
+    const action = String(body.action || '').trim()
+
+    if (action === 'updateAcademicYear') {
+      const currentYear = new Date().getFullYear()
+      const academicYearStart = Number(body.academicYearStart)
+
+      if (Number.isNaN(academicYearStart)) {
+        return NextResponse.json({ success: false, error: 'Năm học không hợp lệ' }, { status: 400 })
+      }
+
+      const allowedAcademicYears = [currentYear - 1, currentYear]
+      if (!allowedAcademicYears.includes(academicYearStart)) {
+        return NextResponse.json(
+          { success: false, error: 'Chỉ được chọn năm học hiện tại hoặc năm học kế trước' },
+          { status: 400 }
+        )
+      }
+
+      pool = await sql.connect(dbConfig)
+
+      await pool
+        .request()
+        .input('academicYearStart', sql.Int, academicYearStart)
+        .query(`
+          WITH ClassBase AS (
+            SELECT
+              MaLop,
+              TRY_CAST(LEFT(NienKhoa, CHARINDEX('-', NienKhoa + '-') - 1) AS INT) AS StartYear
+            FROM LOP
+          )
+          UPDATE l
+          SET
+            Nam = CASE
+              WHEN (@academicYearStart - cb.StartYear + 1) < 1 THEN 1
+              WHEN (@academicYearStart - cb.StartYear + 1) > 4 THEN 4
+              ELSE (@academicYearStart - cb.StartYear + 1)
+            END,
+            TrangThai = CASE
+              WHEN (@academicYearStart - cb.StartYear + 1) > 4 THEN N'Đã tốt nghiệp'
+              ELSE N'Chưa tốt nghiệp'
+            END
+          FROM LOP l
+          INNER JOIN ClassBase cb ON cb.MaLop = l.MaLop
+          WHERE cb.StartYear IS NOT NULL
+        `)
+
+      return NextResponse.json({ success: true })
+    }
+
     const id = Number(body.id)
     const maNganh = String(body.maNganh || '').trim()
     const tenLop = String(body.tenLop || '').trim()

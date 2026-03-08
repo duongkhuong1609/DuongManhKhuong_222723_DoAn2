@@ -97,11 +97,13 @@ const resolveClassYear = (inputYear: unknown, nienKhoa: string) => {
 }
 
 export function ClassesModule() {
+  const currentYear = new Date().getFullYear()
   const [classes, setClasses] = useState(initialClasses)
   const [departments, setDepartments] = useState<DepartmentOption[]>([])
   const [majors, setMajors] = useState<MajorOption[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedDepartmentMajorFilter, setSelectedDepartmentMajorFilter] = useState("")
+  const [selectedAcademicYearStart, setSelectedAcademicYearStart] = useState(String(currentYear - 1))
   const [selectedNienKhoaStartFilter, setSelectedNienKhoaStartFilter] = useState("")
   const [selectedStatusFilter, setSelectedStatusFilter] = useState("")
   const [openDepartmentMajorFilterPopover, setOpenDepartmentMajorFilterPopover] = useState(false)
@@ -185,15 +187,17 @@ export function ClassesModule() {
 
   const cohortStartYear = Number(newClass.cohortStartYear)
   const nienKhoaValue = `${cohortStartYear}-${cohortStartYear + 4}`
-  const currentYear = new Date().getFullYear()
-  const classYearValue = Math.max(1, Math.min(4, currentYear - cohortStartYear))
+  const activeAcademicYearStart = Number(selectedAcademicYearStart)
+  const classYearValue = Math.max(1, Math.min(4, activeAcademicYearStart - cohortStartYear + 1))
 
   const classNumberValue = String(parseInt(newClass.classNumber || '1', 10) || 1).padStart(2, '0')
   const classNamePreview = selectedMajor
     ? `DH${String(cohortStartYear).slice(-2)}${buildMajorAbbreviation(selectedMajor.name)}${classNumberValue}`
     : ''
 
-  const yearOptions = Array.from({ length: 4 }, (_, index) => currentYear - index)
+  const addCohortStartOptions = Array.from({ length: 4 }, (_, index) => activeAcademicYearStart - index)
+  const academicYearOptions = [currentYear - 1, currentYear]
+  const editCohortStartOptions = Array.from({ length: 4 }, (_, index) => activeAcademicYearStart - index)
   const nienKhoaFilterYearOptions = Array.from({ length: 5 }, (_, index) => currentYear - index)
   const nienKhoaFilterOptions = nienKhoaFilterYearOptions.map((year) => ({
     startYear: String(year),
@@ -245,6 +249,12 @@ export function ClassesModule() {
       return
     }
 
+    const minAllowedStartYear = activeAcademicYearStart - 3
+    if (cohortStartYear < minAllowedStartYear || cohortStartYear > activeAcademicYearStart) {
+      alert(`Niên khóa chỉ được chọn trong khoảng từ ${minAllowedStartYear}-${minAllowedStartYear + 4} đến ${activeAcademicYearStart}-${activeAcademicYearStart + 4}`)
+      return
+    }
+
     const confirmMessage = `Xác nhận thêm lớp học mới:\n- Tên lớp: ${classNamePreview}\n- Khoa: ${selectedDepartment?.name || ''}\n- Ngành: ${selectedMajor?.name || ''}\n- Niên khóa: ${nienKhoaValue}\n- Năm lớp: ${classYearValue}\n- Trạng thái: Chưa tốt nghiệp`
     const shouldCreate = confirm(confirmMessage)
     if (!shouldCreate) return
@@ -282,6 +292,41 @@ export function ClassesModule() {
     } catch (error) {
       console.error('Error creating class:', error)
       alert('Lỗi khi thêm lớp học')
+    }
+  }
+
+  const handleAcademicYearChange = async (value: string) => {
+    if (value === selectedAcademicYearStart) return
+
+    const selectedStart = Number(value)
+    const shouldUpdate = confirm(
+      `Xác nhận chuyển năm học sang ${selectedStart}-${selectedStart + 1}?\nHệ thống sẽ cập nhật Năm và Trạng thái của toàn bộ lớp học theo Niên khóa.`
+    )
+
+    if (!shouldUpdate) return
+
+    try {
+      const res = await fetch('/api/classes', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'updateAcademicYear',
+          academicYearStart: selectedStart,
+        }),
+      })
+
+      const json = await res.json()
+      if (!res.ok || !json.success) {
+        alert(json.error || 'Cập nhật năm học thất bại')
+        return
+      }
+
+      setSelectedAcademicYearStart(value)
+      alert('Cập nhật năm học thành công')
+      loadClasses()
+    } catch (error) {
+      console.error('Error updating academic year:', error)
+      alert('Lỗi khi cập nhật năm học')
     }
   }
 
@@ -363,7 +408,12 @@ export function ClassesModule() {
     }
 
     const startYear = String(classItem.nienKhoa || '').split('-')[0]?.trim()
-    const validStartYear = startYear && !Number.isNaN(Number(startYear)) ? startYear : String(currentYear)
+    const parsedStartYear = Number(startYear)
+    const minAllowedStartYear = activeAcademicYearStart - 3
+    const normalizedStartYear = Number.isNaN(parsedStartYear)
+      ? activeAcademicYearStart
+      : Math.max(minAllowedStartYear, Math.min(activeAcademicYearStart, parsedStartYear))
+    const validStartYear = String(normalizedStartYear)
 
     setEditingClass({
       id: classItem.id,
@@ -384,8 +434,14 @@ export function ClassesModule() {
     }
 
     const startYear = Number(editingClass.cohortStartYear)
+    const minAllowedStartYear = activeAcademicYearStart - 3
+    if (startYear < minAllowedStartYear || startYear > activeAcademicYearStart) {
+      alert(`Niên khóa chỉ được chọn trong khoảng từ ${minAllowedStartYear}-${minAllowedStartYear + 4} đến ${activeAcademicYearStart}-${activeAcademicYearStart + 4}`)
+      return
+    }
+
     const nienKhoa = `${startYear}-${startYear + 4}`
-    const nam = Math.max(1, Math.min(4, currentYear - startYear))
+    const nam = Math.max(1, Math.min(4, activeAcademicYearStart - startYear + 1))
 
     const shouldUpdate = confirm(
       `Xác nhận cập nhật lớp học:\n- Tên lớp: ${editingClass.name}\n- Khoa: ${editingDepartment?.name || ''}\n- Ngành: ${editingMajor?.name || ''}\n- Niên khóa: ${nienKhoa}\n- Năm lớp: ${nam}\n- Trạng thái: ${editingClass.status}`
@@ -458,6 +514,19 @@ export function ClassesModule() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Select value={selectedAcademicYearStart} onValueChange={handleAcademicYearChange}>
+            <SelectTrigger className="w-[170px] bg-green-600 text-white hover:bg-green-700 focus:ring-green-600 [&>svg]:text-white">
+              <span className="truncate text-left">
+                {`Chọn năm học: ${selectedAcademicYearStart}-${Number(selectedAcademicYearStart) + 1}`}
+              </span>
+            </SelectTrigger>
+            <SelectContent>
+              {academicYearOptions.map((yearStart) => (
+                <SelectItem key={yearStart} value={String(yearStart)}>{yearStart}-{yearStart + 1}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <Dialog open={isAddDepartmentMajorOpen} onOpenChange={setIsAddDepartmentMajorOpen}>
             <DialogTrigger asChild>
               <Button variant="outline">
@@ -669,7 +738,7 @@ export function ClassesModule() {
                       <SelectValue placeholder="Chọn niên khóa" />
                     </SelectTrigger>
                     <SelectContent>
-                      {yearOptions.map((year) => (
+                      {addCohortStartOptions.map((year) => (
                         <SelectItem key={year} value={String(year)}>
                           {year}-{year + 4}
                         </SelectItem>
@@ -768,7 +837,7 @@ export function ClassesModule() {
                         <SelectValue placeholder="Chọn niên khóa" />
                       </SelectTrigger>
                       <SelectContent>
-                        {nienKhoaFilterYearOptions.map((year) => (
+                        {editCohortStartOptions.map((year) => (
                           <SelectItem key={year} value={String(year)}>
                             {year}-{year + 4}
                           </SelectItem>
@@ -779,7 +848,7 @@ export function ClassesModule() {
                   <div className="grid gap-2">
                     <Label>Năm lớp</Label>
                     <Input
-                      value={`Năm ${Math.max(1, Math.min(4, currentYear - Number(editingClass.cohortStartYear)))}`}
+                      value={`Năm ${Math.max(1, Math.min(4, activeAcademicYearStart - Number(editingClass.cohortStartYear) + 1))}`}
                       disabled
                     />
                   </div>
@@ -993,7 +1062,12 @@ export function ClassesModule() {
                   <TableCell>{c.nienKhoa}</TableCell>
                   <TableCell>{`Năm ${c.year}`}</TableCell>
                   <TableCell>
-                    <Badge variant="default">{c.status || 'Chưa tốt nghiệp'}</Badge>
+                    <Badge
+                      variant="default"
+                      className={c.status === 'Đã tốt nghiệp' ? 'bg-green-600 text-white hover:bg-green-700' : undefined}
+                    >
+                      {c.status || 'Chưa tốt nghiệp'}
+                    </Badge>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
