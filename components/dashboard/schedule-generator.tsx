@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Sparkles, Play, RotateCcw, CheckCircle2, AlertCircle, Settings2, ChevronsUpDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,86 +27,190 @@ interface GenerationStep {
   message?: string
 }
 
-const faculties = [
-  "Công nghệ thông tin",
-  "Khoa học máy tính",
-  "Công nghệ phần mềm",
-  "Mạng và truyền thông",
-]
+interface MajorOption {
+  id: string
+  name: string
+  departmentName: string
+}
 
-const majors = {
-  "Công nghệ thông tin": ["Lập trình", "Cơ sở dữ liệu", "An niệm mạng"],
-  "Khoa học máy tính": ["Khoa học dữ liệu", "Trí tuệ nhân tạo", "Thị giác máy tính"],
-  "Công nghệ phần mềm": ["Phát triển phần mềm", "Kiểm thử phần mềm", "Quản lý dự án"],
-  "Mạng và truyền thông": ["Mạng máy tính", "Truyền thông", "Hệ thống viễn thông"],
+interface SemesterOption {
+  id: string
+  name: string
+  classYear: string
+  majorName: string
+}
+
+interface JobStatePayload {
+  status: "running" | "completed" | "error"
+  progress: number
+  steps: GenerationStep[]
+  error?: string
+  result?: {
+    createdRows: number
+    unassignedTasks: number
+    totalTasks: number
+    warnings: string[]
+  }
 }
 
 export function ScheduleGenerator() {
   const [status, setStatus] = useState<GenerationStatus>("idle")
   const [progress, setProgress] = useState(0)
-  const [currentStep, setCurrentStep] = useState(0)
-  const [semester, setSemester] = useState("1")
-  const [year, setYear] = useState("2024")
+  const [jobId, setJobId] = useState("")
+  const [selectedSemesterId, setSelectedSemesterId] = useState("all")
   const [selectedFaculty, setSelectedFaculty] = useState("")
-  const [selectedMajor, setSelectedMajor] = useState("")
+  const [selectedMajorId, setSelectedMajorId] = useState("")
   const [openFacultyPopover, setOpenFacultyPopover] = useState(false)
   const [openMajorPopover, setOpenMajorPopover] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+  const [resultSummary, setResultSummary] = useState<string[]>([])
+  const [majors, setMajors] = useState<MajorOption[]>([])
+  const [semesters, setSemesters] = useState<SemesterOption[]>([])
+
   const [settings, setSettings] = useState({
     avoidConflicts: true,
     optimizeRooms: true,
     balanceWorkload: true,
-    respectPreferences: false
+    respectPreferences: true
   })
 
   const [steps, setSteps] = useState<GenerationStep[]>([
-    { name: "Tải dữ liệu giảng viên và môn học", status: "pending" },
-    { name: "Kiểm tra ràng buộc thời gian", status: "pending" },
-    { name: "Phân bổ phòng học", status: "pending" },
-    { name: "Tối ưu hóa lịch dạy", status: "pending" },
-    { name: "Kiểm tra xung đột", status: "pending" },
-    { name: "Hoàn tất và lưu lịch", status: "pending" },
+    { name: "Tải dữ liệu học kỳ, lớp, môn, giảng viên", status: "pending" },
+    { name: "Phân tích tác vụ và kiểm tra ràng buộc", status: "pending" },
+    { name: "Sinh lịch và tối ưu phân công", status: "pending" },
+    { name: "Ghi kết quả vào bảng LICH_DAY", status: "pending" },
+    { name: "Hoàn tất", status: "pending" },
   ])
 
-  const startGeneration = async () => {
-    setStatus("running")
-    setProgress(0)
-    setCurrentStep(0)
-    
-    const newSteps: GenerationStep[] = steps.map(s => ({ ...s, status: "pending" as const }))
-    setSteps(newSteps)
+  const faculties = useMemo(
+    () => Array.from(new Set(majors.map((item) => item.departmentName).filter(Boolean))),
+    [majors],
+  )
 
-    for (let i = 0; i < newSteps.length; i++) {
-      setCurrentStep(i)
-      newSteps[i].status = "running"
-      setSteps([...newSteps])
-      
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1500))
-      
-      newSteps[i].status = "completed"
-      newSteps[i].message = getStepMessage(i)
-      setSteps([...newSteps])
-      setProgress(((i + 1) / newSteps.length) * 100)
+  const facultyMajors = useMemo(() => {
+    if (!selectedFaculty) return []
+    return majors.filter((item) => item.departmentName === selectedFaculty)
+  }, [majors, selectedFaculty])
+
+  const filteredSemesters = useMemo(() => {
+    const majorName = majors.find((item) => item.id === selectedMajorId)?.name
+    if (!majorName) return []
+    return semesters.filter((item) => item.majorName === majorName)
+  }, [majors, semesters, selectedMajorId])
+
+  useEffect(() => {
+    const loadOptions = async () => {
+      try {
+        const response = await fetch("/api/schedules/generate", { cache: "no-store" })
+        const payload = await response.json()
+        if (!response.ok || !payload.success) {
+          throw new Error(payload.error || "Không thể tải dữ liệu khoa/ngành/học kỳ")
+        }
+
+        setMajors(payload.data.majors || [])
+        setSemesters(payload.data.semesters || [])
+      } catch (error: any) {
+        setErrorMessage(String(error?.message || "Lỗi khi tải dữ liệu ban đầu"))
+      }
     }
 
-    setStatus("completed")
-  }
+    loadOptions()
+  }, [])
 
-  const getStepMessage = (stepIndex: number): string => {
-    const messages = [
-      "Đã tải 48 giảng viên, 156 môn học",
-      "Kiểm tra 12 ràng buộc thời gian",
-      "Phân bổ 32 phòng học cho 89 lớp",
-      "Tối ưu 2,456 giờ dạy",
-      "Không phát hiện xung đột",
-      "Đã lưu thành công"
-    ]
-    return messages[stepIndex] || ""
+  useEffect(() => {
+    if (!jobId || status !== "running") return
+
+    const timer = setInterval(async () => {
+      try {
+        const response = await fetch(`/api/schedules/generate?jobId=${jobId}`, { cache: "no-store" })
+        const payload = await response.json()
+
+        if (!response.ok || !payload.success) {
+          throw new Error(payload.error || "Không lấy được tiến trình lập lịch")
+        }
+
+        const job: JobStatePayload = payload.data
+        setProgress(Number(job.progress || 0))
+        setSteps(job.steps || [])
+
+        if (job.status === "completed") {
+          setStatus("completed")
+
+          const summaryLines: string[] = []
+          if (job.result) {
+            summaryLines.push(`Đã tạo ${job.result.createdRows} dòng lịch / ${job.result.totalTasks} tác vụ`)
+            summaryLines.push(`Chưa phân được ${job.result.unassignedTasks} tác vụ`)
+            if (Array.isArray(job.result.warnings)) {
+              summaryLines.push(...job.result.warnings.slice(0, 3))
+            }
+          }
+
+          setResultSummary(summaryLines)
+          setJobId("")
+          clearInterval(timer)
+        }
+
+        if (job.status === "error") {
+          setStatus("error")
+          setErrorMessage(job.error || "Lỗi khi lập lịch")
+          setJobId("")
+          clearInterval(timer)
+        }
+      } catch (error: any) {
+        setStatus("error")
+        setErrorMessage(String(error?.message || "Lỗi khi đồng bộ tiến trình"))
+        setJobId("")
+        clearInterval(timer)
+      }
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [jobId, status])
+
+  const startGeneration = async () => {
+    try {
+      if (!selectedMajorId) {
+        setStatus("error")
+        setErrorMessage("Vui lòng chọn ngành trước khi lập lịch")
+        return
+      }
+
+      setStatus("running")
+      setProgress(0)
+      setErrorMessage("")
+      setResultSummary([])
+      setSteps((prev) => prev.map((step) => ({ ...step, status: "pending", message: undefined })))
+
+      const response = await fetch("/api/schedules/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          majorId: selectedMajorId,
+          semesterIds: selectedSemesterId === "all" ? [] : [selectedSemesterId],
+          settings,
+          replaceExisting: true,
+        }),
+      })
+
+      const payload = await response.json()
+
+      if (!response.ok || !payload.success) {
+        throw new Error(payload.error || "Không thể khởi tạo tác vụ lập lịch")
+      }
+
+      setJobId(String(payload.data.jobId || ""))
+    } catch (error: any) {
+      setStatus("error")
+      setErrorMessage(String(error?.message || "Lỗi khi bắt đầu lập lịch"))
+    }
   }
 
   const resetGeneration = () => {
     setStatus("idle")
     setProgress(0)
-    setCurrentStep(0)
+    setJobId("")
+    setErrorMessage("")
+    setResultSummary([])
     setSteps(steps.map(s => ({ ...s, status: "pending", message: undefined })))
   }
 
@@ -224,27 +328,18 @@ export function ScheduleGenerator() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
-                  <Label>Năm học</Label>
-                  <Select value={year} onValueChange={setYear}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="2024">2024 - 2025</SelectItem>
-                      <SelectItem value="2025">2025 - 2026</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-2">
                   <Label>Học kỳ</Label>
-                  <Select value={semester} onValueChange={setSemester}>
+                  <Select value={selectedSemesterId} onValueChange={setSelectedSemesterId}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">Học kì 1</SelectItem>
-                      <SelectItem value="2">Học kì 2</SelectItem>
-                      <SelectItem value="3">Học kì 3</SelectItem>
+                      <SelectItem value="all">Tất cả học kỳ của ngành</SelectItem>
+                      {filteredSemesters.map((item) => (
+                        <SelectItem key={item.id} value={item.id}>
+                          HK {item.name} - Năm lớp {item.classYear || "?"}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -259,13 +354,13 @@ export function ScheduleGenerator() {
                       aria-expanded={openFacultyPopover}
                       className="w-full justify-between"
                     >
-                      {selectedFaculty || "Chọn khoa..."}
+                      {selectedFaculty || "Chọn khoa"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-full p-0" align="start">
                     <Command>
-                      <CommandInput placeholder="Tìm kiếm khoa..." />
+                      <CommandInput placeholder="Tìm khoa..." />
                       <CommandEmpty>Không tìm thấy khoa.</CommandEmpty>
                       <CommandList>
                         <CommandGroup>
@@ -275,7 +370,8 @@ export function ScheduleGenerator() {
                               value={faculty}
                               onSelect={(currentValue) => {
                                 setSelectedFaculty(currentValue === selectedFaculty ? "" : currentValue)
-                                setSelectedMajor("")
+                                setSelectedMajorId("")
+                                setSelectedSemesterId("all")
                                 setOpenFacultyPopover(false)
                               }}
                             >
@@ -305,32 +401,34 @@ export function ScheduleGenerator() {
                         aria-expanded={openMajorPopover}
                         className="w-full justify-between"
                       >
-                        {selectedMajor || "Chọn ngành..."}
+                        {majors.find((item) => item.id === selectedMajorId)?.name || "Chọn ngành"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-full p-0" align="start">
                       <Command>
-                        <CommandInput placeholder="Tìm kiếm ngành..." />
+                        <CommandInput placeholder="Tìm ngành..." />
                         <CommandEmpty>Không tìm thấy ngành.</CommandEmpty>
                         <CommandList>
                           <CommandGroup>
-                            {majors[selectedFaculty as keyof typeof majors]?.map((major) => (
+                            {facultyMajors.map((major) => (
                               <CommandItem
-                                key={major}
-                                value={major}
+                                key={major.id}
+                                value={major.name}
                                 onSelect={(currentValue) => {
-                                  setSelectedMajor(currentValue === selectedMajor ? "" : currentValue)
+                                  const nextMajorId = currentValue.toLowerCase() === major.name.toLowerCase() ? major.id : ""
+                                  setSelectedMajorId(nextMajorId === selectedMajorId ? "" : nextMajorId)
+                                  setSelectedSemesterId("all")
                                   setOpenMajorPopover(false)
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    selectedMajor === major ? "opacity-100" : "opacity-0"
+                                    selectedMajorId === major.id ? "opacity-100" : "opacity-0"
                                   )}
                                 />
-                                {major}
+                                {major.name}
                               </CommandItem>
                             ))}
                           </CommandGroup>
@@ -385,6 +483,20 @@ export function ScheduleGenerator() {
               </div>
             </CardContent>
           </Card>
+
+          {(errorMessage || resultSummary.length > 0) && (
+            <Card className="border-border/50">
+              <CardHeader>
+                <CardTitle className="text-base">Kết quả thực thi</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm text-muted-foreground">
+                {errorMessage && <p className="text-destructive">{errorMessage}</p>}
+                {resultSummary.map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

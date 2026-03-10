@@ -7,8 +7,7 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
 export const prisma =
   globalForPrisma.prisma ||
-  // Prisma@7 requires passing an options object; even if empty
-  new PrismaClient({})
+  new PrismaClient({} as never)
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 

@@ -268,8 +268,8 @@ export function CoursesModule() {
       loadAssignedInstructorCodes(courseId),
     ])
 
-    const availableCodeSet = new Set(availableInstructors.map((item) => item.code))
-    const filteredAssignedCodes = assignedCodes.filter((code) => availableCodeSet.has(code))
+    const availableCodeSet = new Set(availableInstructors.map((item: InstructorOption) => item.code))
+    const filteredAssignedCodes = assignedCodes.filter((code: string) => availableCodeSet.has(code))
 
     setEditInstructorOptions(availableInstructors)
     setEditingCourse((prev) => {
@@ -548,7 +548,7 @@ export function CoursesModule() {
 
     loadAssignableInstructors(majorId).then((items) => {
       setAddInstructorOptions(items)
-      const validCodes = new Set(items.map((item) => item.code))
+      const validCodes = new Set(items.map((item: InstructorOption) => item.code))
       setNewCourse((prev) => ({
         ...prev,
         instructorCodes: prev.instructorCodes.filter((code) => validCodes.has(code)),
@@ -565,7 +565,7 @@ export function CoursesModule() {
     const majorId = String(editingCourse.majorId).trim()
     loadAssignableInstructors(majorId).then((items) => {
       setEditInstructorOptions(items)
-      const validCodes = new Set(items.map((item) => item.code))
+      const validCodes = new Set(items.map((item: InstructorOption) => item.code))
       setEditingCourse((prev) => {
         if (!prev || String(prev.majorId).trim() !== majorId) return prev
         return {

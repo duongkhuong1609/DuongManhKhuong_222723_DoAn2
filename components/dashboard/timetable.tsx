@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Filter, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -24,21 +24,64 @@ const timeslots = [
   { id: 5, name: "Tiết 9-10", time: "17:30 - 19:20" },
 ]
 
-// scheduleData will be fetched from the server when backend is ready
-const scheduleData: Array<any> = []
+interface ScheduleCell {
+  id: string
+  day: number
+  slot: number
+  course: string
+  class: string
+  instructor: string
+  room: string
+  semester: string
+}
 
 // colors may come from course definitions later
 const courseColors: Record<string, string> = {}
 
 export function TimetableView() {
-  const [semester, setSemester] = useState("hk1")
+  const [semester, setSemester] = useState("all")
   const [instructor, setInstructor] = useState("all")
   const [week, setWeek] = useState(1)
+  const [scheduleData, setScheduleData] = useState<ScheduleCell[]>([])
+  const [semesterOptions, setSemesterOptions] = useState<string[]>([])
+  const [instructorOptions, setInstructorOptions] = useState<Array<{ id: string; name: string }>>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const filteredSchedule = scheduleData.filter(item => {
-    if (instructor !== "all" && item.instructor !== instructor) return false
-    return true
-  })
+  useEffect(() => {
+    const loadTimetable = async () => {
+      try {
+        setLoading(true)
+        setError("")
+
+        const params = new URLSearchParams({
+          week: String(week),
+          semester,
+          instructor,
+        })
+
+        const response = await fetch(`/api/schedules/timetable?${params.toString()}`, { cache: "no-store" })
+        const payload = await response.json()
+
+        if (!response.ok || !payload.success) {
+          throw new Error(payload.error || "Không thể tải thời khóa biểu")
+        }
+
+        setScheduleData(payload.data.schedule || [])
+        setSemesterOptions(payload.data.filters?.semesters || [])
+        setInstructorOptions(payload.data.filters?.instructors || [])
+      } catch (err: any) {
+        setScheduleData([])
+        setError(String(err?.message || "Lỗi khi tải dữ liệu thời khóa biểu"))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadTimetable()
+  }, [semester, instructor, week])
+
+  const filteredSchedule = useMemo(() => scheduleData, [scheduleData])
 
   const getScheduleForCell = (dayIndex: number, slotId: number) => {
     return filteredSchedule.find(item => item.day === dayIndex && item.slot === slotId)
@@ -63,7 +106,7 @@ export function TimetableView() {
                 <ChevronLeft className="h-4 w-4" />
               </Button>
               <span className="min-w-[100px] text-center font-medium">Tuần {week}</span>
-              <Button variant="outline" size="icon" onClick={() => setWeek(Math.min(20, week + 1))}>
+              <Button variant="outline" size="icon" onClick={() => setWeek(Math.min(24, week + 1))}>
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
@@ -75,9 +118,10 @@ export function TimetableView() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="hk1">Học kỳ 1</SelectItem>
-                    <SelectItem value="hk2">Học kỳ 2</SelectItem>
-                    <SelectItem value="hkhe">Học kỳ hè</SelectItem>
+                    <SelectItem value="all">Tất cả học kỳ</SelectItem>
+                    {semesterOptions.map((item) => (
+                      <SelectItem key={item} value={item}>Học kỳ {item}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -87,12 +131,17 @@ export function TimetableView() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tất cả giảng viên</SelectItem>
+                  {instructorOptions.map((item) => (
+                    <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
         </CardHeader>
         <CardContent>
+          {loading && <p className="mb-3 text-sm text-muted-foreground">Đang tải thời khóa biểu...</p>}
+          {error && <p className="mb-3 text-sm text-destructive">{error}</p>}
           <div className="overflow-x-auto">
             <div className="min-w-[900px]">
               {/* Header */}
@@ -158,6 +207,9 @@ export function TimetableView() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-3">
+            {Object.entries(courseColors).length === 0 && (
+              <span className="text-sm text-muted-foreground">Màu môn học sẽ hiển thị khi cấu hình danh mục môn.</span>
+            )}
             {Object.entries(courseColors).map(([course, color]) => (
               <div key={course} className="flex items-center gap-2">
                 <div className={cn("w-4 h-4 rounded border", color)} />
