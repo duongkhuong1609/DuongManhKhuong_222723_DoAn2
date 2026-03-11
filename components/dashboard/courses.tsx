@@ -207,11 +207,19 @@ export function CoursesModule() {
     setAddInstructorOptions([])
   }
 
-  const loadAssignableInstructors = async (majorId: string) => {
+  const loadAssignableInstructors = async (majorId: string, year?: number, semester?: number) => {
     if (!majorId) return [] as InstructorOption[]
 
     try {
-      const res = await fetch(`/api/courses/instructors?majorId=${encodeURIComponent(majorId)}`)
+      const params = new URLSearchParams({ majorId })
+      if (Number.isFinite(year) && (year || 0) > 0) {
+        params.set('year', String(year))
+      }
+      if (Number.isFinite(semester) && (semester || 0) > 0) {
+        params.set('semester', String(semester))
+      }
+
+      const res = await fetch(`/api/courses/instructors?${params.toString()}`)
       const json = await res.json()
       if (!res.ok || !json.success) return []
 
@@ -264,7 +272,11 @@ export function CoursesModule() {
     setIsEditOpen(true)
 
     const [availableInstructors, assignedCodes] = await Promise.all([
-      loadAssignableInstructors(majorId),
+      loadAssignableInstructors(
+        majorId,
+        extractFirstNumber(course.year),
+        extractFirstNumber(course.semester)
+      ),
       loadAssignedInstructorCodes(courseId),
     ])
 
@@ -546,7 +558,11 @@ export function CoursesModule() {
       return
     }
 
-    loadAssignableInstructors(majorId).then((items) => {
+    loadAssignableInstructors(
+      majorId,
+      Number(newCourse.year) || undefined,
+      Number(newCourse.semester) || undefined
+    ).then((items) => {
       setAddInstructorOptions(items)
       const validCodes = new Set(items.map((item: InstructorOption) => item.code))
       setNewCourse((prev) => ({
@@ -554,7 +570,7 @@ export function CoursesModule() {
         instructorCodes: prev.instructorCodes.filter((code) => validCodes.has(code)),
       }))
     })
-  }, [newCourse.majorId])
+  }, [newCourse.majorId, newCourse.year, newCourse.semester])
 
   useEffect(() => {
     if (!editingCourse?.majorId) {
@@ -563,7 +579,11 @@ export function CoursesModule() {
     }
 
     const majorId = String(editingCourse.majorId).trim()
-    loadAssignableInstructors(majorId).then((items) => {
+    loadAssignableInstructors(
+      majorId,
+      Number(editingCourse.year) || undefined,
+      Number(editingCourse.semester) || undefined
+    ).then((items) => {
       setEditInstructorOptions(items)
       const validCodes = new Set(items.map((item: InstructorOption) => item.code))
       setEditingCourse((prev) => {
@@ -574,7 +594,7 @@ export function CoursesModule() {
         }
       })
     })
-  }, [editingCourse?.majorId])
+  }, [editingCourse?.majorId, editingCourse?.year, editingCourse?.semester])
 
   const editComputedPeriods = (() => {
     if (!editingCourse) return 0

@@ -15,6 +15,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const courseIdParam = searchParams.get('courseId')
     const majorId = String(searchParams.get('majorId') || '').trim()
+    const year = Number(searchParams.get('year'))
+    const semester = Number(searchParams.get('semester'))
     const courseId = Number(courseIdParam)
 
     if (!courseIdParam && !majorId) {
@@ -24,22 +26,36 @@ export async function GET(request: NextRequest) {
     pool = await sql.connect(dbConfig)
 
     if (majorId) {
-      const result = await pool
+      const requestDb = pool
         .request()
         .input('majorId', majorId)
-        .query(`
-          SELECT DISTINCT
-            gv.MaGV AS code,
-            gv.TenGV AS name,
-            gv.EmailGV AS email,
-            gv.ChucVu AS position,
-            k.TenKhoa AS department
-          FROM NGANH n
-          INNER JOIN KHOA k ON n.MaKhoa = k.MaKhoa
-          INNER JOIN GIANG_VIEN gv ON gv.MaKhoa = k.MaKhoa
-          WHERE n.MaNganh = @majorId
-          ORDER BY gv.TenGV ASC
-        `)
+
+      const hasYear = Number.isFinite(year) && year > 0
+      const hasSemester = Number.isFinite(semester) && semester > 0
+      if (hasYear) requestDb.input('year', sql.Int, year)
+      if (hasSemester) requestDb.input('semester', sql.Int, semester)
+
+      const result = await requestDb.query(`
+        SELECT DISTINCT
+          gv.MaGV AS code,
+          gv.TenGV AS name,
+          gv.EmailGV AS email,
+          gv.ChucVu AS position,
+          k.TenKhoa AS department
+        FROM NGANH n
+        INNER JOIN KHOA k ON n.MaKhoa = k.MaKhoa
+        INNER JOIN GIANG_VIEN gv ON gv.MaKhoa = k.MaKhoa
+        INNER JOIN CHUYEN_MON_CUA_GV cm ON cm.MaGV = gv.MaGV
+        INNER JOIN MON m ON m.MaMon = cm.MaMon
+        WHERE n.MaNganh = @majorId
+          AND m.MaNganh = n.MaNganh
+          ${hasYear ? "AND TRY_CONVERT(INT, m.NamM) = @year" : ""}
+          ${hasSemester ? "AND TRY_CONVERT(INT, m.HocKy) = @semester" : ""}
+          AND UPPER(LTRIM(RTRIM(ISNULL(gv.TrangThai, '')))) IN (
+            N'CÓ THỂ DẠY', N'CO THE DAY', N'ACTIVE', N'HOẠT ĐỘNG', N'HOAT DONG', N'ĐANG DẠY', N'DANG DAY'
+          )
+        ORDER BY gv.TenGV ASC
+      `)
 
       const data = result.recordset.map((row: any) => ({
         code: String(row.code || '').trim(),
@@ -68,8 +84,13 @@ export async function GET(request: NextRequest) {
           k.TenKhoa AS department
         FROM CHUYEN_MON_CUA_GV cm
         INNER JOIN GIANG_VIEN gv ON cm.MaGV = gv.MaGV
-        LEFT JOIN KHOA k ON gv.MaKhoa = k.MaKhoa
+        INNER JOIN MON m ON m.MaMon = cm.MaMon
+        INNER JOIN NGANH n ON n.MaNganh = m.MaNganh
+        INNER JOIN KHOA k ON k.MaKhoa = n.MaKhoa AND gv.MaKhoa = k.MaKhoa
         WHERE cm.MaMon = @courseId
+          AND UPPER(LTRIM(RTRIM(ISNULL(gv.TrangThai, '')))) IN (
+            N'CÓ THỂ DẠY', N'CO THE DAY', N'ACTIVE', N'HOẠT ĐỘNG', N'HOAT DONG', N'ĐANG DẠY', N'DANG DAY'
+          )
         ORDER BY gv.TenGV ASC
       `)
 

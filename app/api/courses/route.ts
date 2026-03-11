@@ -21,10 +21,22 @@ const normalizeInstructorCodes = (value: unknown): string[] => {
   )
 }
 
-const getValidInstructorCodesForMajor = async (pool: any, majorId: string, instructorCodes: string[]) => {
+const getValidInstructorCodesForMajor = async (
+  pool: any,
+  majorId: string,
+  instructorCodes: string[],
+  year?: number,
+  semester?: number
+) => {
   if (instructorCodes.length === 0) return [] as string[]
 
   const request = pool.request().input('majorId', majorId)
+  const hasYear = Number.isFinite(year) && (year || 0) > 0
+  const hasSemester = Number.isFinite(semester) && (semester || 0) > 0
+
+  if (hasYear) request.input('year', sql.Int, year)
+  if (hasSemester) request.input('semester', sql.Int, semester)
+
   const placeholders = instructorCodes.map((code, index) => {
     const param = `code${index}`
     request.input(param, code)
@@ -35,7 +47,15 @@ const getValidInstructorCodesForMajor = async (pool: any, majorId: string, instr
     SELECT DISTINCT gv.MaGV AS code
     FROM NGANH n
     INNER JOIN GIANG_VIEN gv ON gv.MaKhoa = n.MaKhoa
+    INNER JOIN CHUYEN_MON_CUA_GV cm ON cm.MaGV = gv.MaGV
+    INNER JOIN MON m ON m.MaMon = cm.MaMon
     WHERE n.MaNganh = @majorId
+      AND m.MaNganh = n.MaNganh
+      ${hasYear ? "AND TRY_CONVERT(INT, m.NamM) = @year" : ""}
+      ${hasSemester ? "AND TRY_CONVERT(INT, m.HocKy) = @semester" : ""}
+      AND UPPER(LTRIM(RTRIM(ISNULL(gv.TrangThai, '')))) IN (
+        N'CÓ THỂ DẠY', N'CO THE DAY', N'ACTIVE', N'HOẠT ĐỘNG', N'HOAT DONG', N'ĐANG DẠY', N'DANG DAY'
+      )
       AND gv.MaGV IN (${placeholders.join(', ')})
   `)
 
@@ -165,7 +185,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Môn học đã tồn tại trong ngành đã chọn' }, { status: 400 })
     }
 
-    const validInstructorCodes = await getValidInstructorCodesForMajor(pool, majorId, instructorCodes)
+    const validInstructorCodes = await getValidInstructorCodesForMajor(
+      pool,
+      majorId,
+      instructorCodes,
+      year,
+      semester
+    )
     if (validInstructorCodes.length !== instructorCodes.length) {
       return NextResponse.json(
         { success: false, error: 'Danh sách giảng viên không hợp lệ với ngành đã chọn' },
@@ -281,7 +307,13 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Môn học đã tồn tại trong ngành đã chọn' }, { status: 400 })
     }
 
-    const validInstructorCodes = await getValidInstructorCodesForMajor(pool, majorId, instructorCodes)
+    const validInstructorCodes = await getValidInstructorCodesForMajor(
+      pool,
+      majorId,
+      instructorCodes,
+      year,
+      semester
+    )
     if (validInstructorCodes.length !== instructorCodes.length) {
       return NextResponse.json(
         { success: false, error: 'Danh sách giảng viên không hợp lệ với ngành đã chọn' },

@@ -36,8 +36,26 @@ interface MajorOption {
 interface SemesterOption {
   id: string
   name: string
-  classYear: string
+  classYear: number
+  majorId?: string
   majorName: string
+  status?: string
+}
+
+const normalizeText = (value: unknown) =>
+  String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+
+const isOngoingSemesterStatus = (value: unknown) => {
+  const raw = String(value || "").trim()
+  // direct match for exact stored text
+  if (raw === "Đang diễn ra" || raw === "2") return true
+  // normalised (diacritics-stripped) match for legacy/fallback values
+  const normalized = normalizeText(raw)
+  return normalized === "dang dien ra" || normalized === "ongoing" || normalized === "active"
 }
 
 interface JobStatePayload {
@@ -78,7 +96,7 @@ export function ScheduleGenerator() {
     { name: "Tải dữ liệu học kỳ, lớp, môn, giảng viên", status: "pending" },
     { name: "Phân tích tác vụ và kiểm tra ràng buộc", status: "pending" },
     { name: "Sinh lịch và tối ưu phân công", status: "pending" },
-    { name: "Ghi kết quả vào bảng LICH_DAY", status: "pending" },
+    { name: "Lưu kết quả lập lịch", status: "pending" },
     { name: "Hoàn tất", status: "pending" },
   ])
 
@@ -93,10 +111,24 @@ export function ScheduleGenerator() {
   }, [majors, selectedFaculty])
 
   const filteredSemesters = useMemo(() => {
-    const majorName = majors.find((item) => item.id === selectedMajorId)?.name
-    if (!majorName) return []
-    return semesters.filter((item) => item.majorName === majorName)
-  }, [majors, semesters, selectedMajorId])
+    if (!selectedMajorId) return []
+    const selectedMajor = majors.find((item) => String(item.id) === String(selectedMajorId))
+    const selectedMajorNameNorm = normalizeText(selectedMajor?.name || "")
+
+    return semesters
+      .filter((item) => {
+        const sameId = String(item.majorId || "") === String(selectedMajorId)
+        const sameName = selectedMajorNameNorm && normalizeText(item.majorName) === selectedMajorNameNorm
+        return (sameId || sameName) && isOngoingSemesterStatus(item.status)
+      })
+      .sort((a, b) => {
+        if (a.classYear !== b.classYear) return a.classYear - b.classYear
+        return String(a.name || "").localeCompare(String(b.name || ""), "vi")
+      })
+  }, [semesters, selectedMajorId, majors])
+
+  const hasSelectedMajor = Boolean(selectedFaculty && selectedMajorId)
+  const hasMappedSemesters = filteredSemesters.length > 0
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -169,9 +201,21 @@ export function ScheduleGenerator() {
 
   const startGeneration = async () => {
     try {
+      if (!selectedFaculty) {
+        setStatus("error")
+        setErrorMessage("Vui lòng chọn khoa trước khi lập lịch")
+        return
+      }
+
       if (!selectedMajorId) {
         setStatus("error")
         setErrorMessage("Vui lòng chọn ngành trước khi lập lịch")
+        return
+      }
+
+      if (!hasMappedSemesters) {
+        setStatus("error")
+        setErrorMessage("Ngành đã chọn không có học kỳ ở trạng thái Đang diễn ra để lập lịch")
         return
       }
 
@@ -304,7 +348,7 @@ export function ScheduleGenerator() {
             <div className="flex gap-3">
               <Button 
                 onClick={startGeneration} 
-                disabled={status === "running"}
+                disabled={status === "running" || !hasSelectedMajor || !hasMappedSemesters}
                 className="flex-1"
               >
                 <Play className="mr-2 h-4 w-4" />
@@ -334,10 +378,10 @@ export function ScheduleGenerator() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">Tất cả học kỳ của ngành</SelectItem>
+                      <SelectItem value="all">Tất cả học kỳ đang diễn ra của ngành đã chọn</SelectItem>
                       {filteredSemesters.map((item) => (
                         <SelectItem key={item.id} value={item.id}>
-                          HK {item.name} - Năm lớp {item.classYear || "?"}
+                          Năm {item.classYear} • HK {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -390,53 +434,57 @@ export function ScheduleGenerator() {
                   </PopoverContent>
                 </Popover>
               </div>
-              {selectedFaculty && (
-                <div className="grid gap-2">
-                  <Label>Ngành</Label>
-                  <Popover open={openMajorPopover} onOpenChange={setOpenMajorPopover}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={openMajorPopover}
-                        className="w-full justify-between"
-                      >
-                        {majors.find((item) => item.id === selectedMajorId)?.name || "Chọn ngành"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-full p-0" align="start">
-                      <Command>
-                        <CommandInput placeholder="Tìm ngành..." />
-                        <CommandEmpty>Không tìm thấy ngành.</CommandEmpty>
-                        <CommandList>
-                          <CommandGroup>
-                            {facultyMajors.map((major) => (
-                              <CommandItem
-                                key={major.id}
-                                value={major.name}
-                                onSelect={(currentValue) => {
-                                  const nextMajorId = currentValue.toLowerCase() === major.name.toLowerCase() ? major.id : ""
-                                  setSelectedMajorId(nextMajorId === selectedMajorId ? "" : nextMajorId)
-                                  setSelectedSemesterId("all")
-                                  setOpenMajorPopover(false)
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    selectedMajorId === major.id ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                                {major.name}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                </div>
+              <div className="grid gap-2">
+                <Label>Ngành</Label>
+                <Popover open={openMajorPopover} onOpenChange={setOpenMajorPopover}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openMajorPopover}
+                      className="w-full justify-between"
+                      disabled={!selectedFaculty}
+                    >
+                      {majors.find((item) => item.id === selectedMajorId)?.name || (selectedFaculty ? "Chọn ngành" : "Chọn khoa trước")}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput placeholder="Tìm ngành..." />
+                      <CommandEmpty>Không tìm thấy ngành.</CommandEmpty>
+                      <CommandList>
+                        <CommandGroup>
+                          {facultyMajors.map((major) => (
+                            <CommandItem
+                              key={major.id}
+                              value={major.name}
+                              onSelect={(currentValue) => {
+                                const nextMajorId = currentValue.toLowerCase() === major.name.toLowerCase() ? major.id : ""
+                                setSelectedMajorId(nextMajorId === selectedMajorId ? "" : nextMajorId)
+                                setSelectedSemesterId("all")
+                                setOpenMajorPopover(false)
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  selectedMajorId === major.id ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {major.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+              {hasSelectedMajor && !hasMappedSemesters && (
+                <p className="text-xs text-amber-600">
+                  Ngành này chưa có học kỳ ở trạng thái Đang diễn ra theo năm 1-4 trong CSDL HOC_KY.
+                </p>
               )}
             </CardContent>
           </Card>

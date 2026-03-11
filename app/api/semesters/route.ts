@@ -16,6 +16,30 @@ const createDbPool = async () => {
   return pool
 }
 
+const normalizeSemesterStatusLabel = (value: unknown): 'Đang diễn ra' | 'Tạm ngưng' => {
+  const normalized = String(value || '').trim().toLowerCase()
+  if (
+    normalized === '2' ||
+    normalized === 'đang diễn ra' ||
+    normalized === 'dang dien ra' ||
+    normalized === 'ongoing' ||
+    normalized === 'active'
+  ) {
+    return 'Đang diễn ra'
+  }
+  if (
+    normalized === '1' ||
+    normalized === 'tạm dừng' ||
+    normalized === 'tam dung' ||
+    normalized === 'tạm ngưng' ||
+    normalized === 'tam ngung' ||
+    normalized === 'paused'
+  ) {
+    return 'Tạm ngưng'
+  }
+  return 'Tạm ngưng'
+}
+
 const parseDateValue = (value: unknown) => {
   const raw = String(value || '').trim()
   if (!raw) return null
@@ -252,8 +276,8 @@ export async function GET(request: NextRequest) {
     const params: Record<string, any> = {}
 
     if (status) {
-      conditions.push("TrangThai = @st")
-      params.st = status
+      conditions.push("CAST(hk.TrangThai AS NVARCHAR(50)) = @st")
+      params.st = normalizeSemesterStatusLabel(status)
     }
 
     if (conditions.length) {
@@ -282,7 +306,7 @@ export async function GET(request: NextRequest) {
       endDate: row.endDate,
       isActive: true,
       isCurrent: false,
-      status: String(row.status || 'upcoming').trim(),
+      status: normalizeSemesterStatusLabel(row.status),
       mappedCourseCount: Number(row.mappedCourseCount || 0),
       mappedTotalCredits: Number(row.mappedTotalCredits || 0),
     }))
@@ -316,7 +340,7 @@ export async function POST(request: NextRequest) {
     academicYearStart = Number(body.academicYearStart)
     startDate = parseDateValue(body.startDate)
     endDate = parseDateValue(body.endDate)
-    const status = String(body.status || 'upcoming').trim() || 'upcoming'
+    const status = normalizeSemesterStatusLabel(body.status)
 
     if (!majorId || !majorName || Number.isNaN(classYear) || Number.isNaN(semesterNumber) || Number.isNaN(academicYearStart) || !startDate || !endDate) {
       return NextResponse.json({ success: false, error: 'Thiếu thông tin bắt buộc' }, { status: 400 })
@@ -568,7 +592,7 @@ export async function PUT(request: NextRequest) {
       const academicYearStart = Number(body.academicYearStart)
       const startDate = parseDateValue(body.startDate)
       const endDate = parseDateValue(body.endDate)
-      const normalizedStatus = String(body.status || 'upcoming').trim() || 'upcoming'
+      const normalizedStatus = normalizeSemesterStatusLabel(body.status)
 
       if (!majorId || !majorName || Number.isNaN(classYear) || Number.isNaN(semesterNumber) || Number.isNaN(academicYearStart) || !startDate || !endDate) {
         return NextResponse.json({ success: false, error: 'Thiếu thông tin bắt buộc để cập nhật học kỳ' }, { status: 400 })
@@ -586,16 +610,6 @@ export async function PUT(request: NextRequest) {
       const mappedSemesterNumber = resolveCourseSemesterNumber(classYear, semesterNumber)
       if (mappedSemesterNumber <= 0) {
         return NextResponse.json({ success: false, error: 'Không thể quy đổi học kỳ theo năm lớp' }, { status: 400 })
-      }
-
-      if (normalizedStatus === 'upcoming' || normalizedStatus === 'completed') {
-        const hasActiveSchedule = await hasActiveScheduleInSemester(pool, code)
-        if (hasActiveSchedule) {
-          return NextResponse.json(
-            { success: false, error: 'Học kỳ đang có thời khóa biểu chưa xóa nên không thể chuyển trạng thái sang Sắp tới hoặc Đã kết thúc' },
-            { status: 400 }
-          )
-        }
       }
 
       const semesterColumns = await getTableColumns(pool, 'HOC_KY')
@@ -674,20 +688,12 @@ export async function PUT(request: NextRequest) {
     }
 
     if (status) {
-      if (status === 'upcoming' || status === 'completed') {
-        const hasActiveSchedule = await hasActiveScheduleInSemester(pool, code)
-        if (hasActiveSchedule) {
-          return NextResponse.json(
-            { success: false, error: 'Học kỳ đang có thời khóa biểu chưa xóa nên không thể chuyển trạng thái sang Sắp tới hoặc Đã kết thúc' },
-            { status: 400 }
-          )
-        }
-      }
+      const normalizedStatus = normalizeSemesterStatusLabel(status)
 
       await pool
         .request()
         .input('code', code)
-        .input('status', status)
+        .input('status', normalizedStatus)
         .query(`
           UPDATE HOC_KY
           SET TrangThai = @status

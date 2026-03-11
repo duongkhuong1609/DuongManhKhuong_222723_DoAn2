@@ -65,7 +65,7 @@ interface SemesterItem {
   academicYear: string
   startDate: string
   endDate: string
-  status: "upcoming" | "ongoing" | "completed" | string
+  status: string
   mappedCourseCount: number
   mappedTotalCredits: number
 }
@@ -100,13 +100,70 @@ interface SemesterEditState {
   academicYearStart: string
   startDate: string
   endDate: string
-  status: "upcoming" | "ongoing" | "completed"
+  status: "Đang diễn ra" | "Tạm ngưng"
 }
 
-const fetcher = (url: string) =>
-  fetch(url)
-    .then((res) => res.json())
-    .then((r) => r.data || [])
+const normalizeSemesterStatus = (value: unknown): "Đang diễn ra" | "Tạm ngưng" => {
+  const normalized = String(value || "").trim().toLowerCase()
+  if (
+    normalized === "2" ||
+    normalized === "đang diễn ra" ||
+    normalized === "dang dien ra" ||
+    normalized === "ongoing" ||
+    normalized === "active"
+  ) {
+    return "Đang diễn ra"
+  }
+  if (
+    normalized === "1" ||
+    normalized === "tạm dừng" ||
+    normalized === "tam dung" ||
+    normalized === "tạm ngưng" ||
+    normalized === "tam ngung" ||
+    normalized === "paused"
+  ) {
+    return "Tạm ngưng"
+  }
+  return "Tạm ngưng"
+}
+
+const safeFetchJson = async (url: string, init?: RequestInit, retries = 1): Promise<any | null> => {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 10000)
+
+  try {
+    const response = await fetch(url, {
+      ...init,
+      cache: "no-store",
+      credentials: "same-origin",
+      signal: controller.signal,
+    })
+
+    const contentType = response.headers.get("content-type") || ""
+    if (!contentType.includes("application/json")) {
+      return null
+    }
+
+    const json = await response.json()
+    if (!response.ok || json?.success === false) {
+      return null
+    }
+
+    return json
+  } catch {
+    if (retries > 0) {
+      return safeFetchJson(url, init, retries - 1)
+    }
+    return null
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
+const fetcher = async (url: string) => {
+  const json = await safeFetchJson(url)
+  return json?.data || []
+}
 
 const parseDateValue = (value: string) => {
   const date = new Date(value)
@@ -199,7 +256,7 @@ export function SemestersModule() {
     academicYearStart: String(currentYear - 1),
     startDate: "",
     endDate: "",
-    status: "upcoming" as "upcoming" | "ongoing" | "completed",
+    status: "Đang diễn ra" as "Đang diễn ra" | "Tạm ngưng",
   })
 
   const resetForm = () => {
@@ -211,44 +268,43 @@ export function SemestersModule() {
       academicYearStart: String(currentYear - 1),
       startDate: "",
       endDate: "",
-      status: "upcoming",
+      status: "Đang diễn ra",
     })
     setOpenMajorPopover(false)
   }
 
   useEffect(() => {
-    fetch("/api/classes/options")
-      .then((res) => res.json())
-      .then((json) => {
-        if (!json.success) return
+    let active = true
 
-        const majorData = (json.data?.majors || []).map((item: any) => ({
-          id: String(item.id || "").trim(),
-          name: String(item.name || "").trim(),
-        }))
-        setMajors(majorData)
-      })
-      .catch((error) => {
-        console.error("Error loading major options for semesters:", error)
-      })
+    const loadInitialData = async () => {
+      const [majorPayload, classPayload] = await Promise.all([
+        safeFetchJson("/api/classes/options"),
+        safeFetchJson("/api/classes"),
+      ])
 
-    fetch("/api/classes")
-      .then((res) => res.json())
-      .then((json) => {
-        if (!json.success) return
+      if (!active) return
 
-        const classData = (json.data || []).map((item: any) => ({
-          id: Number(item.id || 0),
-          name: String(item.name || "").trim(),
-          major: String(item.major || "").trim(),
-          year: Number(item.year || 0),
-          nienKhoa: String(item.nienKhoa || "").trim(),
-        }))
-        setClasses(classData)
-      })
-      .catch((error) => {
-        console.error("Error loading classes for semesters:", error)
-      })
+      const majorData = (majorPayload?.data?.majors || []).map((item: any) => ({
+        id: String(item.id || "").trim(),
+        name: String(item.name || "").trim(),
+      }))
+      setMajors(majorData)
+
+      const classData = (classPayload?.data || []).map((item: any) => ({
+        id: Number(item.id || 0),
+        name: String(item.name || "").trim(),
+        major: String(item.major || "").trim(),
+        year: Number(item.year || 0),
+        nienKhoa: String(item.nienKhoa || "").trim(),
+      }))
+      setClasses(classData)
+    }
+
+    loadInitialData()
+
+    return () => {
+      active = false
+    }
   }, [])
 
   const classesAcademicYearStart = useMemo(() => {
@@ -494,7 +550,7 @@ export function SemestersModule() {
       academicYearStart: String(startYear),
       startDate: String(semester.startDate || "").slice(0, 10),
       endDate: String(semester.endDate || "").slice(0, 10),
-      status: (semester.status as "upcoming" | "ongoing" | "completed") || "upcoming",
+      status: normalizeSemesterStatus(semester.status),
     })
     setIsEditDialogOpen(true)
   }
@@ -579,14 +635,11 @@ export function SemestersModule() {
   }
 
   const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "ongoing":
-        return <Badge className="bg-green-100 text-green-700">Đang diễn ra</Badge>
-      case "completed":
-        return <Badge variant="secondary">Đã kết thúc</Badge>
-      default:
-        return <Badge className="bg-blue-100 text-blue-700">Sắp tới</Badge>
+    const normalized = normalizeSemesterStatus(status)
+    if (normalized === "Đang diễn ra") {
+      return <Badge className="bg-green-100 text-green-700">Đang diễn ra</Badge>
     }
+    return <Badge variant="secondary">Tạm ngưng</Badge>
   }
 
   return (
@@ -763,7 +816,7 @@ export function SemestersModule() {
                     <Label>Trạng thái</Label>
                     <Select
                       value={newSemester.status}
-                      onValueChange={(value: "upcoming" | "ongoing" | "completed") =>
+                      onValueChange={(value: "Đang diễn ra" | "Tạm ngưng") =>
                         setNewSemester((prev) => ({ ...prev, status: value }))
                       }
                     >
@@ -771,9 +824,8 @@ export function SemestersModule() {
                         <SelectValue placeholder="Chọn trạng thái" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="upcoming">Sắp tới</SelectItem>
-                        <SelectItem value="ongoing">Đang diễn ra</SelectItem>
-                        <SelectItem value="completed">Đã kết thúc</SelectItem>
+                        <SelectItem value="Đang diễn ra">Đang diễn ra</SelectItem>
+                        <SelectItem value="Tạm ngưng">Tạm ngưng</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -909,9 +961,8 @@ export function SemestersModule() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tất cả trạng thái</SelectItem>
-                <SelectItem value="upcoming">Sắp tới</SelectItem>
-                <SelectItem value="ongoing">Đang diễn ra</SelectItem>
-                <SelectItem value="completed">Đã kết thúc</SelectItem>
+                <SelectItem value="Đang diễn ra">Đang diễn ra</SelectItem>
+                <SelectItem value="Tạm ngưng">Tạm ngưng</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -1129,7 +1180,7 @@ export function SemestersModule() {
                 <Label>Trạng thái</Label>
                 <Select
                   value={editingSemester.status}
-                  onValueChange={(value: "upcoming" | "ongoing" | "completed") =>
+                  onValueChange={(value: "Đang diễn ra" | "Tạm ngưng") =>
                     setEditingSemester((prev) => prev ? { ...prev, status: value } : prev)
                   }
                 >
@@ -1137,9 +1188,8 @@ export function SemestersModule() {
                     <SelectValue placeholder="Chọn trạng thái" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="upcoming">Sắp tới</SelectItem>
-                    <SelectItem value="ongoing">Đang diễn ra</SelectItem>
-                    <SelectItem value="completed">Đã kết thúc</SelectItem>
+                    <SelectItem value="Đang diễn ra">Đang diễn ra</SelectItem>
+                    <SelectItem value="Tạm ngưng">Tạm ngưng</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
