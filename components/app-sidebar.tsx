@@ -10,18 +10,14 @@ import {
   CalendarDays,
   CalendarRange,
   BarChart3,
-  Download,
-  Settings,
   Sparkles,
   User,
   Heart,
-  LogOut,
 } from "lucide-react"
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -104,11 +100,6 @@ const reportItems = [
     title: "Thống kê giờ dạy",
     icon: BarChart3,
     id: "statistics",
-  },
-  {
-    title: "Xuất lịch dạy",
-    icon: Download,
-    id: "export",
   },
 ]
 
@@ -315,22 +306,6 @@ export function AppSidebar({
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Cài đặt">
-              <Settings className="h-4 w-4" />
-              <span>Cài đặt hệ thống</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Đăng xuất" onClick={onLogout}>
-              <LogOut className="h-4 w-4" />
-              <span>Đăng xuất</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </Sidebar>
   )
 }

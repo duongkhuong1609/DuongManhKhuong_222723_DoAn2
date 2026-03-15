@@ -82,6 +82,39 @@ const parseSemesterOrder = (semester: string) => {
   return 99
 }
 
+const safeFetchJson = async (url: string, init?: RequestInit, retries = 1): Promise<any | null> => {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 15000)
+
+  try {
+    const res = await fetch(url, {
+      ...init,
+      cache: "no-store",
+      credentials: "same-origin",
+      signal: controller.signal,
+    })
+
+    const contentType = res.headers.get("content-type") || ""
+    if (!contentType.includes("application/json")) {
+      return null
+    }
+
+    const json = await res.json()
+    if (!res.ok || !json?.success) {
+      return null
+    }
+
+    return json
+  } catch {
+    if (retries > 0) {
+      return safeFetchJson(url, init, retries - 1)
+    }
+    return null
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
 export function CoursesModule() {
   const [courses, setCourses] = useState(initialCourses)
   const [majors, setMajors] = useState<MajorOption[]>([])
@@ -91,6 +124,7 @@ export function CoursesModule() {
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [selectedMajor, setSelectedMajor] = useState("")
   const [selectedCourseType, setSelectedCourseType] = useState("")
+  const [selectedSemesterFilter, setSelectedSemesterFilter] = useState("")
   const [openMajorPopover, setOpenMajorPopover] = useState(false)
   const [openAddMajorPopover, setOpenAddMajorPopover] = useState(false)
   const [openAddInstructorPopover, setOpenAddInstructorPopover] = useState(false)
@@ -116,45 +150,49 @@ export function CoursesModule() {
     return newCourse.type === 'Thực hành' ? credits * 30 : credits * 15
   })()
 
-  const loadCourses = () => {
-    fetch('/api/courses')
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          setCourses(json.data || [])
-          if (!json.data || json.data.length === 0) {
-            setLoadError('Không thể tải dữ liệu môn học. Kiểm tra kết nối cơ sở dữ liệu.')
-          }
-        } else {
-          setLoadError(json.error || 'Lỗi không xác định khi tải môn học')
-          setCourses([])
-        }
-      })
-      .catch(err => {
-        console.error('Error loading courses:', err)
-        setLoadError(err.message || 'Lỗi khi gọi API')
-        setCourses([])
-      })
+  const loadCourses = async () => {
+    const json = await safeFetchJson('/api/courses', undefined, 2)
+
+    if (json) {
+      setCourses(json.data || [])
+      if (!json.data || json.data.length === 0) {
+        setLoadError('Không có dữ liệu môn học.')
+      } else {
+        setLoadError(null)
+      }
+      return
+    }
+
+    setLoadError('Không thể tải dữ liệu môn học. Vui lòng thử lại sau.')
+    setCourses([])
   }
 
   useEffect(() => {
-    loadCourses()
+    let active = true
 
-    fetch('/api/classes/options')
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          const majorData = (json.data?.majors || []).map((item: any) => ({
-            id: String(item.id || ''),
-            name: String(item.name || '').trim(),
-            departmentId: String(item.departmentId || '').trim(),
-          }))
-          setMajors(majorData)
-        }
-      })
-      .catch(err => {
-        console.error('Error loading majors for courses:', err)
-      })
+    const loadInitialData = async () => {
+      await loadCourses()
+
+      const majorPayload = await safeFetchJson('/api/classes/options', undefined, 2)
+      if (!active) return
+
+      if (majorPayload) {
+        const majorData = (majorPayload.data?.majors || []).map((item: any) => ({
+          id: String(item.id || ''),
+          name: String(item.name || '').trim(),
+          departmentId: String(item.departmentId || '').trim(),
+        }))
+        setMajors(majorData)
+      } else {
+        setMajors([])
+      }
+    }
+
+    loadInitialData()
+
+    return () => {
+      active = false
+    }
   }, [])
 
   const majorOptions = Array.from(new Set(courses.map((c) => c.major).filter(Boolean))) as string[]
@@ -362,10 +400,27 @@ export function CoursesModule() {
         selectedCourseType === "" ||
         (selectedCourseType === "Lý thuyết" && courseType.includes('lý thuyết')) ||
         (selectedCourseType === "Thực hành" && courseType.includes('thực hành'))
+
+      const courseSemester = extractFirstNumber(course.semester)
+      const matchesSemester =
+        selectedSemesterFilter === "" ||
+        courseSemester === Number(selectedSemesterFilter)
       
-      return matchesSearch && matchesMajor && matchesType
+      return matchesSearch && matchesMajor && matchesType && matchesSemester
     }
   )
+
+  const semesterFilterOptions = Array.from(
+    new Set(
+      courses
+        .filter((course) => {
+          if (!selectedMajor) return false
+          return String(course.major || '').trim() === String(selectedMajor).trim()
+        })
+        .map((course) => extractFirstNumber(course.semester))
+        .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
+    )
+  ).sort((a, b) => a - b)
 
   const displayCourses = selectedMajor
     ? [...filteredCourses].sort((a, b) => {
@@ -382,6 +437,21 @@ export function CoursesModule() {
   const selectedMajorTotalCredits = selectedMajor
     ? displayCourses.reduce((sum, course) => sum + Number(course.credits || 0), 0)
     : 0
+
+  useEffect(() => {
+    if (!selectedMajor && selectedSemesterFilter !== "") {
+      setSelectedSemesterFilter("")
+      return
+    }
+
+    if (
+      selectedMajor &&
+      selectedSemesterFilter !== "" &&
+      !semesterFilterOptions.includes(Number(selectedSemesterFilter))
+    ) {
+      setSelectedSemesterFilter("")
+    }
+  }, [selectedMajor, selectedSemesterFilter, semesterFilterOptions])
 
   const toggleAddInstructor = (code: string) => {
     setNewCourse((prev) => {
@@ -1066,10 +1136,29 @@ export function CoursesModule() {
                 <SelectItem value="Thực hành">Thực hành</SelectItem>
               </SelectContent>
             </Select>
+            <Select
+              value={selectedSemesterFilter || "all"}
+              onValueChange={(value) => setSelectedSemesterFilter(value === "all" ? "" : value)}
+              disabled={!selectedMajor}
+            >
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="Học kỳ" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tất cả học kỳ</SelectItem>
+                {semesterFilterOptions.map((semester) => (
+                  <SelectItem key={semester} value={String(semester)}>{`Học kỳ ${semester}`}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             {selectedMajor ? (
               <div className="ml-auto flex items-center gap-2">
-                <Badge variant="secondary">Số môn: {selectedMajorCourseCount}</Badge>
-                <Badge variant="secondary">Tổng tín chỉ: {selectedMajorTotalCredits}</Badge>
+                <Badge variant="secondary">
+                  {selectedSemesterFilter ? `HK ${selectedSemesterFilter} - ` : ""}Số môn: {selectedMajorCourseCount}
+                </Badge>
+                <Badge variant="secondary">
+                  {selectedSemesterFilter ? `HK ${selectedSemesterFilter} - ` : ""}Tổng tín chỉ: {selectedMajorTotalCredits}
+                </Badge>
               </div>
             ) : null}
           </div>

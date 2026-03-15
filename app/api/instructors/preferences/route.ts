@@ -36,6 +36,27 @@ const resolveOtherNameColumn = (columns: Set<string>) => {
   return "TenNVK"
 }
 
+const resolveOtherStatusColumn = (columns: Set<string>) => {
+  if (columns.has("trangthaiduyet")) return "TrangThaiDuyet"
+  if (columns.has("trangthai")) return "TrangThai"
+  return "TrangThaiDuyet"
+}
+
+const normalizeApprovalStatus = (value: unknown) => {
+  const raw = String(value || "").trim().toLowerCase()
+  if (!raw) return "Chưa duyệt"
+  if (raw === "1" || raw.includes("da duyet") || raw.includes("đã duyệt") || raw.includes("approved")) {
+    return "Đã duyệt"
+  }
+  if (raw === "2" || raw.includes("khong duyet") || raw.includes("không duyệt") || raw.includes("rejected")) {
+    return "Không duyệt"
+  }
+  if (raw === "0" || raw.includes("chua duyet") || raw.includes("chưa duyệt") || raw.includes("pending")) {
+    return "Chưa duyệt"
+  }
+  return "Chưa duyệt"
+}
+
 export async function GET(request: NextRequest) {
   let pool: any
   try {
@@ -44,6 +65,10 @@ export async function GET(request: NextRequest) {
     pool = await new sql.ConnectionPool(dbConfig).connect()
 
     if (!maGV) {
+      const otherColumns = await getTableColumns(pool, "NGUYEN_VONG_KHAC")
+      const hasOtherStatusColumn = otherColumns.has("trangthaiduyet") || otherColumns.has("trangthai")
+      const otherStatusColumn = resolveOtherStatusColumn(otherColumns)
+
       const result = await pool.request().query(`
         SELECT
           gv.MaGV,
@@ -59,7 +84,15 @@ export async function GET(request: NextRequest) {
             SELECT COUNT(1)
             FROM NGUYEN_VONG_KHAC nvk
             WHERE nvk.MaGV = gv.MaGV
-          ) AS otherCount
+          ) AS otherCount,
+          (
+            SELECT COUNT(1)
+            FROM NGUYEN_VONG_KHAC nvk
+            WHERE nvk.MaGV = gv.MaGV
+              AND ${hasOtherStatusColumn
+                ? `LTRIM(RTRIM(ISNULL(CAST(nvk.${otherStatusColumn} AS NVARCHAR(50)), N'Chưa duyệt'))) <> N'Đã duyệt'`
+                : "1 = 1"}
+          ) AS pendingOtherCount
         FROM GIANG_VIEN gv
         LEFT JOIN KHOA k ON gv.MaKhoa = k.MaKhoa
         WHERE EXISTS (
@@ -78,6 +111,7 @@ export async function GET(request: NextRequest) {
         department: String(row.department || "").trim(),
         timeCount: Number(row.timeCount || 0),
         otherCount: Number(row.otherCount || 0),
+        pendingOtherCount: Number(row.pendingOtherCount || 0),
       }))
 
       return NextResponse.json({ success: true, data })
@@ -90,6 +124,8 @@ export async function GET(request: NextRequest) {
 
     const timeIdColumn = resolveTimeIdColumn(timeColumns)
     const otherNameColumn = resolveOtherNameColumn(otherColumns)
+    const hasOtherStatusColumn = otherColumns.has("trangthaiduyet") || otherColumns.has("trangthai")
+    const otherStatusColumn = resolveOtherStatusColumn(otherColumns)
 
     const [timeResult, otherResult] = await Promise.all([
       pool
@@ -105,7 +141,8 @@ export async function GET(request: NextRequest) {
         .request()
         .input("maGV", maGV)
         .query(`
-          SELECT MaNVK, ${otherNameColumn} AS TenNV, GiaTri
+          SELECT MaNVK, ${otherNameColumn} AS TenNV, GiaTri,
+                 ${hasOtherStatusColumn ? `CAST(${otherStatusColumn} AS NVARCHAR(50))` : "CAST(N'Chưa duyệt' AS NVARCHAR(50))"} AS TrangThaiDuyet
           FROM NGUYEN_VONG_KHAC
           WHERE MaGV = @maGV
           ORDER BY MaNVK DESC
@@ -123,6 +160,7 @@ export async function GET(request: NextRequest) {
       id: Number(row.MaNVK || 0),
       tenNV: String(row.TenNV || "").trim(),
       giaTri: String(row.GiaTri || "").trim(),
+      trangThaiDuyet: normalizeApprovalStatus(row.TrangThaiDuyet),
     }))
 
     return NextResponse.json({ success: true, data: { timePreferences, otherPreferences } })
@@ -138,39 +176,82 @@ export async function PUT(request: NextRequest) {
   let pool: any
   try {
     const body = await request.json()
+    const type = String(body.type || "time").trim().toLowerCase()
     const maGV = String(body.maGV || "").trim()
-    const preferenceId = Number(body.preferenceId)
-    const mucDoUuTien = Number(body.mucDoUuTien)
 
-    if (!maGV || !Number.isFinite(preferenceId) || preferenceId <= 0) {
-      return NextResponse.json({ success: false, error: "Thiếu dữ liệu cập nhật nguyện vọng thời gian" }, { status: 400 })
-    }
-
-    if (!Number.isInteger(mucDoUuTien) || mucDoUuTien < 1 || mucDoUuTien > 3) {
-      return NextResponse.json({ success: false, error: "Mức độ ưu tiên chỉ được nhập 1, 2 hoặc 3" }, { status: 400 })
+    if (!maGV) {
+      return NextResponse.json({ success: false, error: "Thiếu mã giảng viên" }, { status: 400 })
     }
 
     pool = await new sql.ConnectionPool(dbConfig).connect()
 
-    const timeColumns = await getTableColumns(pool, "NGUYEN_VONG_THOI_GIAN")
-    const timeIdColumn = resolveTimeIdColumn(timeColumns)
+    if (type === "time") {
+      const preferenceId = Number(body.preferenceId)
+      const mucDoUuTien = Number(body.mucDoUuTien)
 
-    const result = await pool
-      .request()
-      .input("preferenceId", sql.Int, preferenceId)
-      .input("maGV", maGV)
-      .input("mucDoUuTien", String(mucDoUuTien))
-      .query(`
-        UPDATE NGUYEN_VONG_THOI_GIAN
-        SET MucDoUuTien = @mucDoUuTien
-        WHERE ${timeIdColumn} = @preferenceId AND MaGV = @maGV
-      `)
+      if (!Number.isFinite(preferenceId) || preferenceId <= 0) {
+        return NextResponse.json({ success: false, error: "Thiếu dữ liệu cập nhật nguyện vọng thời gian" }, { status: 400 })
+      }
 
-    if (!result.rowsAffected || result.rowsAffected[0] === 0) {
-      return NextResponse.json({ success: false, error: "Không tìm thấy nguyện vọng thời gian để cập nhật" }, { status: 404 })
+      if (!Number.isInteger(mucDoUuTien) || mucDoUuTien < 1 || mucDoUuTien > 3) {
+        return NextResponse.json({ success: false, error: "Mức độ ưu tiên chỉ được nhập 1, 2 hoặc 3" }, { status: 400 })
+      }
+
+      const timeColumns = await getTableColumns(pool, "NGUYEN_VONG_THOI_GIAN")
+      const timeIdColumn = resolveTimeIdColumn(timeColumns)
+
+      const result = await pool
+        .request()
+        .input("preferenceId", sql.Int, preferenceId)
+        .input("maGV", maGV)
+        .input("mucDoUuTien", String(mucDoUuTien))
+        .query(`
+          UPDATE NGUYEN_VONG_THOI_GIAN
+          SET MucDoUuTien = @mucDoUuTien
+          WHERE ${timeIdColumn} = @preferenceId AND MaGV = @maGV
+        `)
+
+      if (!result.rowsAffected || result.rowsAffected[0] === 0) {
+        return NextResponse.json({ success: false, error: "Không tìm thấy nguyện vọng thời gian để cập nhật" }, { status: 404 })
+      }
+
+      return NextResponse.json({ success: true })
     }
 
-    return NextResponse.json({ success: true })
+    if (type === "other") {
+      const preferenceId = Number(body.preferenceId)
+      const approvalStatus = normalizeApprovalStatus(body.trangThaiDuyet)
+
+      if (!Number.isFinite(preferenceId) || preferenceId <= 0) {
+        return NextResponse.json({ success: false, error: "Thiếu dữ liệu cập nhật nguyện vọng đặc biệt" }, { status: 400 })
+      }
+
+      const otherColumns = await getTableColumns(pool, "NGUYEN_VONG_KHAC")
+      if (!otherColumns.has("trangthaiduyet") && !otherColumns.has("trangthai")) {
+        return NextResponse.json({ success: false, error: "Bảng NGUYEN_VONG_KHAC chưa có cột TrangThaiDuyet" }, { status: 400 })
+      }
+
+      const otherStatusColumn = resolveOtherStatusColumn(otherColumns)
+
+      const result = await pool
+        .request()
+        .input("preferenceId", sql.Int, preferenceId)
+        .input("maGV", maGV)
+        .input("approvalStatus", approvalStatus)
+        .query(`
+          UPDATE NGUYEN_VONG_KHAC
+          SET ${otherStatusColumn} = @approvalStatus
+          WHERE MaNVK = @preferenceId AND MaGV = @maGV
+        `)
+
+      if (!result.rowsAffected || result.rowsAffected[0] === 0) {
+        return NextResponse.json({ success: false, error: "Không tìm thấy nguyện vọng đặc biệt để cập nhật" }, { status: 404 })
+      }
+
+      return NextResponse.json({ success: true })
+    }
+
+    return NextResponse.json({ success: false, error: "Loại cập nhật không hợp lệ" }, { status: 400 })
   } catch (error) {
     console.error("Error updating time preference priority:", error)
     return NextResponse.json({ success: false, error: "Lỗi khi cập nhật mức độ ưu tiên" }, { status: 500 })

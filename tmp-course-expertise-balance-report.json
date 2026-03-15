@@ -1,0 +1,657 @@
+{
+  "generatedAt": "2026-03-14T04:17:09.093Z",
+  "policy": {
+    "minExpertsPerCourse": 2,
+    "activeStatusInclude": [
+      "CÓ THỂ DẠY",
+      "CO THE DAY",
+      "ACTIVE",
+      "HOẠT ĐỘNG",
+      "HOAT DONG",
+      "ĐANG DẠY",
+      "DANG DAY",
+      ""
+    ],
+    "activeStatusExclude": [
+      "TẠM DỪNG",
+      "TAM DUNG",
+      "TẠM NGƯNG",
+      "TAM NGUNG",
+      "VÔ HIỆU HÓA",
+      "VO HIEU HOA"
+    ]
+  },
+  "totals": {
+    "totalCourses": 358,
+    "totalActiveInstructors": 126,
+    "expertiseRowsActiveOnlyBefore": 754
+  },
+  "before": {
+    "coursesWith0Or1ExpertsCount": 30,
+    "coursesWith0ExpertsCount": 0,
+    "coursesWith1ExpertCount": 30,
+    "instructorsWith0Or1CoursesCount": 0,
+    "instructorsWith0CoursesCount": 0,
+    "instructorsWith1CourseCount": 0
+  },
+  "assignment": {
+    "insertedPairsCount": 30
+  },
+  "after": {
+    "coursesWith0Or1ExpertsCount": 0,
+    "coursesWith0ExpertsCount": 0,
+    "coursesWith1ExpertCount": 0,
+    "instructorsWith0Or1CoursesCount": 0,
+    "instructorsWith0CoursesCount": 0,
+    "instructorsWith1CourseCount": 0
+  },
+  "details": {
+    "coursesWith0Or1ExpertsBefore": [
+      {
+        "maMon": 82,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          1
+        ]
+      },
+      {
+        "maMon": 85,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          4
+        ]
+      },
+      {
+        "maMon": 86,
+        "tenMon": "Toán rời rạc 1",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          10
+        ]
+      },
+      {
+        "maMon": 87,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          10
+        ]
+      },
+      {
+        "maMon": 89,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          26
+        ]
+      },
+      {
+        "maMon": 90,
+        "tenMon": "Triết học",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          44
+        ]
+      },
+      {
+        "maMon": 94,
+        "tenMon": "Toán rời rạc 2",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          10
+        ]
+      },
+      {
+        "maMon": 100,
+        "tenMon": "Cơ sở dữ liệu",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          10
+        ]
+      },
+      {
+        "maMon": 101,
+        "tenMon": "Kiến trúc máy tính",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          10
+        ]
+      },
+      {
+        "maMon": 104,
+        "tenMon": "Nhập môn công nghệ phần mềm",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "maKhoa": "1",
+        "expertCount": 1,
+        "experts": [
+          55
+        ]
+      },
+      {
+        "maMon": 283,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          1
+        ]
+      },
+      {
+        "maMon": 284,
+        "tenMon": "Giáo dục quốc phòng - an ninh",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          26
+        ]
+      },
+      {
+        "maMon": 288,
+        "tenMon": "Vật lý đại cương",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          31
+        ]
+      },
+      {
+        "maMon": 293,
+        "tenMon": "Triết học",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          44
+        ]
+      },
+      {
+        "maMon": 294,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          4
+        ]
+      },
+      {
+        "maMon": 295,
+        "tenMon": "Toán cao cấp 2",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          26
+        ]
+      },
+      {
+        "maMon": 297,
+        "tenMon": "Dung sai - Kỹ thuật đo",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          50
+        ]
+      },
+      {
+        "maMon": 299,
+        "tenMon": "Môi trường và con người",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          26
+        ]
+      },
+      {
+        "maMon": 300,
+        "tenMon": "Quản trị dự án phát triển sản phẩm",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "maKhoa": "3",
+        "expertCount": 1,
+        "experts": [
+          26
+        ]
+      },
+      {
+        "maMon": 541,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          1
+        ]
+      },
+      {
+        "maMon": 546,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          4
+        ]
+      },
+      {
+        "maMon": 547,
+        "tenMon": "Giải phẫu 1",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          24
+        ]
+      },
+      {
+        "maMon": 550,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          23
+        ]
+      },
+      {
+        "maMon": 551,
+        "tenMon": "Sinh học và di truyền",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          15
+        ]
+      },
+      {
+        "maMon": 552,
+        "tenMon": "Sinh lý",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          20
+        ]
+      },
+      {
+        "maMon": 553,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          36
+        ]
+      },
+      {
+        "maMon": 555,
+        "tenMon": "Lý sinh",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          15
+        ]
+      },
+      {
+        "maMon": 558,
+        "tenMon": "Anh văn căn bản 5",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          15
+        ]
+      },
+      {
+        "maMon": 564,
+        "tenMon": "An toàn sinh học",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          15
+        ]
+      },
+      {
+        "maMon": 565,
+        "tenMon": "Xác suất thống kê y học",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "maKhoa": "2",
+        "expertCount": 1,
+        "experts": [
+          15
+        ]
+      }
+    ],
+    "instructorsWith0Or1CoursesBefore": [],
+    "insertedPairs": [
+      {
+        "maGV": 5,
+        "tenGV": "Đặng Quang Hiếu",
+        "maMon": 82,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 5,
+        "tenGV": "Đặng Quang Hiếu",
+        "maMon": 85,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 76,
+        "tenGV": "Nguyen Minh An",
+        "maMon": 86,
+        "tenMon": "Toán rời rạc 1",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 77,
+        "tenGV": "Tran Quoc Bao",
+        "maMon": 87,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 78,
+        "tenGV": "Le Gia Huy",
+        "maMon": 89,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 79,
+        "tenGV": "Pham Duc Kiet",
+        "maMon": 90,
+        "tenMon": "Triết học",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 80,
+        "tenGV": "Hoang Anh Linh",
+        "maMon": 94,
+        "tenMon": "Toán rời rạc 2",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 81,
+        "tenGV": "Vu Thanh Nam",
+        "maMon": 100,
+        "tenMon": "Cơ sở dữ liệu",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 82,
+        "tenGV": "Vo Ngoc Phuc",
+        "maMon": 101,
+        "tenMon": "Kiến trúc máy tính",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 83,
+        "tenGV": "Dang Khanh Quang",
+        "maMon": 104,
+        "tenMon": "Nhập môn công nghệ phần mềm",
+        "maNganh": "1",
+        "tenNganh": "Công Nghệ Thông Tin",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 25,
+        "tenGV": "Kỹ sư Trần Anh Tuấn",
+        "maMon": 283,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 30,
+        "tenGV": "Nguyễn Tử Quảng",
+        "maMon": 284,
+        "tenMon": "Giáo dục quốc phòng - an ninh",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 32,
+        "tenGV": "Nguyễn Thành Nam",
+        "maMon": 288,
+        "tenMon": "Vật lý đại cương",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 34,
+        "tenGV": "Đỗ Cao Bảo",
+        "maMon": 293,
+        "tenMon": "Triết học",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 25,
+        "tenGV": "Kỹ sư Trần Anh Tuấn",
+        "maMon": 294,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 29,
+        "tenGV": "Hoàng Kiều",
+        "maMon": 295,
+        "tenMon": "Toán cao cấp 2",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 30,
+        "tenGV": "Nguyễn Tử Quảng",
+        "maMon": 297,
+        "tenMon": "Dung sai - Kỹ thuật đo",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 31,
+        "tenGV": "Trương Gia Bình",
+        "maMon": 299,
+        "tenMon": "Môi trường và con người",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 32,
+        "tenGV": "Nguyễn Thành Nam",
+        "maMon": 300,
+        "tenMon": "Quản trị dự án phát triển sản phẩm",
+        "maNganh": "4",
+        "tenNganh": "Công Nghệ Kỹ Thuật Oto",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 18,
+        "tenGV": "Võ Thị Sáu",
+        "maMon": 541,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 19,
+        "tenGV": "Hồ Xuân Hương",
+        "maMon": 546,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 13,
+        "tenGV": "Nguyễn Xuân Hùng",
+        "maMon": 547,
+        "tenMon": "Giải phẫu 1",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 18,
+        "tenGV": "Võ Thị Sáu",
+        "maMon": 550,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 19,
+        "tenGV": "Hồ Xuân Hương",
+        "maMon": 551,
+        "tenMon": "Sinh học và di truyền",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 22,
+        "tenGV": "Phạm Ngọc Thạch",
+        "maMon": 552,
+        "tenMon": "Sinh lý",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 23,
+        "tenGV": "Đặng Văn Ngữ",
+        "maMon": 553,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 24,
+        "tenGV": "Tôn Thất Tùng",
+        "maMon": 555,
+        "tenMon": "Lý sinh",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 128,
+        "tenGV": "Nguyen Minh Ngan",
+        "maMon": 558,
+        "tenMon": "Anh văn căn bản 5",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 129,
+        "tenGV": "Tran Gia Nhu",
+        "maMon": 564,
+        "tenMon": "An toàn sinh học",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      },
+      {
+        "maGV": 130,
+        "tenGV": "Le Bao Oanh",
+        "maMon": 565,
+        "tenMon": "Xác suất thống kê y học",
+        "maNganh": "6",
+        "tenNganh": "Kỹ Thuật Xét Nghiệm Y Học",
+        "strategy": "same-dept"
+      }
+    ],
+    "coursesWith0Or1ExpertsAfter": [],
+    "instructorsWith0Or1CoursesAfter": []
+  }
+}

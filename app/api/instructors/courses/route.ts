@@ -29,12 +29,17 @@ export async function GET(request: NextRequest) {
           m.MaMon AS id,
           m.TenMon AS name,
           m.LoaiMon AS type,
+          CAST(m.MaNganh AS NVARCHAR(50)) AS majorId,
+          n.TenNganh AS majorName,
           m.NamM AS year,
           m.HocKy AS semester,
           m.SoTinChi AS credits
         FROM CHUYEN_MON_CUA_GV cm
+        INNER JOIN GIANG_VIEN gv ON gv.MaGV = cm.MaGV
         INNER JOIN MON m ON cm.MaMon = m.MaMon
+        INNER JOIN NGANH n ON n.MaNganh = m.MaNganh
         WHERE cm.MaGV = @instructorCode
+          AND CAST(gv.MaKhoa AS NVARCHAR(50)) = CAST(n.MaKhoa AS NVARCHAR(50))
         ORDER BY m.TenMon ASC
       `)
 
@@ -42,6 +47,8 @@ export async function GET(request: NextRequest) {
       id: Number(row.id || 0),
       name: String(row.name || '').trim(),
       type: String(row.type || '').trim(),
+      majorId: String(row.majorId || '').trim(),
+      majorName: String(row.majorName || '').trim(),
       year: String(row.year || '').trim(),
       semester: String(row.semester || '').trim(),
       credits: Number(row.credits || 0),

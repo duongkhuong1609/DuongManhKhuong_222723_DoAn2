@@ -128,7 +128,7 @@ export default function DashboardPage() {
         case "user-timeslots":
           return <TimeslotsModule />
         case "user-timetable":
-          return <TimetableView />
+          return <TimetableView userMode />
         case "user-preferences":
           return <UserPreferencesModule />
         default:
@@ -167,11 +167,24 @@ export default function DashboardPage() {
   }
 
   if (loadingSession) {
-    return <div className="p-6 text-sm text-muted-foreground">Đang kiểm tra đăng nhập...</div>
+    return (
+      <div className="flex min-h-screen items-center justify-center p-6">
+        <div className="text-sm text-muted-foreground">Đang kiểm tra đăng nhập...</div>
+      </div>
+    )
   }
 
   if (!session) {
-    return null
+    return (
+      <div className="flex min-h-screen items-center justify-center p-6">
+        <div className="space-y-3 text-center">
+          <p className="text-sm text-muted-foreground">Đang chuyển đến trang đăng nhập...</p>
+          <Button variant="outline" size="sm" onClick={() => router.replace("/login")}>
+            Mở trang đăng nhập
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (

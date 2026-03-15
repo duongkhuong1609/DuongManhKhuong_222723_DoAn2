@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-03-14T09:51:05.195Z",
+  "policy": {
+    "minCoursesPerInstructor": 3
+  },
+  "before": {
+    "activeInstructorsCount": 126,
+    "instructorsBelowMinCount": 1,
+    "zeroCourseCount": 0,
+    "oneCourseCount": 0,
+    "twoCourseCount": 1
+  },
+  "assignment": {
+    "insertedPairsCount": 1
+  },
+  "after": {
+    "instructorsBelowMinCount": 0,
+    "zeroCourseCount": 0,
+    "oneCourseCount": 0,
+    "twoCourseCount": 0
+  },
+  "details": {
+    "instructorsBelowMinBefore": [
+      {
+        "maGV": 55,
+        "tenGV": "Nguyễn Việt Thắng",
+        "maKhoa": "5",
+        "courseCount": 2
+      }
+    ],
+    "insertedPairs": [
+      {
+        "maGV": 55,
+        "tenGV": "Nguyễn Việt Thắng",
+        "maMon": 481,
+        "tenMon": "Anh văn căn bản 1",
+        "strategy": "same-dept",
+        "expertCountBeforePick": 2
+      }
+    ],
+    "instructorsBelowMinAfter": []
+  }
+}

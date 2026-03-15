@@ -10,7 +10,11 @@ const isPublicPath = (pathname: string) => {
 }
 
 const isPublicApiPath = (pathname: string) => {
-  return pathname.startsWith("/api/auth/login") || pathname.startsWith("/api/auth/logout")
+  return (
+    pathname.startsWith("/api/auth/login") ||
+    pathname.startsWith("/api/auth/logout") ||
+    pathname.startsWith("/api/auth/forgot-password")
+  )
 }
 
 export function middleware(request: NextRequest) {
@@ -39,7 +43,12 @@ export function middleware(request: NextRequest) {
       return NextResponse.json({ success: false, error: "Chưa đăng nhập" }, { status: 401 })
     }
 
-    if (session.role === "user" && !pathname.startsWith("/api/user") && !pathname.startsWith("/api/auth/me")) {
+    if (
+      session.role === "user" &&
+      !pathname.startsWith("/api/user") &&
+      !pathname.startsWith("/api/auth/me") &&
+      !pathname.startsWith("/api/schedules/timetable")
+    ) {
       return NextResponse.json({ success: false, error: "Không có quyền truy cập" }, { status: 403 })
     }
 

@@ -129,6 +129,7 @@ export function ScheduleGenerator() {
 
   const hasSelectedMajor = Boolean(selectedFaculty && selectedMajorId)
   const hasMappedSemesters = filteredSemesters.length > 0
+  const selectedMajorName = majors.find((item) => item.id === selectedMajorId)?.name || ""
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -217,6 +218,41 @@ export function ScheduleGenerator() {
         setStatus("error")
         setErrorMessage("Ngành đã chọn không có học kỳ ở trạng thái Đang diễn ra để lập lịch")
         return
+      }
+
+      if (filteredSemesters.length > 1 && selectedSemesterId !== "all") {
+        setErrorMessage("")
+        alert("hãy chọn lập lịch cho tất cả các lớp để cho ra kết quả tốt nhất")
+        return
+      }
+
+      const precheckParams = new URLSearchParams({
+        mode: "precheck",
+        majorId: selectedMajorId,
+      })
+
+      if (selectedSemesterId !== "all") {
+        precheckParams.append("semesterId", selectedSemesterId)
+      } else {
+        filteredSemesters.forEach((semester) => {
+          precheckParams.append("semesterId", semester.id)
+        })
+      }
+
+      const precheckResponse = await fetch(`/api/schedules/generate?${precheckParams.toString()}`, { cache: "no-store" })
+      const precheckPayload = await precheckResponse.json()
+
+      if (!precheckResponse.ok || !precheckPayload.success) {
+        throw new Error(precheckPayload.error || "Không thể kiểm tra dữ liệu lập lịch hiện có")
+      }
+
+      if (precheckPayload.data?.hasExistingSchedule) {
+        const confirmRegenerate = confirm(
+          `ngành này (${precheckPayload.data?.majorName || selectedMajorName || "Chưa rõ ngành"}) đã có thời khóa biểu từ trước, bạn có muốn thực hiện lập lịch lại `,
+        )
+        if (!confirmRegenerate) {
+          return
+        }
       }
 
       setStatus("running")
@@ -483,7 +519,7 @@ export function ScheduleGenerator() {
               </div>
               {hasSelectedMajor && !hasMappedSemesters && (
                 <p className="text-xs text-amber-600">
-                  Ngành này chưa có học kỳ ở trạng thái Đang diễn ra theo năm 1-4 trong CSDL HOC_KY.
+                  Ngành này chưa diễn ra học kỳ nào.
                 </p>
               )}
             </CardContent>

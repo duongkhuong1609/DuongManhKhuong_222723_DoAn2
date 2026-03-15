@@ -85,7 +85,7 @@ export function UserTeachingModule() {
               {data.schedules.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="px-3 py-4 text-center text-muted-foreground">
-                    Chưa có dữ liệu lịch dạy.
+                    Không có lịch dạy hiện tại.
                   </td>
                 </tr>
               ) : (

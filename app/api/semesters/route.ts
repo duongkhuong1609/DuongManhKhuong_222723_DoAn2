@@ -16,7 +16,13 @@ const createDbPool = async () => {
   return pool
 }
 
-const normalizeSemesterStatusLabel = (value: unknown): 'Đang diễn ra' | 'Tạm ngưng' => {
+const SCHEMA_CACHE_TTL_MS = 5 * 60 * 1000
+const tableColumnsCache = new Map<string, { expiresAt: number; columns: Set<string> }>()
+let linkTableCache: { expiresAt: number; name: string } | null = null
+
+type SemesterStatusLabel = 'Đang diễn ra' | 'Đã kết thúc'
+
+const normalizeSemesterStatusLabel = (value: unknown): SemesterStatusLabel => {
   const normalized = String(value || '').trim().toLowerCase()
   if (
     normalized === '2' ||
@@ -29,15 +35,88 @@ const normalizeSemesterStatusLabel = (value: unknown): 'Đang diễn ra' | 'Tạ
   }
   if (
     normalized === '1' ||
+    normalized === '3' ||
+    normalized === 'đã kết thúc' ||
+    normalized === 'da ket thuc' ||
+    normalized === 'completed' ||
+    normalized === 'finished' ||
     normalized === 'tạm dừng' ||
     normalized === 'tam dung' ||
     normalized === 'tạm ngưng' ||
     normalized === 'tam ngung' ||
     normalized === 'paused'
   ) {
-    return 'Tạm ngưng'
+    return 'Đã kết thúc'
   }
-  return 'Tạm ngưng'
+  return 'Đã kết thúc'
+}
+
+const hasPastEndDate = (dateLike: unknown) => {
+  const endDate = new Date(String(dateLike || ''))
+  if (Number.isNaN(endDate.getTime())) return false
+
+  // Consider semester ending at end of day to avoid blocking transitions during the end date itself.
+  const endOfDay = new Date(endDate)
+  endOfDay.setHours(23, 59, 59, 999)
+  return Date.now() > endOfDay.getTime()
+}
+
+const findExistingOngoingSemesterBySlot = async (
+  pool: any,
+  {
+    hasMajorNameColumn,
+    hasMajorIdColumn,
+    majorId,
+    majorName,
+    classYear,
+    semesterName,
+    excludeCode,
+  }: {
+    hasMajorNameColumn: boolean
+    hasMajorIdColumn: boolean
+    majorId: string
+    majorName: string
+    classYear: string
+    semesterName: string
+    excludeCode?: string
+  }
+) => {
+  const requestDb = pool.request()
+  const conditions: string[] = [
+    `UPPER(LTRIM(RTRIM(ISNULL(CAST(hk.TrangThai AS NVARCHAR(50)), '')))) IN (
+      N'ĐANG DIỄN RA', N'DANG DIEN RA', N'ONGOING', N'ACTIVE', N'2'
+    )`,
+    `hk.TenHK = @semesterName`,
+    `CAST(hk.NamHK AS NVARCHAR(50)) = @classYear`,
+    `(hk.DenNgay IS NULL OR TRY_CONVERT(DATETIME, hk.DenNgay) >= GETDATE())`,
+  ]
+
+  requestDb.input('semesterName', semesterName)
+  requestDb.input('classYear', classYear)
+
+  if (excludeCode) {
+    conditions.push('CAST(hk.MaHK AS NVARCHAR(50)) <> @excludeCode')
+    requestDb.input('excludeCode', excludeCode)
+  }
+
+  if (hasMajorIdColumn && majorId) {
+    conditions.push('CAST(hk.MaNganhHK AS NVARCHAR(50)) = @majorId')
+    requestDb.input('majorId', majorId)
+  } else if (hasMajorNameColumn && majorName) {
+    conditions.push("LTRIM(RTRIM(ISNULL(hk.TenNganhHK, ''))) = @majorName")
+    requestDb.input('majorName', majorName)
+  } else {
+    return null
+  }
+
+  const result = await requestDb.query(`
+    SELECT TOP 1 hk.MaHK
+    FROM HOC_KY hk
+    WHERE ${conditions.join(' AND ')}
+    ORDER BY hk.DenNgay DESC, hk.MaHK DESC
+  `)
+
+  return result.recordset?.[0] || null
 }
 
 const parseDateValue = (value: unknown) => {
@@ -71,6 +150,12 @@ const buildNumericExtractExpression = (tableAlias: string, columnName: string) =
 `
 
 const getTableColumns = async (pool: any, tableName: string) => {
+  const cacheKey = String(tableName || '').trim().toUpperCase()
+  const cached = tableColumnsCache.get(cacheKey)
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.columns
+  }
+
   const result = await pool
     .request()
     .input('tableName', tableName)
@@ -80,12 +165,23 @@ const getTableColumns = async (pool: any, tableName: string) => {
       WHERE TABLE_NAME = @tableName
     `)
 
-  return new Set(
+  const columns = new Set<string>(
     result.recordset.map((row: any) => String(row.COLUMN_NAME || '').trim())
   )
+
+  tableColumnsCache.set(cacheKey, {
+    expiresAt: Date.now() + SCHEMA_CACHE_TTL_MS,
+    columns,
+  })
+
+  return columns
 }
 
 const resolveLinkTable = async (pool: any) => {
+  if (linkTableCache && linkTableCache.expiresAt > Date.now()) {
+    return linkTableCache.name
+  }
+
   const result = await pool.request().query(`
     SELECT TABLE_NAME
     FROM INFORMATION_SCHEMA.TABLES
@@ -93,9 +189,18 @@ const resolveLinkTable = async (pool: any) => {
   `)
 
   const names = result.recordset.map((row: any) => String(row.TABLE_NAME || '').trim())
-  if (names.includes('HOC_KY_CAC_MON_HOC')) return 'HOC_KY_CAC_MON_HOC'
-  if (names.includes('HOC_KY_CAC_MON')) return 'HOC_KY_CAC_MON'
-  return ''
+  const name = names.includes('HOC_KY_CAC_MON_HOC')
+    ? 'HOC_KY_CAC_MON_HOC'
+    : names.includes('HOC_KY_CAC_MON')
+      ? 'HOC_KY_CAC_MON'
+      : ''
+
+  linkTableCache = {
+    expiresAt: Date.now() + SCHEMA_CACHE_TTL_MS,
+    name,
+  }
+
+  return name
 }
 
 const resolveAcademicYearLabel = (dateLike: unknown) => {
@@ -255,15 +360,8 @@ export async function GET(request: NextRequest) {
       'hk.TuNgay AS startDate',
       'hk.DenNgay AS endDate',
       'hk.TrangThai AS status',
-      linkTable
-        ? `(SELECT COUNT(1) FROM ${linkTable} hkm WHERE hkm.MaHK = hk.MaHK) AS mappedCourseCount`
-        : '0 AS mappedCourseCount',
-      linkTable
-        ? `(SELECT COALESCE(SUM(TRY_CONVERT(INT, m.SoTinChi)), 0)
-             FROM ${linkTable} hkm
-             INNER JOIN MON m ON hkm.MaMon = m.MaMon
-             WHERE hkm.MaHK = hk.MaHK) AS mappedTotalCredits`
-        : '0 AS mappedTotalCredits',
+      '0 AS mappedCourseCount',
+      '0 AS mappedTotalCredits',
     ]
 
     let query = `
@@ -276,8 +374,17 @@ export async function GET(request: NextRequest) {
     const params: Record<string, any> = {}
 
     if (status) {
-      conditions.push("CAST(hk.TrangThai AS NVARCHAR(50)) = @st")
-      params.st = normalizeSemesterStatusLabel(status)
+      const normalizedStatus = normalizeSemesterStatusLabel(status)
+      if (normalizedStatus === 'Đang diễn ra') {
+        conditions.push(`UPPER(LTRIM(RTRIM(ISNULL(CAST(hk.TrangThai AS NVARCHAR(50)), '')))) IN (
+          N'ĐANG DIỄN RA', N'DANG DIEN RA', N'ONGOING', N'ACTIVE', N'2'
+        )`)
+      } else {
+        conditions.push(`UPPER(LTRIM(RTRIM(ISNULL(CAST(hk.TrangThai AS NVARCHAR(50)), '')))) IN (
+          N'ĐÃ KẾT THÚC', N'DA KET THUC', N'COMPLETED', N'FINISHED', N'3',
+          N'TẠM NGƯNG', N'TAM NGUNG', N'TẠM DỪNG', N'TAM DUNG', N'PAUSED', N'1'
+        )`)
+      }
     }
 
     if (conditions.length) {
@@ -293,7 +400,49 @@ export async function GET(request: NextRequest) {
 
     const result = await requestDb.query(query)
 
-    const mapped = result.recordset.map((row: any) => ({
+    const statsBySemesterId = new Map<string, { mappedCourseCount: number; mappedTotalCredits: number }>()
+    if (linkTable && (result.recordset || []).length > 0) {
+      const semesterNumericIds: number[] = Array.from(
+        new Set<number>(
+          (result.recordset || [])
+            .map((row: any) => Number(String(row.code || '').trim()))
+            .filter((value: number) => Number.isFinite(value) && value > 0)
+        )
+      )
+
+      if (semesterNumericIds.length > 0) {
+      const statsRequest = pool.request()
+      const idPlaceholders = semesterNumericIds.map((id: number, index: number) => {
+        statsRequest.input(`semesterId${index}`, sql.Int, id)
+        return `@semesterId${index}`
+      })
+
+      const statsResult = await statsRequest.query(`
+        SELECT hkm.MaHK AS semesterId,
+               COUNT(1) AS mappedCourseCount,
+               COALESCE(SUM(TRY_CONVERT(INT, m.SoTinChi)), 0) AS mappedTotalCredits
+        FROM ${linkTable} hkm
+        LEFT JOIN MON m ON hkm.MaMon = m.MaMon
+        WHERE hkm.MaHK IN (${idPlaceholders.join(',')})
+        GROUP BY hkm.MaHK
+      `)
+
+      for (const row of statsResult.recordset || []) {
+        const semesterId = String(row.semesterId || '').trim()
+        if (!semesterId) continue
+        statsBySemesterId.set(semesterId, {
+          mappedCourseCount: Number(row.mappedCourseCount || 0),
+          mappedTotalCredits: Number(row.mappedTotalCredits || 0),
+        })
+      }
+      }
+    }
+
+    const mapped = result.recordset.map((row: any) => {
+      const semesterId = String(row.code || '').trim()
+      const stats = statsBySemesterId.get(semesterId)
+
+      return {
       _id: String(row.code || ''),
       code: String(row.code || ''),
       name: String(row.name || '').trim(),
@@ -307,18 +456,15 @@ export async function GET(request: NextRequest) {
       isActive: true,
       isCurrent: false,
       status: normalizeSemesterStatusLabel(row.status),
-      mappedCourseCount: Number(row.mappedCourseCount || 0),
-      mappedTotalCredits: Number(row.mappedTotalCredits || 0),
-    }))
+      mappedCourseCount: Number(stats?.mappedCourseCount || 0),
+      mappedTotalCredits: Number(stats?.mappedTotalCredits || 0),
+    }
+    })
 
     return NextResponse.json({ success: true, data: mapped })
   } catch (error) {
     console.error("Error fetching semesters via mssql:", error)
     return NextResponse.json({ success: false, error: "Lỗi khi tải danh sách học kỳ" }, { status: 500 })
-  } finally {
-    if (pool) {
-      await pool.close()
-    }
   }
 }
 
@@ -434,6 +580,28 @@ export async function POST(request: NextRequest) {
         success: true,
         data: { id: Number(duplicate.recordset[0].MaHK || 0), alreadyExists: true },
       })
+    }
+
+    const existingOngoingSemester = await findExistingOngoingSemesterBySlot(pool, {
+      hasMajorNameColumn,
+      hasMajorIdColumn,
+      majorId,
+      majorName,
+      classYear: String(classYear),
+      semesterName,
+    })
+    if (existingOngoingSemester) {
+      return NextResponse.json(
+        { success: false, error: 'Học kỳ này của ngành đang diễn ra và chưa kết thúc. Vui lòng kết thúc học kỳ hiện tại trước khi tạo mới.' },
+        { status: 400 }
+      )
+    }
+
+    if (status === 'Đã kết thúc' && !hasPastEndDate(endDate)) {
+      return NextResponse.json(
+        { success: false, error: 'Chỉ được đặt trạng thái Đã kết thúc khi đã qua Đến ngày của học kỳ.' },
+        { status: 400 }
+      )
     }
 
     const insertColumns = ['TenHK', 'TrangThai', 'TuNgay', 'DenNgay', 'NamHK']
@@ -618,6 +786,31 @@ export async function PUT(request: NextRequest) {
       const hasAcademicYearColumn = semesterColumns.has('NamHocHK')
       const academicYearLabel = `${academicYearStart}-${academicYearStart + 1}`
 
+      if (normalizedStatus === 'Đã kết thúc' && !hasPastEndDate(endDate)) {
+        return NextResponse.json(
+          { success: false, error: 'Chỉ được chuyển sang Đã kết thúc khi đã qua Đến ngày của học kỳ.' },
+          { status: 400 }
+        )
+      }
+
+      if (normalizedStatus === 'Đang diễn ra') {
+        const existingOngoingSemester = await findExistingOngoingSemesterBySlot(pool, {
+          hasMajorNameColumn,
+          hasMajorIdColumn,
+          majorId,
+          majorName,
+          classYear: String(classYear),
+          semesterName: String(mappedSemesterNumber),
+          excludeCode: code,
+        })
+        if (existingOngoingSemester) {
+          return NextResponse.json(
+            { success: false, error: 'Học kỳ này của ngành đang diễn ra và chưa kết thúc. Không thể cập nhật thành học kỳ đang diễn ra thứ hai.' },
+            { status: 400 }
+          )
+        }
+      }
+
       const setClauses = [
         'TenHK = @semesterName',
         'TrangThai = @status',
@@ -689,6 +882,58 @@ export async function PUT(request: NextRequest) {
 
     if (status) {
       const normalizedStatus = normalizeSemesterStatusLabel(status)
+
+      const semesterColumns = await getTableColumns(pool, 'HOC_KY')
+      const hasMajorNameColumn = semesterColumns.has('TenNganhHK')
+      const hasMajorIdColumn = semesterColumns.has('MaNganhHK')
+
+      const majorSelectParts = [
+        'DenNgay',
+        'TenHK',
+        'NamHK',
+        hasMajorIdColumn ? 'CAST(MaNganhHK AS NVARCHAR(50)) AS MajorId' : "'' AS MajorId",
+        hasMajorNameColumn ? 'TenNganhHK AS MajorName' : "'' AS MajorName",
+      ]
+
+      const semesterResult = await pool
+        .request()
+        .input('code', code)
+        .query(`
+          SELECT TOP 1 ${majorSelectParts.join(', ')}
+          FROM HOC_KY
+          WHERE CAST(MaHK AS NVARCHAR(50)) = @code
+        `)
+
+      if (!semesterResult.recordset.length) {
+        return NextResponse.json({ success: false, error: 'Không tìm thấy học kỳ cần cập nhật' }, { status: 404 })
+      }
+
+      const semesterRow = semesterResult.recordset[0]
+
+      if (normalizedStatus === 'Đã kết thúc' && !hasPastEndDate(semesterRow.DenNgay)) {
+        return NextResponse.json(
+          { success: false, error: 'Chỉ được chuyển sang Đã kết thúc khi đã qua Đến ngày của học kỳ.' },
+          { status: 400 }
+        )
+      }
+
+      if (normalizedStatus === 'Đang diễn ra') {
+        const existingOngoingSemester = await findExistingOngoingSemesterBySlot(pool, {
+          hasMajorNameColumn,
+          hasMajorIdColumn,
+          majorId: String(semesterRow.MajorId || '').trim(),
+          majorName: String(semesterRow.MajorName || '').trim(),
+          classYear: String(semesterRow.NamHK || '').trim(),
+          semesterName: String(semesterRow.TenHK || '').trim(),
+          excludeCode: code,
+        })
+        if (existingOngoingSemester) {
+          return NextResponse.json(
+            { success: false, error: 'Học kỳ này của ngành đang diễn ra và chưa kết thúc. Không thể bật thêm học kỳ đang diễn ra.' },
+            { status: 400 }
+          )
+        }
+      }
 
       await pool
         .request()

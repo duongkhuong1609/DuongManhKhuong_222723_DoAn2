@@ -44,15 +44,28 @@ const getValidInstructorCodesForMajor = async (
   })
 
   const result = await request.query(`
+    WITH ValidExpertiseLoad AS (
+      SELECT
+        gv2.MaGV,
+        COUNT(DISTINCT cm2.MaMon) AS courseCount
+      FROM GIANG_VIEN gv2
+      INNER JOIN CHUYEN_MON_CUA_GV cm2 ON cm2.MaGV = gv2.MaGV
+      INNER JOIN MON m2 ON m2.MaMon = cm2.MaMon
+      INNER JOIN NGANH n2 ON n2.MaNganh = m2.MaNganh
+      WHERE CAST(gv2.MaKhoa AS NVARCHAR(50)) = CAST(n2.MaKhoa AS NVARCHAR(50))
+      GROUP BY gv2.MaGV
+    )
     SELECT DISTINCT gv.MaGV AS code
     FROM NGANH n
     INNER JOIN GIANG_VIEN gv ON gv.MaKhoa = n.MaKhoa
     INNER JOIN CHUYEN_MON_CUA_GV cm ON cm.MaGV = gv.MaGV
     INNER JOIN MON m ON m.MaMon = cm.MaMon
+    INNER JOIN ValidExpertiseLoad vel ON vel.MaGV = gv.MaGV
     WHERE n.MaNganh = @majorId
       AND m.MaNganh = n.MaNganh
       ${hasYear ? "AND TRY_CONVERT(INT, m.NamM) = @year" : ""}
       ${hasSemester ? "AND TRY_CONVERT(INT, m.HocKy) = @semester" : ""}
+      AND vel.courseCount BETWEEN 3 AND 5
       AND UPPER(LTRIM(RTRIM(ISNULL(gv.TrangThai, '')))) IN (
         N'CÓ THỂ DẠY', N'CO THE DAY', N'ACTIVE', N'HOẠT ĐỘNG', N'HOAT DONG', N'ĐANG DẠY', N'DANG DAY'
       )

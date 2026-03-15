@@ -1,0 +1,5280 @@
+{
+  "generatedAt": "2026-03-14T10:26:42.879Z",
+  "policy": {
+    "minExpertsPerCourse": 3,
+    "maxCoursesPerInstructor": 5,
+    "strictSameDepartment": true,
+    "prioritizeExistingSameMajor": true
+  },
+  "totals": {
+    "activeInstructors": 126,
+    "totalCourses": 358
+  },
+  "before": {
+    "deficientCoursesCount": 276
+  },
+  "assignment": {
+    "insertedPairsCount": 0,
+    "swappedPairsCount": 0
+  },
+  "after": {
+    "deficientCoursesCount": 276,
+    "overloadInstructorsCount": 0,
+    "unresolvedCoursesCount": 276
+  },
+  "details": {
+    "deficientCoursesBefore": [
+      {
+        "maMon": 82,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 85,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 87,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 93,
+        "tenMon": "Lập trình căn bản",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 96,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 100,
+        "tenMon": "Cơ sở dữ liệu",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 101,
+        "tenMon": "Kiến trúc máy tính",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 102,
+        "tenMon": "Cấu trúc dữ liệu – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 103,
+        "tenMon": "Cơ sở dữ liệu – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 104,
+        "tenMon": "Nhập môn công nghệ phần mềm",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 105,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 107,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 108,
+        "tenMon": "Phân tích và thiết kế thuật toán",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 109,
+        "tenMon": "Phân tích và thiết kế thuật toán – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 110,
+        "tenMon": "Nguyên lý hệ điều hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 111,
+        "tenMon": "Nguyên lý hệ điều hành – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 113,
+        "tenMon": "Lập trình hướng đối tượng – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 114,
+        "tenMon": "Mạng máy tính",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 115,
+        "tenMon": "Mạng máy tính – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 116,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 117,
+        "tenMon": "Phân tích và thiết kế hệ thống thông tin",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 118,
+        "tenMon": "Phân tích và thiết kế hệ thống thông tin – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 119,
+        "tenMon": "Lập trình web",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 120,
+        "tenMon": "Lập trình web – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 121,
+        "tenMon": "Thiết kế đồ họa",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 122,
+        "tenMon": "Thiết kế đồ họa – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 123,
+        "tenMon": "Anh văn chuyên ngành (CNTT)",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 124,
+        "tenMon": "Quản trị mạng máy tính",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 125,
+        "tenMon": "Quản trị mạng máy tính – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 126,
+        "tenMon": "Hệ quản trị cơ sở dữ liệu",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 127,
+        "tenMon": "Hệ quản trị cơ sở dữ liệu – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 128,
+        "tenMon": "Lập trình .NET",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 129,
+        "tenMon": "Lập trình .NET – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 130,
+        "tenMon": "Xử lý ảnh",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 131,
+        "tenMon": "Điện toán đám mây",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 132,
+        "tenMon": "Điện toán đám mây – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 133,
+        "tenMon": "Trí tuệ nhân tạo",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 134,
+        "tenMon": "Đồ án 1 – cơ sở CNTT",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 135,
+        "tenMon": "An toàn và bảo mật thông tin",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 136,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 137,
+        "tenMon": "Phát triển phần mềm mã nguồn mở",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 138,
+        "tenMon": "Phát triển phần mềm mã nguồn mở – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 139,
+        "tenMon": "Lập trình thiết bị di động",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 140,
+        "tenMon": "Lập trình thiết bị di động – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 141,
+        "tenMon": "Pháp luật về công nghệ thông tin",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 142,
+        "tenMon": "Lập trình Python",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 143,
+        "tenMon": "Lập trình Python – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 144,
+        "tenMon": "Hệ thống thông tin quản lý",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 145,
+        "tenMon": "Phương pháp nghiên cứu và viết báo cáo khoa học",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 146,
+        "tenMon": "Đồ án 2 – chuyên ngành (CNTT)",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 147,
+        "tenMon": "Hệ thống thương mại điện tử",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 148,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 149,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 151,
+        "tenMon": "Công nghệ chuỗi khối",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 152,
+        "tenMon": "Công nghệ chuỗi khối – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 153,
+        "tenMon": "Thực tập cuối khóa (CNTT)",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 154,
+        "tenMon": "Ngôn ngữ mô hình hóa UML",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 155,
+        "tenMon": "Ngôn ngữ mô hình hóa UML – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 156,
+        "tenMon": "Quản lý dự án công nghệ thông tin",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 158,
+        "tenMon": "Kiểm thử phần mềm",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 159,
+        "tenMon": "Kiểm thử phần mềm – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 160,
+        "tenMon": "Nhập môn khoa học dữ liệu",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 161,
+        "tenMon": "Nhập môn khoa học dữ liệu – Thực hành",
+        "maNganh": "1",
+        "maKhoa": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 223,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 224,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 225,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 226,
+        "tenMon": "Triết học",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 227,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 228,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 229,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 230,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 231,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 232,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 233,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 234,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 235,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 236,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 237,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 238,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 239,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 240,
+        "tenMon": "Tâm lý học ứng dụng trong kinh doanh",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 241,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 242,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 243,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 247,
+        "tenMon": "Kinh tế lượng",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 251,
+        "tenMon": "Quản trị học",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 265,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 266,
+        "tenMon": "Kế toán quản trị",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 267,
+        "tenMon": "Phân tích hoạt động kinh doanh",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 268,
+        "tenMon": "Quản trị tài chính",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 269,
+        "tenMon": "Thiết lập & Thẩm định dự án đầu tư",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 270,
+        "tenMon": "Kế toán tài chính",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 271,
+        "tenMon": "Quản trị chất lượng",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 272,
+        "tenMon": "Quản trị chiến lược",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 273,
+        "tenMon": "Quản trị Marketing",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 274,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 275,
+        "tenMon": "Quản trị thương hiệu",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 276,
+        "tenMon": "Thực hành nghề nghiệp 1 (QTKD)",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 277,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 278,
+        "tenMon": "Thị trường chứng khoán",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 279,
+        "tenMon": "Thực tập cuối khóa (QTKD ĐH)",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 280,
+        "tenMon": "Khóa luận tốt nghiệp (QTKD)",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 281,
+        "tenMon": "Quản trị kinh doanh quốc tế",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 282,
+        "tenMon": "E-Marketing",
+        "maNganh": "5",
+        "maKhoa": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 284,
+        "tenMon": "Giáo dục quốc phòng - an ninh",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 286,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 288,
+        "tenMon": "Vật lý đại cương",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 289,
+        "tenMon": "Nhập môn ngành công nghệ kỹ thuật ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 290,
+        "tenMon": "Kỹ thuật nhiệt",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 292,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 295,
+        "tenMon": "Toán cao cấp 2",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 296,
+        "tenMon": "Vật lý đại cương - Thực hành",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 299,
+        "tenMon": "Môi trường và con người",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 302,
+        "tenMon": "Hình họa & Vẽ kỹ thuật",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 304,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 305,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 306,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 307,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 308,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 309,
+        "tenMon": "Sức bền vật liệu - Thực hành",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 310,
+        "tenMon": "Vật liệu cơ khí",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 311,
+        "tenMon": "Chi tiết máy - Đồ án",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 312,
+        "tenMon": "Vật liệu cơ khí - Thực hành",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 313,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 314,
+        "tenMon": "Kỹ thuật điện - điện tử",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 315,
+        "tenMon": "Nguyên lý động cơ đốt trong",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 316,
+        "tenMon": "Động cơ đốt trong - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 317,
+        "tenMon": "Lý thuyết ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 318,
+        "tenMon": "Hệ thống điện động cơ và điều khiển động cơ - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 319,
+        "tenMon": "Hệ thống điện động cơ và điều khiển động cơ",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 320,
+        "tenMon": "Thực tập ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 321,
+        "tenMon": "Thực tập cơ khí (Nguội, hàn, gia công cơ khí)",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 322,
+        "tenMon": "Nguyên lý máy",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 323,
+        "tenMon": "Hệ thống điện và điều khiển tự động trên ô tô - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 324,
+        "tenMon": "Cơ học lưu chất ứng dụng",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 325,
+        "tenMon": "Hệ thống điện và điều khiển tự động trên ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 326,
+        "tenMon": "Chẩn đoán kỹ thuật và bảo dưỡng - sửa chữa ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 327,
+        "tenMon": "Chẩn đoán kỹ thuật và bảo dưỡng - sửa chữa ô tô - Thực hành",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 328,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 329,
+        "tenMon": "Anh văn chuyên ngành (ô tô)",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 330,
+        "tenMon": "Thiết kế và tính toán động cơ đốt trong",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 331,
+        "tenMon": "Thiết kế và tính toán ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 333,
+        "tenMon": "Quản lý chất lượng",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 334,
+        "tenMon": "Cơ điện tử",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 336,
+        "tenMon": "Kỹ thuật ô tô chuyên dụng",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 337,
+        "tenMon": "Công nghệ sản xuất và lắp ráp ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 338,
+        "tenMon": "Phương pháp nghiên cứu khoa học",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 339,
+        "tenMon": "Matlab ứng dụng",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 340,
+        "tenMon": "Nhiên liệu và dầu mỡ",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 341,
+        "tenMon": "Thử nghiệm ô tô và động cơ",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 342,
+        "tenMon": "Hệ thống điều hòa không khí & thiết bị tiện nghi trên ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 343,
+        "tenMon": "Hộp số tự động - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 344,
+        "tenMon": "Truyền động khí nén và thủy lực ứng dụng",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 345,
+        "tenMon": "Thử nghiệm ô tô và động cơ - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 346,
+        "tenMon": "Hệ thống điều hòa không khí ô tô - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 347,
+        "tenMon": "Nhiên liệu mới cho động cơ và ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 348,
+        "tenMon": "Vi khí hậu và nhân trắc học ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 349,
+        "tenMon": "Kỹ thuật nội ngoại thất ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 350,
+        "tenMon": "Công nghệ hàn, sơn ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 351,
+        "tenMon": "Khảo nghiệm hệ thống nhiên liệu Diesel - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 352,
+        "tenMon": "Kỹ thuật an toàn lao động",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 353,
+        "tenMon": "Kỹ thuật kiểm định ô tô",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 354,
+        "tenMon": "Kỹ thuật kiểm định ô tô - Thực tập",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 355,
+        "tenMon": "Thực tập tốt nghiệp (CNKTOTO)",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 357,
+        "tenMon": "Ứng dụng tin học trong thiết kế kỹ thuật",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 358,
+        "tenMon": "Chuyên đề 1: Ô tô điện và Hybrid",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 359,
+        "tenMon": "Chuyên đề 2: Động cơ đốt trong thế hệ mới",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 360,
+        "tenMon": "Khóa luận tốt nghiệp (CNKTOTO)",
+        "maNganh": "4",
+        "maKhoa": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 481,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 482,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 483,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 484,
+        "tenMon": "Triết học",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 485,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 486,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 487,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 488,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 489,
+        "tenMon": "Quản trị học",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 490,
+        "tenMon": "Toán kinh tế",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 491,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 492,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 493,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 494,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 495,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 496,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 497,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 499,
+        "tenMon": "Quản lý chuỗi cung ứng",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 500,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 501,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 502,
+        "tenMon": "Luật kinh tế",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 503,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 504,
+        "tenMon": "Phương pháp nghiên cứu trong kinh tế",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 505,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 515,
+        "tenMon": "Quản trị logistics",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 525,
+        "tenMon": "Quản trị kinh doanh quốc tế",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 526,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 527,
+        "tenMon": "Quản trị lưu trữ và hàng tồn kho",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 528,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 529,
+        "tenMon": "Quản trị rủi ro trong kinh doanh",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 530,
+        "tenMon": "Quản lý dự án",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 531,
+        "tenMon": "Quản trị chiến lược",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 532,
+        "tenMon": "Vận tải và bảo hiểm ngoại thương",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 533,
+        "tenMon": "Nghiệp vụ hải quan",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 534,
+        "tenMon": "Ứng dụng thương mại điện tử",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 535,
+        "tenMon": "Thực tập tốt nghiệp (Logistics)",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 536,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 537,
+        "tenMon": "Quản trị tài chính",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 538,
+        "tenMon": "Thanh toán quốc tế",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 539,
+        "tenMon": "Nghiệp vụ ngoại thương",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 540,
+        "tenMon": "Khóa luận tốt nghiệp (Logistics và QLCCU)",
+        "maNganh": "3",
+        "maKhoa": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 547,
+        "tenMon": "Giải phẫu 1",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 548,
+        "tenMon": "Giải phẫu 1 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 549,
+        "tenMon": "Hóa học đại cương - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 550,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 551,
+        "tenMon": "Sinh học và di truyền",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 552,
+        "tenMon": "Sinh lý",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 554,
+        "tenMon": "Sinh lý - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 555,
+        "tenMon": "Lý sinh",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 556,
+        "tenMon": "Lý sinh - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 557,
+        "tenMon": "Sinh học và di truyền - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 558,
+        "tenMon": "Anh văn căn bản 5",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 559,
+        "tenMon": "Hóa sinh 1",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 560,
+        "tenMon": "Triết học Mác - Lênin",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 561,
+        "tenMon": "Điều dưỡng cơ bản",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 562,
+        "tenMon": "Điều dưỡng cơ bản - Thực tập",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 563,
+        "tenMon": "Hóa sinh 1 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 564,
+        "tenMon": "An toàn sinh học",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 565,
+        "tenMon": "Xác suất thống kê y học",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 566,
+        "tenMon": "Dược lý",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 567,
+        "tenMon": "Sinh lý bệnh và miễn dịch",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 569,
+        "tenMon": "Bệnh học nội khoa",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 570,
+        "tenMon": "Bệnh học ngoại khoa",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 571,
+        "tenMon": "Kỹ thuật xét nghiệm cơ bản",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 572,
+        "tenMon": "Kỹ thuật xét nghiệm cơ bản - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 574,
+        "tenMon": "Mô phôi học",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 575,
+        "tenMon": "Mô phôi học - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 576,
+        "tenMon": "Huyết học tế bào 1",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 577,
+        "tenMon": "Huyết học tế bào 1 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 578,
+        "tenMon": "Vi sinh 1",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 579,
+        "tenMon": "Vi sinh 1 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 580,
+        "tenMon": "Ký sinh trùng 1",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 581,
+        "tenMon": "Ký sinh trùng 1 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 582,
+        "tenMon": "Hóa sinh 2",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 583,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 584,
+        "tenMon": "Phương pháp nghiên cứu khoa học sức khỏe",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 585,
+        "tenMon": "Xét nghiệm tế bào 1",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 586,
+        "tenMon": "Xét nghiệm tế bào 1 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 587,
+        "tenMon": "Huyết học tế bào 2 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 588,
+        "tenMon": "Huyết học tế bào 2",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 589,
+        "tenMon": "Hóa sinh 2 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 590,
+        "tenMon": "Vi sinh 2",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 591,
+        "tenMon": "Vi sinh 2 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 592,
+        "tenMon": "Ký sinh trùng 2",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 593,
+        "tenMon": "Ký sinh trùng 2 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 594,
+        "tenMon": "Lịch sử Đảng Cộng sản Việt Nam",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 595,
+        "tenMon": "Hóa sinh 3",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 596,
+        "tenMon": "Hóa sinh 3 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 597,
+        "tenMon": "Vi sinh 3",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 598,
+        "tenMon": "Vi sinh 3 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 599,
+        "tenMon": "Ký sinh trùng 3",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 600,
+        "tenMon": "Ký sinh trùng 3 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 601,
+        "tenMon": "Y sinh học phân tử",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      },
+      {
+        "maMon": 602,
+        "tenMon": "Y sinh học phân tử - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 603,
+        "tenMon": "Huyết học đông máu - truyền máu",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 604,
+        "tenMon": "Huyết học đông máu - truyền máu - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 605,
+        "tenMon": "Xét nghiệm tế bào 2 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 606,
+        "tenMon": "Xét nghiệm tế bào 2",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 607,
+        "tenMon": "Anh văn chuyên ngành (Xét nghiệm)",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 608,
+        "tenMon": "Quản lý chất lượng phòng xét nghiệm",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 609,
+        "tenMon": "Thực tập KTXN1: Hóa sinh",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 610,
+        "tenMon": "Thực tập KTXN2: Huyết học",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 611,
+        "tenMon": "Vi sinh 4",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 612,
+        "tenMon": "Vi sinh 4 - Thực hành",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 614,
+        "tenMon": "Thực tập tốt nghiệp (Xét nghiệm)",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 615,
+        "tenMon": "Kiểm soát nhiễm khuẩn",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 616,
+        "tenMon": "Thực tập KTXN3: Vi sinh - Ký sinh",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 1
+      },
+      {
+        "maMon": 617,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "6",
+        "maKhoa": "2",
+        "expertCount": 2
+      }
+    ],
+    "insertedPairs": [],
+    "swappedPairs": [],
+    "deficientCoursesAfter": [
+      {
+        "maMon": 82,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 85,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 87,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 93,
+        "tenMon": "Lập trình căn bản",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 96,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 100,
+        "tenMon": "Cơ sở dữ liệu",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 101,
+        "tenMon": "Kiến trúc máy tính",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 102,
+        "tenMon": "Cấu trúc dữ liệu – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 103,
+        "tenMon": "Cơ sở dữ liệu – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 104,
+        "tenMon": "Nhập môn công nghệ phần mềm",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 105,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 107,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 108,
+        "tenMon": "Phân tích và thiết kế thuật toán",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 109,
+        "tenMon": "Phân tích và thiết kế thuật toán – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 110,
+        "tenMon": "Nguyên lý hệ điều hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 111,
+        "tenMon": "Nguyên lý hệ điều hành – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 113,
+        "tenMon": "Lập trình hướng đối tượng – Thực hành",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 114,
+        "tenMon": "Mạng máy tính",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 115,
+        "tenMon": "Mạng máy tính – Thực hành",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 116,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 117,
+        "tenMon": "Phân tích và thiết kế hệ thống thông tin",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 118,
+        "tenMon": "Phân tích và thiết kế hệ thống thông tin – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 119,
+        "tenMon": "Lập trình web",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 120,
+        "tenMon": "Lập trình web – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 121,
+        "tenMon": "Thiết kế đồ họa",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 122,
+        "tenMon": "Thiết kế đồ họa – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 123,
+        "tenMon": "Anh văn chuyên ngành (CNTT)",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 124,
+        "tenMon": "Quản trị mạng máy tính",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 125,
+        "tenMon": "Quản trị mạng máy tính – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 126,
+        "tenMon": "Hệ quản trị cơ sở dữ liệu",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 127,
+        "tenMon": "Hệ quản trị cơ sở dữ liệu – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 128,
+        "tenMon": "Lập trình .NET",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 129,
+        "tenMon": "Lập trình .NET – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 130,
+        "tenMon": "Xử lý ảnh",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 131,
+        "tenMon": "Điện toán đám mây",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 132,
+        "tenMon": "Điện toán đám mây – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 133,
+        "tenMon": "Trí tuệ nhân tạo",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 134,
+        "tenMon": "Đồ án 1 – cơ sở CNTT",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 135,
+        "tenMon": "An toàn và bảo mật thông tin",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 136,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 137,
+        "tenMon": "Phát triển phần mềm mã nguồn mở",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 138,
+        "tenMon": "Phát triển phần mềm mã nguồn mở – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 139,
+        "tenMon": "Lập trình thiết bị di động",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 140,
+        "tenMon": "Lập trình thiết bị di động – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 141,
+        "tenMon": "Pháp luật về công nghệ thông tin",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 142,
+        "tenMon": "Lập trình Python",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 143,
+        "tenMon": "Lập trình Python – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 144,
+        "tenMon": "Hệ thống thông tin quản lý",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 145,
+        "tenMon": "Phương pháp nghiên cứu và viết báo cáo khoa học",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 146,
+        "tenMon": "Đồ án 2 – chuyên ngành (CNTT)",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 147,
+        "tenMon": "Hệ thống thương mại điện tử",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 148,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 149,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 151,
+        "tenMon": "Công nghệ chuỗi khối",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 152,
+        "tenMon": "Công nghệ chuỗi khối – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 153,
+        "tenMon": "Thực tập cuối khóa (CNTT)",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 154,
+        "tenMon": "Ngôn ngữ mô hình hóa UML",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 155,
+        "tenMon": "Ngôn ngữ mô hình hóa UML – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 156,
+        "tenMon": "Quản lý dự án công nghệ thông tin",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 158,
+        "tenMon": "Kiểm thử phần mềm",
+        "maNganh": "1",
+        "expertCount": 2
+      },
+      {
+        "maMon": 159,
+        "tenMon": "Kiểm thử phần mềm – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 160,
+        "tenMon": "Nhập môn khoa học dữ liệu",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 161,
+        "tenMon": "Nhập môn khoa học dữ liệu – Thực hành",
+        "maNganh": "1",
+        "expertCount": 1
+      },
+      {
+        "maMon": 223,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 224,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 225,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 226,
+        "tenMon": "Triết học",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 227,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 228,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 229,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 230,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 231,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 232,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 233,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 234,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 235,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 236,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 237,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 238,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 239,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 240,
+        "tenMon": "Tâm lý học ứng dụng trong kinh doanh",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 241,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 242,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 243,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 247,
+        "tenMon": "Kinh tế lượng",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 251,
+        "tenMon": "Quản trị học",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 265,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 266,
+        "tenMon": "Kế toán quản trị",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 267,
+        "tenMon": "Phân tích hoạt động kinh doanh",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 268,
+        "tenMon": "Quản trị tài chính",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 269,
+        "tenMon": "Thiết lập & Thẩm định dự án đầu tư",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 270,
+        "tenMon": "Kế toán tài chính",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 271,
+        "tenMon": "Quản trị chất lượng",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 272,
+        "tenMon": "Quản trị chiến lược",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 273,
+        "tenMon": "Quản trị Marketing",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 274,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 275,
+        "tenMon": "Quản trị thương hiệu",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 276,
+        "tenMon": "Thực hành nghề nghiệp 1 (QTKD)",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 277,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 278,
+        "tenMon": "Thị trường chứng khoán",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 279,
+        "tenMon": "Thực tập cuối khóa (QTKD ĐH)",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 280,
+        "tenMon": "Khóa luận tốt nghiệp (QTKD)",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 281,
+        "tenMon": "Quản trị kinh doanh quốc tế",
+        "maNganh": "5",
+        "expertCount": 1
+      },
+      {
+        "maMon": 282,
+        "tenMon": "E-Marketing",
+        "maNganh": "5",
+        "expertCount": 2
+      },
+      {
+        "maMon": 284,
+        "tenMon": "Giáo dục quốc phòng - an ninh",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 286,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 288,
+        "tenMon": "Vật lý đại cương",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 289,
+        "tenMon": "Nhập môn ngành công nghệ kỹ thuật ô tô",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 290,
+        "tenMon": "Kỹ thuật nhiệt",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 292,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 295,
+        "tenMon": "Toán cao cấp 2",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 296,
+        "tenMon": "Vật lý đại cương - Thực hành",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 299,
+        "tenMon": "Môi trường và con người",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 302,
+        "tenMon": "Hình họa & Vẽ kỹ thuật",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 304,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 305,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 306,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 307,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 308,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 309,
+        "tenMon": "Sức bền vật liệu - Thực hành",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 310,
+        "tenMon": "Vật liệu cơ khí",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 311,
+        "tenMon": "Chi tiết máy - Đồ án",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 312,
+        "tenMon": "Vật liệu cơ khí - Thực hành",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 313,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 314,
+        "tenMon": "Kỹ thuật điện - điện tử",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 315,
+        "tenMon": "Nguyên lý động cơ đốt trong",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 316,
+        "tenMon": "Động cơ đốt trong - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 317,
+        "tenMon": "Lý thuyết ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 318,
+        "tenMon": "Hệ thống điện động cơ và điều khiển động cơ - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 319,
+        "tenMon": "Hệ thống điện động cơ và điều khiển động cơ",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 320,
+        "tenMon": "Thực tập ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 321,
+        "tenMon": "Thực tập cơ khí (Nguội, hàn, gia công cơ khí)",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 322,
+        "tenMon": "Nguyên lý máy",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 323,
+        "tenMon": "Hệ thống điện và điều khiển tự động trên ô tô - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 324,
+        "tenMon": "Cơ học lưu chất ứng dụng",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 325,
+        "tenMon": "Hệ thống điện và điều khiển tự động trên ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 326,
+        "tenMon": "Chẩn đoán kỹ thuật và bảo dưỡng - sửa chữa ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 327,
+        "tenMon": "Chẩn đoán kỹ thuật và bảo dưỡng - sửa chữa ô tô - Thực hành",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 328,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 329,
+        "tenMon": "Anh văn chuyên ngành (ô tô)",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 330,
+        "tenMon": "Thiết kế và tính toán động cơ đốt trong",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 331,
+        "tenMon": "Thiết kế và tính toán ô tô",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 333,
+        "tenMon": "Quản lý chất lượng",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 334,
+        "tenMon": "Cơ điện tử",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 336,
+        "tenMon": "Kỹ thuật ô tô chuyên dụng",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 337,
+        "tenMon": "Công nghệ sản xuất và lắp ráp ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 338,
+        "tenMon": "Phương pháp nghiên cứu khoa học",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 339,
+        "tenMon": "Matlab ứng dụng",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 340,
+        "tenMon": "Nhiên liệu và dầu mỡ",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 341,
+        "tenMon": "Thử nghiệm ô tô và động cơ",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 342,
+        "tenMon": "Hệ thống điều hòa không khí & thiết bị tiện nghi trên ô tô",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 343,
+        "tenMon": "Hộp số tự động - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 344,
+        "tenMon": "Truyền động khí nén và thủy lực ứng dụng",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 345,
+        "tenMon": "Thử nghiệm ô tô và động cơ - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 346,
+        "tenMon": "Hệ thống điều hòa không khí ô tô - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 347,
+        "tenMon": "Nhiên liệu mới cho động cơ và ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 348,
+        "tenMon": "Vi khí hậu và nhân trắc học ô tô",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 349,
+        "tenMon": "Kỹ thuật nội ngoại thất ô tô",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 350,
+        "tenMon": "Công nghệ hàn, sơn ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 351,
+        "tenMon": "Khảo nghiệm hệ thống nhiên liệu Diesel - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 352,
+        "tenMon": "Kỹ thuật an toàn lao động",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 353,
+        "tenMon": "Kỹ thuật kiểm định ô tô",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 354,
+        "tenMon": "Kỹ thuật kiểm định ô tô - Thực tập",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 355,
+        "tenMon": "Thực tập tốt nghiệp (CNKTOTO)",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 357,
+        "tenMon": "Ứng dụng tin học trong thiết kế kỹ thuật",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 358,
+        "tenMon": "Chuyên đề 1: Ô tô điện và Hybrid",
+        "maNganh": "4",
+        "expertCount": 2
+      },
+      {
+        "maMon": 359,
+        "tenMon": "Chuyên đề 2: Động cơ đốt trong thế hệ mới",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 360,
+        "tenMon": "Khóa luận tốt nghiệp (CNKTOTO)",
+        "maNganh": "4",
+        "expertCount": 1
+      },
+      {
+        "maMon": 481,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 482,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 483,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 484,
+        "tenMon": "Triết học",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 485,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 486,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 487,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 488,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 489,
+        "tenMon": "Quản trị học",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 490,
+        "tenMon": "Toán kinh tế",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 491,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 492,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 493,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 494,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 495,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 496,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 497,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 499,
+        "tenMon": "Quản lý chuỗi cung ứng",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 500,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 501,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 502,
+        "tenMon": "Luật kinh tế",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 503,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 504,
+        "tenMon": "Phương pháp nghiên cứu trong kinh tế",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 505,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 515,
+        "tenMon": "Quản trị logistics",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 525,
+        "tenMon": "Quản trị kinh doanh quốc tế",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 526,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 527,
+        "tenMon": "Quản trị lưu trữ và hàng tồn kho",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 528,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 529,
+        "tenMon": "Quản trị rủi ro trong kinh doanh",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 530,
+        "tenMon": "Quản lý dự án",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 531,
+        "tenMon": "Quản trị chiến lược",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 532,
+        "tenMon": "Vận tải và bảo hiểm ngoại thương",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 533,
+        "tenMon": "Nghiệp vụ hải quan",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 534,
+        "tenMon": "Ứng dụng thương mại điện tử",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 535,
+        "tenMon": "Thực tập tốt nghiệp (Logistics)",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 536,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "3",
+        "expertCount": 2
+      },
+      {
+        "maMon": 537,
+        "tenMon": "Quản trị tài chính",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 538,
+        "tenMon": "Thanh toán quốc tế",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 539,
+        "tenMon": "Nghiệp vụ ngoại thương",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 540,
+        "tenMon": "Khóa luận tốt nghiệp (Logistics và QLCCU)",
+        "maNganh": "3",
+        "expertCount": 1
+      },
+      {
+        "maMon": 547,
+        "tenMon": "Giải phẫu 1",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 548,
+        "tenMon": "Giải phẫu 1 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 549,
+        "tenMon": "Hóa học đại cương - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 550,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 551,
+        "tenMon": "Sinh học và di truyền",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 552,
+        "tenMon": "Sinh lý",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 554,
+        "tenMon": "Sinh lý - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 555,
+        "tenMon": "Lý sinh",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 556,
+        "tenMon": "Lý sinh - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 557,
+        "tenMon": "Sinh học và di truyền - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 558,
+        "tenMon": "Anh văn căn bản 5",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 559,
+        "tenMon": "Hóa sinh 1",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 560,
+        "tenMon": "Triết học Mác - Lênin",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 561,
+        "tenMon": "Điều dưỡng cơ bản",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 562,
+        "tenMon": "Điều dưỡng cơ bản - Thực tập",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 563,
+        "tenMon": "Hóa sinh 1 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 564,
+        "tenMon": "An toàn sinh học",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 565,
+        "tenMon": "Xác suất thống kê y học",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 566,
+        "tenMon": "Dược lý",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 567,
+        "tenMon": "Sinh lý bệnh và miễn dịch",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 569,
+        "tenMon": "Bệnh học nội khoa",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 570,
+        "tenMon": "Bệnh học ngoại khoa",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 571,
+        "tenMon": "Kỹ thuật xét nghiệm cơ bản",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 572,
+        "tenMon": "Kỹ thuật xét nghiệm cơ bản - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 574,
+        "tenMon": "Mô phôi học",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 575,
+        "tenMon": "Mô phôi học - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 576,
+        "tenMon": "Huyết học tế bào 1",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 577,
+        "tenMon": "Huyết học tế bào 1 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 578,
+        "tenMon": "Vi sinh 1",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 579,
+        "tenMon": "Vi sinh 1 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 580,
+        "tenMon": "Ký sinh trùng 1",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 581,
+        "tenMon": "Ký sinh trùng 1 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 582,
+        "tenMon": "Hóa sinh 2",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 583,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 584,
+        "tenMon": "Phương pháp nghiên cứu khoa học sức khỏe",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 585,
+        "tenMon": "Xét nghiệm tế bào 1",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 586,
+        "tenMon": "Xét nghiệm tế bào 1 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 587,
+        "tenMon": "Huyết học tế bào 2 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 588,
+        "tenMon": "Huyết học tế bào 2",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 589,
+        "tenMon": "Hóa sinh 2 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 590,
+        "tenMon": "Vi sinh 2",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 591,
+        "tenMon": "Vi sinh 2 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 592,
+        "tenMon": "Ký sinh trùng 2",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 593,
+        "tenMon": "Ký sinh trùng 2 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 594,
+        "tenMon": "Lịch sử Đảng Cộng sản Việt Nam",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 595,
+        "tenMon": "Hóa sinh 3",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 596,
+        "tenMon": "Hóa sinh 3 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 597,
+        "tenMon": "Vi sinh 3",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 598,
+        "tenMon": "Vi sinh 3 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 599,
+        "tenMon": "Ký sinh trùng 3",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 600,
+        "tenMon": "Ký sinh trùng 3 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 601,
+        "tenMon": "Y sinh học phân tử",
+        "maNganh": "6",
+        "expertCount": 2
+      },
+      {
+        "maMon": 602,
+        "tenMon": "Y sinh học phân tử - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 603,
+        "tenMon": "Huyết học đông máu - truyền máu",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 604,
+        "tenMon": "Huyết học đông máu - truyền máu - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 605,
+        "tenMon": "Xét nghiệm tế bào 2 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 606,
+        "tenMon": "Xét nghiệm tế bào 2",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 607,
+        "tenMon": "Anh văn chuyên ngành (Xét nghiệm)",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 608,
+        "tenMon": "Quản lý chất lượng phòng xét nghiệm",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 609,
+        "tenMon": "Thực tập KTXN1: Hóa sinh",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 610,
+        "tenMon": "Thực tập KTXN2: Huyết học",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 611,
+        "tenMon": "Vi sinh 4",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 612,
+        "tenMon": "Vi sinh 4 - Thực hành",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 614,
+        "tenMon": "Thực tập tốt nghiệp (Xét nghiệm)",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 615,
+        "tenMon": "Kiểm soát nhiễm khuẩn",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 616,
+        "tenMon": "Thực tập KTXN3: Vi sinh - Ký sinh",
+        "maNganh": "6",
+        "expertCount": 1
+      },
+      {
+        "maMon": 617,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "6",
+        "expertCount": 2
+      }
+    ],
+    "unresolvedCourses": [
+      {
+        "maMon": 100,
+        "tenMon": "Cơ sở dữ liệu",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 101,
+        "tenMon": "Kiến trúc máy tính",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 102,
+        "tenMon": "Cấu trúc dữ liệu – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 103,
+        "tenMon": "Cơ sở dữ liệu – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 104,
+        "tenMon": "Nhập môn công nghệ phần mềm",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 105,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 107,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 108,
+        "tenMon": "Phân tích và thiết kế thuật toán",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 109,
+        "tenMon": "Phân tích và thiết kế thuật toán – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 110,
+        "tenMon": "Nguyên lý hệ điều hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 111,
+        "tenMon": "Nguyên lý hệ điều hành – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 116,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 117,
+        "tenMon": "Phân tích và thiết kế hệ thống thông tin",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 118,
+        "tenMon": "Phân tích và thiết kế hệ thống thông tin – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 119,
+        "tenMon": "Lập trình web",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 120,
+        "tenMon": "Lập trình web – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 122,
+        "tenMon": "Thiết kế đồ họa – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 123,
+        "tenMon": "Anh văn chuyên ngành (CNTT)",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 124,
+        "tenMon": "Quản trị mạng máy tính",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 125,
+        "tenMon": "Quản trị mạng máy tính – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 126,
+        "tenMon": "Hệ quản trị cơ sở dữ liệu",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 127,
+        "tenMon": "Hệ quản trị cơ sở dữ liệu – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 128,
+        "tenMon": "Lập trình .NET",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 129,
+        "tenMon": "Lập trình .NET – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 131,
+        "tenMon": "Điện toán đám mây",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 132,
+        "tenMon": "Điện toán đám mây – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 134,
+        "tenMon": "Đồ án 1 – cơ sở CNTT",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 135,
+        "tenMon": "An toàn và bảo mật thông tin",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 136,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 137,
+        "tenMon": "Phát triển phần mềm mã nguồn mở",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 138,
+        "tenMon": "Phát triển phần mềm mã nguồn mở – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 139,
+        "tenMon": "Lập trình thiết bị di động",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 140,
+        "tenMon": "Lập trình thiết bị di động – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 141,
+        "tenMon": "Pháp luật về công nghệ thông tin",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 142,
+        "tenMon": "Lập trình Python",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 143,
+        "tenMon": "Lập trình Python – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 144,
+        "tenMon": "Hệ thống thông tin quản lý",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 146,
+        "tenMon": "Đồ án 2 – chuyên ngành (CNTT)",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 147,
+        "tenMon": "Hệ thống thương mại điện tử",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 148,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 149,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 151,
+        "tenMon": "Công nghệ chuỗi khối",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 152,
+        "tenMon": "Công nghệ chuỗi khối – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 153,
+        "tenMon": "Thực tập cuối khóa (CNTT)",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 154,
+        "tenMon": "Ngôn ngữ mô hình hóa UML",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 155,
+        "tenMon": "Ngôn ngữ mô hình hóa UML – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 156,
+        "tenMon": "Quản lý dự án công nghệ thông tin",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 159,
+        "tenMon": "Kiểm thử phần mềm – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 160,
+        "tenMon": "Nhập môn khoa học dữ liệu",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 161,
+        "tenMon": "Nhập môn khoa học dữ liệu – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 265,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 266,
+        "tenMon": "Kế toán quản trị",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 268,
+        "tenMon": "Quản trị tài chính",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 269,
+        "tenMon": "Thiết lập & Thẩm định dự án đầu tư",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 270,
+        "tenMon": "Kế toán tài chính",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 271,
+        "tenMon": "Quản trị chất lượng",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 273,
+        "tenMon": "Quản trị Marketing",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 274,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 276,
+        "tenMon": "Thực hành nghề nghiệp 1 (QTKD)",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 277,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 278,
+        "tenMon": "Thị trường chứng khoán",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 279,
+        "tenMon": "Thực tập cuối khóa (QTKD ĐH)",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 280,
+        "tenMon": "Khóa luận tốt nghiệp (QTKD)",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 281,
+        "tenMon": "Quản trị kinh doanh quốc tế",
+        "maNganh": "5",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 304,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 305,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 307,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 308,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 309,
+        "tenMon": "Sức bền vật liệu - Thực hành",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 310,
+        "tenMon": "Vật liệu cơ khí",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 311,
+        "tenMon": "Chi tiết máy - Đồ án",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 312,
+        "tenMon": "Vật liệu cơ khí - Thực hành",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 313,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 314,
+        "tenMon": "Kỹ thuật điện - điện tử",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 315,
+        "tenMon": "Nguyên lý động cơ đốt trong",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 316,
+        "tenMon": "Động cơ đốt trong - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 317,
+        "tenMon": "Lý thuyết ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 318,
+        "tenMon": "Hệ thống điện động cơ và điều khiển động cơ - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 319,
+        "tenMon": "Hệ thống điện động cơ và điều khiển động cơ",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 320,
+        "tenMon": "Thực tập ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 321,
+        "tenMon": "Thực tập cơ khí (Nguội, hàn, gia công cơ khí)",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 322,
+        "tenMon": "Nguyên lý máy",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 323,
+        "tenMon": "Hệ thống điện và điều khiển tự động trên ô tô - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 324,
+        "tenMon": "Cơ học lưu chất ứng dụng",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 325,
+        "tenMon": "Hệ thống điện và điều khiển tự động trên ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 326,
+        "tenMon": "Chẩn đoán kỹ thuật và bảo dưỡng - sửa chữa ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 327,
+        "tenMon": "Chẩn đoán kỹ thuật và bảo dưỡng - sửa chữa ô tô - Thực hành",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 328,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 329,
+        "tenMon": "Anh văn chuyên ngành (ô tô)",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 330,
+        "tenMon": "Thiết kế và tính toán động cơ đốt trong",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 333,
+        "tenMon": "Quản lý chất lượng",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 334,
+        "tenMon": "Cơ điện tử",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 337,
+        "tenMon": "Công nghệ sản xuất và lắp ráp ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 338,
+        "tenMon": "Phương pháp nghiên cứu khoa học",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 339,
+        "tenMon": "Matlab ứng dụng",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 341,
+        "tenMon": "Thử nghiệm ô tô và động cơ",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 343,
+        "tenMon": "Hộp số tự động - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 345,
+        "tenMon": "Thử nghiệm ô tô và động cơ - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 346,
+        "tenMon": "Hệ thống điều hòa không khí ô tô - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 347,
+        "tenMon": "Nhiên liệu mới cho động cơ và ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 350,
+        "tenMon": "Công nghệ hàn, sơn ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 351,
+        "tenMon": "Khảo nghiệm hệ thống nhiên liệu Diesel - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 352,
+        "tenMon": "Kỹ thuật an toàn lao động",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 353,
+        "tenMon": "Kỹ thuật kiểm định ô tô",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 354,
+        "tenMon": "Kỹ thuật kiểm định ô tô - Thực tập",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 355,
+        "tenMon": "Thực tập tốt nghiệp (CNKTOTO)",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 357,
+        "tenMon": "Ứng dụng tin học trong thiết kế kỹ thuật",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 359,
+        "tenMon": "Chuyên đề 2: Động cơ đốt trong thế hệ mới",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 360,
+        "tenMon": "Khóa luận tốt nghiệp (CNKTOTO)",
+        "maNganh": "4",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 526,
+        "tenMon": "Lịch sử Đảng cộng sản Việt Nam",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 527,
+        "tenMon": "Quản trị lưu trữ và hàng tồn kho",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 528,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 529,
+        "tenMon": "Quản trị rủi ro trong kinh doanh",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 530,
+        "tenMon": "Quản lý dự án",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 531,
+        "tenMon": "Quản trị chiến lược",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 532,
+        "tenMon": "Vận tải và bảo hiểm ngoại thương",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 533,
+        "tenMon": "Nghiệp vụ hải quan",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 534,
+        "tenMon": "Ứng dụng thương mại điện tử",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 535,
+        "tenMon": "Thực tập tốt nghiệp (Logistics)",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 537,
+        "tenMon": "Quản trị tài chính",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 538,
+        "tenMon": "Thanh toán quốc tế",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 539,
+        "tenMon": "Nghiệp vụ ngoại thương",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 540,
+        "tenMon": "Khóa luận tốt nghiệp (Logistics và QLCCU)",
+        "maNganh": "3",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 556,
+        "tenMon": "Lý sinh - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 557,
+        "tenMon": "Sinh học và di truyền - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 558,
+        "tenMon": "Anh văn căn bản 5",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 559,
+        "tenMon": "Hóa sinh 1",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 560,
+        "tenMon": "Triết học Mác - Lênin",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 562,
+        "tenMon": "Điều dưỡng cơ bản - Thực tập",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 563,
+        "tenMon": "Hóa sinh 1 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 564,
+        "tenMon": "An toàn sinh học",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 565,
+        "tenMon": "Xác suất thống kê y học",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 566,
+        "tenMon": "Dược lý",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 569,
+        "tenMon": "Bệnh học nội khoa",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 570,
+        "tenMon": "Bệnh học ngoại khoa",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 572,
+        "tenMon": "Kỹ thuật xét nghiệm cơ bản - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 574,
+        "tenMon": "Mô phôi học",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 575,
+        "tenMon": "Mô phôi học - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 576,
+        "tenMon": "Huyết học tế bào 1",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 577,
+        "tenMon": "Huyết học tế bào 1 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 579,
+        "tenMon": "Vi sinh 1 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 580,
+        "tenMon": "Ký sinh trùng 1",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 581,
+        "tenMon": "Ký sinh trùng 1 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 583,
+        "tenMon": "Tư tưởng Hồ Chí Minh",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 584,
+        "tenMon": "Phương pháp nghiên cứu khoa học sức khỏe",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 588,
+        "tenMon": "Huyết học tế bào 2",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 589,
+        "tenMon": "Hóa sinh 2 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 590,
+        "tenMon": "Vi sinh 2",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 591,
+        "tenMon": "Vi sinh 2 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 592,
+        "tenMon": "Ký sinh trùng 2",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 593,
+        "tenMon": "Ký sinh trùng 2 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 594,
+        "tenMon": "Lịch sử Đảng Cộng sản Việt Nam",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 595,
+        "tenMon": "Hóa sinh 3",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 596,
+        "tenMon": "Hóa sinh 3 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 602,
+        "tenMon": "Y sinh học phân tử - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 603,
+        "tenMon": "Huyết học đông máu - truyền máu",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 604,
+        "tenMon": "Huyết học đông máu - truyền máu - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 605,
+        "tenMon": "Xét nghiệm tế bào 2 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 606,
+        "tenMon": "Xét nghiệm tế bào 2",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 607,
+        "tenMon": "Anh văn chuyên ngành (Xét nghiệm)",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 608,
+        "tenMon": "Quản lý chất lượng phòng xét nghiệm",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 609,
+        "tenMon": "Thực tập KTXN1: Hóa sinh",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 610,
+        "tenMon": "Thực tập KTXN2: Huyết học",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 611,
+        "tenMon": "Vi sinh 4",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 612,
+        "tenMon": "Vi sinh 4 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 614,
+        "tenMon": "Thực tập tốt nghiệp (Xét nghiệm)",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 615,
+        "tenMon": "Kiểm soát nhiễm khuẩn",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 616,
+        "tenMon": "Thực tập KTXN3: Vi sinh - Ký sinh",
+        "maNganh": "6",
+        "missingExperts": 2
+      },
+      {
+        "maMon": 82,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 85,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 87,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 93,
+        "tenMon": "Lập trình căn bản",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 96,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 113,
+        "tenMon": "Lập trình hướng đối tượng – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 114,
+        "tenMon": "Mạng máy tính",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 115,
+        "tenMon": "Mạng máy tính – Thực hành",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 121,
+        "tenMon": "Thiết kế đồ họa",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 130,
+        "tenMon": "Xử lý ảnh",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 133,
+        "tenMon": "Trí tuệ nhân tạo",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 145,
+        "tenMon": "Phương pháp nghiên cứu và viết báo cáo khoa học",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 158,
+        "tenMon": "Kiểm thử phần mềm",
+        "maNganh": "1",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 223,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 224,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 225,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 226,
+        "tenMon": "Triết học",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 227,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 228,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 229,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 230,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 231,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 232,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 233,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 234,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 235,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 236,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 237,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 238,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 239,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 240,
+        "tenMon": "Tâm lý học ứng dụng trong kinh doanh",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 241,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 242,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 243,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 247,
+        "tenMon": "Kinh tế lượng",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 251,
+        "tenMon": "Quản trị học",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 267,
+        "tenMon": "Phân tích hoạt động kinh doanh",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 272,
+        "tenMon": "Quản trị chiến lược",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 275,
+        "tenMon": "Quản trị thương hiệu",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 282,
+        "tenMon": "E-Marketing",
+        "maNganh": "5",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 284,
+        "tenMon": "Giáo dục quốc phòng - an ninh",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 286,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 288,
+        "tenMon": "Vật lý đại cương",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 289,
+        "tenMon": "Nhập môn ngành công nghệ kỹ thuật ô tô",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 290,
+        "tenMon": "Kỹ thuật nhiệt",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 292,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 295,
+        "tenMon": "Toán cao cấp 2",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 296,
+        "tenMon": "Vật lý đại cương - Thực hành",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 299,
+        "tenMon": "Môi trường và con người",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 302,
+        "tenMon": "Hình họa & Vẽ kỹ thuật",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 306,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 331,
+        "tenMon": "Thiết kế và tính toán ô tô",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 336,
+        "tenMon": "Kỹ thuật ô tô chuyên dụng",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 340,
+        "tenMon": "Nhiên liệu và dầu mỡ",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 342,
+        "tenMon": "Hệ thống điều hòa không khí & thiết bị tiện nghi trên ô tô",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 344,
+        "tenMon": "Truyền động khí nén và thủy lực ứng dụng",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 348,
+        "tenMon": "Vi khí hậu và nhân trắc học ô tô",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 349,
+        "tenMon": "Kỹ thuật nội ngoại thất ô tô",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 358,
+        "tenMon": "Chuyên đề 1: Ô tô điện và Hybrid",
+        "maNganh": "4",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 481,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 482,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 483,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 484,
+        "tenMon": "Triết học",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 485,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 486,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 487,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 488,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 489,
+        "tenMon": "Quản trị học",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 490,
+        "tenMon": "Toán kinh tế",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 491,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 492,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 493,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 494,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 495,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 496,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 497,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 499,
+        "tenMon": "Quản lý chuỗi cung ứng",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 500,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 501,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 502,
+        "tenMon": "Luật kinh tế",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 503,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 504,
+        "tenMon": "Phương pháp nghiên cứu trong kinh tế",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 505,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 515,
+        "tenMon": "Quản trị logistics",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 525,
+        "tenMon": "Quản trị kinh doanh quốc tế",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 536,
+        "tenMon": "Chuyển đổi số",
+        "maNganh": "3",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 547,
+        "tenMon": "Giải phẫu 1",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 548,
+        "tenMon": "Giải phẫu 1 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 549,
+        "tenMon": "Hóa học đại cương - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 550,
+        "tenMon": "Anh văn căn bản 4",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 551,
+        "tenMon": "Sinh học và di truyền",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 552,
+        "tenMon": "Sinh lý",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 554,
+        "tenMon": "Sinh lý - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 555,
+        "tenMon": "Lý sinh",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 561,
+        "tenMon": "Điều dưỡng cơ bản",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 567,
+        "tenMon": "Sinh lý bệnh và miễn dịch",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 571,
+        "tenMon": "Kỹ thuật xét nghiệm cơ bản",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 578,
+        "tenMon": "Vi sinh 1",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 582,
+        "tenMon": "Hóa sinh 2",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 585,
+        "tenMon": "Xét nghiệm tế bào 1",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 586,
+        "tenMon": "Xét nghiệm tế bào 1 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 587,
+        "tenMon": "Huyết học tế bào 2 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 597,
+        "tenMon": "Vi sinh 3",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 598,
+        "tenMon": "Vi sinh 3 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 599,
+        "tenMon": "Ký sinh trùng 3",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 600,
+        "tenMon": "Ký sinh trùng 3 - Thực hành",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 601,
+        "tenMon": "Y sinh học phân tử",
+        "maNganh": "6",
+        "missingExperts": 1
+      },
+      {
+        "maMon": 617,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "6",
+        "missingExperts": 1
+      }
+    ],
+    "overloadInstructorsAfter": []
+  }
+}

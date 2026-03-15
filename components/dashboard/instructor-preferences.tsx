@@ -14,6 +14,7 @@ interface PreferenceInstructorSummary {
   department: string
   timeCount: number
   otherCount: number
+  pendingOtherCount?: number
 }
 
 interface TimePreferenceItem {
@@ -27,6 +28,18 @@ interface OtherPreferenceItem {
   id: number
   tenNV: string
   giaTri: string
+  trangThaiDuyet: string
+}
+
+const getApprovalTextColor = (status: string) => {
+  if (status === "Đã duyệt") return "text-emerald-700"
+  return "text-red-600"
+}
+
+const getApprovalBadgeClassName = (status: string) => {
+  if (status === "Đã duyệt") return "bg-emerald-100 text-emerald-700 border-emerald-300"
+  if (status === "Không duyệt") return "bg-red-100 text-red-700 border-red-300"
+  return "bg-red-100 text-red-700 border-red-300"
 }
 
 export function InstructorPreferencesModule() {
@@ -146,6 +159,36 @@ export function InstructorPreferencesModule() {
     }
   }
 
+  const handleUpdateOtherApproval = async (preferenceId: number, trangThaiDuyet: "Đã duyệt" | "Không duyệt") => {
+    if (!selectedPreferenceInstructor || !Number.isFinite(preferenceId)) return
+
+    try {
+      const res = await fetch("/api/instructors/preferences", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "other",
+          maGV: selectedPreferenceInstructor,
+          preferenceId,
+          trangThaiDuyet,
+        }),
+      })
+
+      const json = await res.json()
+      if (!res.ok || !json.success) {
+        alert(json.error || "Không thể cập nhật trạng thái duyệt")
+        return
+      }
+
+      await loadPreferenceDetails(selectedPreferenceInstructor)
+      await loadPreferenceInstructors()
+      alert(`Đã cập nhật trạng thái: ${trangThaiDuyet}`)
+    } catch (error) {
+      console.error("Error updating approval status:", error)
+      alert("Lỗi khi cập nhật trạng thái duyệt")
+    }
+  }
+
   useEffect(() => {
     loadPreferenceInstructors()
   }, [])
@@ -218,9 +261,18 @@ export function InstructorPreferencesModule() {
                       }}
                     >
                       <p className="font-medium">{item.tenGV}</p>
+                      {(item.pendingOtherCount || 0) > 0 ? (
+                        <span
+                          className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-red-500"
+                          title="Có nguyện vọng đặc biệt đang chờ xử lý"
+                        />
+                      ) : null}
                       <p className="text-xs text-muted-foreground">{item.emailGV}</p>
                       <p className="text-xs text-muted-foreground">{item.department || "Chưa có khoa"}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">Thời gian: {item.timeCount} • Đặc biệt: {item.otherCount}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        Thời gian: {item.timeCount} • Đặc biệt: {item.otherCount}
+                        {(item.pendingOtherCount || 0) > 0 ? ` • Chờ duyệt: ${item.pendingOtherCount}` : ""}
+                      </p>
                     </button>
                   ))
                 )}
@@ -266,7 +318,7 @@ export function InstructorPreferencesModule() {
               </div>
 
               <div className="rounded-lg border p-4">
-                <h3 className="mb-3 font-medium">Nguyện vọng đặc biệt (chỉ xem)</h3>
+                <h3 className="mb-3 font-medium">Nguyện vọng đặc biệt (duyệt/không duyệt)</h3>
                 {loadingPreferenceDetails ? (
                   <p className="text-sm text-muted-foreground">Đang tải chi tiết...</p>
                 ) : otherPreferences.length === 0 ? (
@@ -275,8 +327,29 @@ export function InstructorPreferencesModule() {
                   <div className="space-y-2">
                     {otherPreferences.map((item) => (
                       <div key={item.id} className="rounded-md border p-3">
-                        <p className="font-medium">{item.tenNV}</p>
+                        <p className={cn("font-medium", getApprovalTextColor(item.trangThaiDuyet))}>{item.tenNV}</p>
                         <p className="text-sm text-muted-foreground">Mức độ ưu tiên: {item.giaTri}</p>
+                        <p className={cn("mt-1 inline-flex rounded-full border px-2 py-0.5 text-xs font-medium", getApprovalBadgeClassName(item.trangThaiDuyet))}>
+                          {item.trangThaiDuyet}
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            className="bg-emerald-600 text-white hover:bg-emerald-700"
+                            onClick={() => handleUpdateOtherApproval(item.id, "Đã duyệt")}
+                          >
+                            Duyệt
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleUpdateOtherApproval(item.id, "Không duyệt")}
+                          >
+                            Không duyệt
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </div>

@@ -1,0 +1,2314 @@
+{
+  "generatedAt": "2026-03-14T10:12:58.741Z",
+  "policy": {
+    "minCoursesPerInstructor": 3,
+    "maxCoursesPerInstructor": 4,
+    "departmentStrictMatch": true
+  },
+  "totals": {
+    "managedInstructors": 126,
+    "courses": 358
+  },
+  "actions": {
+    "removedInvalidDepartmentPairs": 216,
+    "removedOverflowPairs": 159,
+    "insertedPairs": 51
+  },
+  "after": {
+    "remainingCountViolations": 0,
+    "remainingCrossDepartmentViolations": 0
+  },
+  "details": {
+    "removedInvalidDepartmentPairs": [
+      {
+        "maGV": 1,
+        "maMon": 223,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 1,
+        "maMon": 283,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 1,
+        "maMon": 481,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 1,
+        "maMon": 541,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 229,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 265,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 304,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 335,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 487,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 526,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 568,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 2,
+        "maMon": 594,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 3,
+        "maMon": 229,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 3,
+        "maMon": 304,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 3,
+        "maMon": 487,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 3,
+        "maMon": 568,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 4,
+        "maMon": 227,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 4,
+        "maMon": 294,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 4,
+        "maMon": 493,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 4,
+        "maMon": 546,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 6,
+        "maMon": 243,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 6,
+        "maMon": 308,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 6,
+        "maMon": 505,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 6,
+        "maMon": 573,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 7,
+        "maMon": 274,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 7,
+        "maMon": 356,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 7,
+        "maMon": 528,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 7,
+        "maMon": 617,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 8,
+        "maMon": 228,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 8,
+        "maMon": 501,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 9,
+        "maMon": 224,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 9,
+        "maMon": 482,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 9,
+        "maMon": 544,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 11,
+        "maMon": 231,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 11,
+        "maMon": 291,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 11,
+        "maMon": 491,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 11,
+        "maMon": 542,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 12,
+        "maMon": 277,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 12,
+        "maMon": 332,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 12,
+        "maMon": 536,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 12,
+        "maMon": 613,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 14,
+        "maMon": 97,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 14,
+        "maMon": 241,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 14,
+        "maMon": 305,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 14,
+        "maMon": 496,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 116,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 136,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 255,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 265,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 328,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 335,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 512,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 15,
+        "maMon": 526,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 16,
+        "maMon": 148,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 16,
+        "maMon": 274,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 16,
+        "maMon": 356,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 16,
+        "maMon": 528,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 83,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 84,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 224,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 225,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 285,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 482,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 17,
+        "maMon": 483,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 21,
+        "maMon": 148,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 21,
+        "maMon": 274,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 21,
+        "maMon": 356,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 21,
+        "maMon": 528,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 23,
+        "maMon": 313,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 26,
+        "maMon": 89,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 26,
+        "maMon": 232,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 26,
+        "maMon": 492,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 27,
+        "maMon": 84,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 27,
+        "maMon": 225,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 27,
+        "maMon": 483,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 27,
+        "maMon": 545,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 28,
+        "maMon": 91,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 28,
+        "maMon": 234,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 28,
+        "maMon": 485,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 33,
+        "maMon": 92,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 33,
+        "maMon": 235,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 33,
+        "maMon": 486,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 35,
+        "maMon": 91,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 35,
+        "maMon": 234,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 35,
+        "maMon": 485,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 36,
+        "maMon": 98,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 36,
+        "maMon": 242,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 36,
+        "maMon": 497,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 36,
+        "maMon": 553,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 37,
+        "maMon": 156,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 37,
+        "maMon": 162,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 37,
+        "maMon": 530,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 37,
+        "maMon": 538,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 38,
+        "maMon": 499,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 38,
+        "maMon": 517,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 88,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 136,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 291,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 335,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 491,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 526,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 542,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 39,
+        "maMon": 594,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 40,
+        "maMon": 489,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 41,
+        "maMon": 84,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 41,
+        "maMon": 285,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 41,
+        "maMon": 483,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 41,
+        "maMon": 545,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 42,
+        "maMon": 531,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 43,
+        "maMon": 105,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 43,
+        "maMon": 501,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 43,
+        "maMon": 532,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 90,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 293,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 484,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 490,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 494,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 495,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 500,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 502,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 503,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 504,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 506,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 507,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 508,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 509,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 510,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 511,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 513,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 514,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 516,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 518,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 519,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 520,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 521,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 522,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 523,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 524,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 525,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 527,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 529,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 533,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 534,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 535,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 537,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 539,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 540,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 44,
+        "maMon": 560,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 45,
+        "maMon": 97,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 45,
+        "maMon": 305,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 45,
+        "maMon": 496,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 45,
+        "maMon": 517,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 45,
+        "maMon": 543,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 46,
+        "maMon": 96,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 46,
+        "maMon": 304,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 46,
+        "maMon": 487,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 46,
+        "maMon": 568,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 47,
+        "maMon": 88,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 47,
+        "maMon": 291,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 47,
+        "maMon": 491,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 47,
+        "maMon": 542,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 48,
+        "maMon": 107,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 48,
+        "maMon": 308,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 48,
+        "maMon": 499,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 48,
+        "maMon": 505,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 48,
+        "maMon": 517,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 48,
+        "maMon": 573,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 49,
+        "maMon": 92,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 49,
+        "maMon": 145,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 49,
+        "maMon": 235,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 49,
+        "maMon": 287,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 50,
+        "maMon": 83,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 50,
+        "maMon": 224,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 50,
+        "maMon": 297,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 50,
+        "maMon": 544,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 51,
+        "maMon": 267,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 51,
+        "maMon": 601,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 51,
+        "maMon": 602,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 52,
+        "maMon": 230,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 52,
+        "maMon": 322,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 53,
+        "maMon": 298,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 53,
+        "maMon": 592,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 53,
+        "maMon": 593,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 54,
+        "maMon": 108,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 54,
+        "maMon": 109,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 54,
+        "maMon": 301,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 55,
+        "maMon": 104,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 56,
+        "maMon": 137,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 56,
+        "maMon": 138,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 56,
+        "maMon": 149,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 56,
+        "maMon": 277,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 56,
+        "maMon": 332,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 56,
+        "maMon": 613,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 57,
+        "maMon": 106,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 57,
+        "maMon": 233,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 57,
+        "maMon": 263,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 57,
+        "maMon": 307,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 58,
+        "maMon": 83,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 58,
+        "maMon": 106,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 58,
+        "maMon": 224,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 58,
+        "maMon": 233,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 58,
+        "maMon": 307,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 58,
+        "maMon": 544,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 91,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 96,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 229,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 234,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 286,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 304,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 59,
+        "maMon": 568,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 60,
+        "maMon": 97,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 60,
+        "maMon": 241,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 60,
+        "maMon": 305,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 60,
+        "maMon": 310,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 60,
+        "maMon": 312,
+        "reason": "cross-department"
+      },
+      {
+        "maGV": 60,
+        "maMon": 543,
+        "reason": "cross-department"
+      }
+    ],
+    "removedOverflowPairs": [
+      {
+        "maGV": 5,
+        "maMon": 159,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 157,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 155,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 154,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 153,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 152,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 151,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 150,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 147,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 146,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 144,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 143,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 142,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 141,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 140,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 139,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 135,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 134,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 132,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 131,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 129,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 128,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 127,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 126,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 125,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 124,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 123,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 120,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 119,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 118,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 117,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 111,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 110,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 103,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 102,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 101,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 100,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 99,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 10,
+        "maMon": 94,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 13,
+        "maMon": 579,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 619,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 618,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 616,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 615,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 614,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 612,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 611,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 610,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 609,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 608,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 606,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 605,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 604,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 603,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 596,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 595,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 591,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 590,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 584,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 583,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 581,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 580,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 577,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 576,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 575,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 574,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 570,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 569,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 566,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 565,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 564,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 563,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 559,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 558,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 557,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 15,
+        "maMon": 556,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 18,
+        "maMon": 607,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 19,
+        "maMon": 602,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 20,
+        "maMon": 572,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 22,
+        "maMon": 562,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 24,
+        "maMon": 588,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 360,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 359,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 357,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 355,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 354,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 353,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 352,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 351,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 350,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 347,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 346,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 345,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 343,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 341,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 339,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 338,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 337,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 334,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 333,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 330,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 329,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 327,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 326,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 325,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 324,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 323,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 321,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 320,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 319,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 318,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 317,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 316,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 315,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 314,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 311,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 309,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 303,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 26,
+        "maMon": 300,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 281,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 280,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 279,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 278,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 276,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 273,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 271,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 270,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 269,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 268,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 266,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 264,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 262,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 261,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 260,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 259,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 258,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 257,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 256,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 253,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 252,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 250,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 249,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 248,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 246,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 245,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 244,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 240,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 44,
+        "maMon": 239,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 76,
+        "maMon": 86,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 77,
+        "maMon": 160,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 78,
+        "maMon": 157,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 79,
+        "maMon": 161,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 80,
+        "maMon": 162,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 81,
+        "maMon": 122,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 82,
+        "maMon": 150,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 83,
+        "maMon": 113,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 128,
+        "maMon": 589,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 129,
+        "maMon": 619,
+        "reason": "overflow>4"
+      },
+      {
+        "maGV": 130,
+        "maMon": 618,
+        "reason": "overflow>4"
+      }
+    ],
+    "insertedPairs": [
+      {
+        "maGV": 1,
+        "tenGV": "Nguyễn Văn Thành",
+        "maMon": 84,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "1",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 2,
+        "tenGV": "Lê Thị Thanh Thủy",
+        "maMon": 91,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "1",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 4,
+        "tenGV": "Phạm Hoàng Hải",
+        "maMon": 92,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "1",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 11,
+        "tenGV": "Tạ Quang Bửu",
+        "maMon": 97,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "1",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 17,
+        "tenGV": "Nguyễn Đình Chiểu",
+        "maMon": 542,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "6",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 27,
+        "tenGV": "Lê Đình Chinh",
+        "maMon": 291,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "4",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 28,
+        "tenGV": "Phạm Minh Chính",
+        "maMon": 304,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "4",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 33,
+        "tenGV": "Bùi Quang Ngọc",
+        "maMon": 305,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "4",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 35,
+        "tenGV": "Lê Quang Tiến",
+        "maMon": 307,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "4",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 36,
+        "tenGV": "Nguyễn Đức Hải",
+        "maMon": 308,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "4",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 37,
+        "tenGV": "Đặng Hùng Võ",
+        "maMon": 224,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 37,
+        "tenGV": "Đặng Hùng Võ",
+        "maMon": 234,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 37,
+        "tenGV": "Đặng Hùng Võ",
+        "maMon": 274,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 38,
+        "tenGV": "Nguyễn Thị Phiến",
+        "maMon": 223,
+        "tenMon": "Anh văn căn bản 1",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 38,
+        "tenGV": "Nguyễn Thị Phiến",
+        "maMon": 224,
+        "tenMon": "Giáo dục quốc phòng – an ninh",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 39,
+        "tenGV": "Trần Vinh Quang",
+        "maMon": 225,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 40,
+        "tenGV": "Lê Hoàng Diệp Thảo",
+        "maMon": 227,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 41,
+        "tenGV": "Đặng Lê Nguyên Vũ",
+        "maMon": 229,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 42,
+        "tenGV": "Phạm Nhật Vượng",
+        "maMon": 230,
+        "tenMon": "Kinh tế vi mô",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 43,
+        "tenGV": "Nguyễn Thị Phương Thảo",
+        "maMon": 232,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 43,
+        "tenGV": "Nguyễn Thị Phương Thảo",
+        "maMon": 233,
+        "tenMon": "Lý thuyết xác suất và thống kê toán",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 45,
+        "tenGV": "Hồ Hùng Anh",
+        "maMon": 234,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 45,
+        "tenGV": "Hồ Hùng Anh",
+        "maMon": 235,
+        "tenMon": "Toán cao cấp 1",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 46,
+        "tenGV": "Nguyễn Đăng Quang",
+        "maMon": 239,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 47,
+        "tenGV": "Trần Bá Dương",
+        "maMon": 240,
+        "tenMon": "Tâm lý học ứng dụng trong kinh doanh",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 48,
+        "tenGV": "Trương Thị Lệ Khanh",
+        "maMon": 241,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 48,
+        "tenGV": "Trương Thị Lệ Khanh",
+        "maMon": 242,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "5",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 49,
+        "tenGV": "Nguyễn Mạnh Tường",
+        "maMon": 483,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 49,
+        "tenGV": "Nguyễn Mạnh Tường",
+        "maMon": 491,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 50,
+        "tenGV": "Lê Viết Hải",
+        "maMon": 517,
+        "tenMon": "Quản lý chuỗi cung ứng bền vững",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 50,
+        "tenGV": "Lê Viết Hải",
+        "maMon": 528,
+        "tenMon": "Khởi nghiệp và đổi mới sáng tạo",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 51,
+        "tenGV": "Nguyễn Cao Trí",
+        "maMon": 483,
+        "tenMon": "Giáo dục thể chất 1",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 51,
+        "tenGV": "Nguyễn Cao Trí",
+        "maMon": 484,
+        "tenMon": "Triết học",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 51,
+        "tenGV": "Nguyễn Cao Trí",
+        "maMon": 485,
+        "tenMon": "Pháp luật đại cương",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 52,
+        "tenGV": "Đoàn Nguyên Đức",
+        "maMon": 487,
+        "tenMon": "Kinh tế chính trị",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 52,
+        "tenGV": "Đoàn Nguyên Đức",
+        "maMon": 489,
+        "tenMon": "Quản trị học",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 53,
+        "tenGV": "Trần Kim Thành",
+        "maMon": 490,
+        "tenMon": "Toán kinh tế",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 53,
+        "tenGV": "Trần Kim Thành",
+        "maMon": 491,
+        "tenMon": "Anh văn căn bản 2",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 53,
+        "tenGV": "Trần Kim Thành",
+        "maMon": 492,
+        "tenMon": "Giáo dục thể chất 2",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 54,
+        "tenGV": "Võ Quốc Thắng",
+        "maMon": 493,
+        "tenMon": "Tin học căn bản",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 54,
+        "tenGV": "Võ Quốc Thắng",
+        "maMon": 494,
+        "tenMon": "Kinh tế vĩ mô",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 54,
+        "tenGV": "Võ Quốc Thắng",
+        "maMon": 495,
+        "tenMon": "Marketing căn bản",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 55,
+        "tenGV": "Nguyễn Việt Thắng",
+        "maMon": 496,
+        "tenMon": "Anh văn căn bản 3",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 56,
+        "tenGV": "Nguyễn Quốc Cường",
+        "maMon": 497,
+        "tenMon": "Giáo dục thể chất 3",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 56,
+        "tenGV": "Nguyễn Quốc Cường",
+        "maMon": 499,
+        "tenMon": "Quản lý chuỗi cung ứng",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 57,
+        "tenGV": "Lý Quí Trung",
+        "maMon": 500,
+        "tenMon": "Logic học đại cương",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 57,
+        "tenGV": "Lý Quí Trung",
+        "maMon": 501,
+        "tenMon": "Tâm lý học đại cương",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 58,
+        "tenGV": "Phan Minh Thông",
+        "maMon": 502,
+        "tenMon": "Luật kinh tế",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 59,
+        "tenGV": "Nguyễn Hòa Bình",
+        "maMon": 503,
+        "tenMon": "Nguyên lý kế toán",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 60,
+        "tenGV": "Lê Hồng Minh",
+        "maMon": 504,
+        "tenMon": "Phương pháp nghiên cứu trong kinh tế",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      },
+      {
+        "maGV": 60,
+        "tenGV": "Lê Hồng Minh",
+        "maMon": 505,
+        "tenMon": "Chủ nghĩa xã hội khoa học",
+        "maNganh": "3",
+        "strategy": "same-department-fill-min3"
+      }
+    ],
+    "violationsAfter": [],
+    "crossDeptViolationsAfter": []
+  }
+}

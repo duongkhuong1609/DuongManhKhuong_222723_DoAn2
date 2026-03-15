@@ -45,6 +45,39 @@ const resolveOtherIdColumn = (columns: Set<string>) => {
   return "MaNVK"
 }
 
+const resolveOtherStatusColumn = (columns: Set<string>) => {
+  if (columns.has("trangthaiduyet")) return "TrangThaiDuyet"
+  if (columns.has("trangthai")) return "TrangThai"
+  return "TrangThaiDuyet"
+}
+
+const normalizeApprovalStatus = (value: unknown) => {
+  const raw = String(value || "").trim().toLowerCase()
+  if (!raw) return "Chưa duyệt"
+  if (raw === "1" || raw.includes("da duyet") || raw.includes("đã duyệt") || raw.includes("approved")) {
+    return "Đã duyệt"
+  }
+  if (raw === "2" || raw.includes("khong duyet") || raw.includes("không duyệt") || raw.includes("rejected")) {
+    return "Không duyệt"
+  }
+  if (raw === "0" || raw.includes("chua duyet") || raw.includes("chưa duyệt") || raw.includes("pending")) {
+    return "Chưa duyệt"
+  }
+  return "Chưa duyệt"
+}
+
+const isIdentityColumn = async (pool: any, tableName: string, columnName: string) => {
+  const result = await pool
+    .request()
+    .input("tableName", tableName)
+    .input("columnName", columnName)
+    .query(`
+      SELECT COLUMNPROPERTY(OBJECT_ID(@tableName), @columnName, 'IsIdentity') AS IsIdentity
+    `)
+
+  return Number(result.recordset?.[0]?.IsIdentity || 0) === 1
+}
+
 export async function GET(request: NextRequest) {
   let pool: any
   try {
@@ -68,6 +101,9 @@ export async function GET(request: NextRequest) {
 
     const timeIdColumn = resolveTimeIdColumn(timeColumns)
     const otherNameColumn = resolveOtherNameColumn(otherColumns)
+    const otherIdColumn = resolveOtherIdColumn(otherColumns)
+    const hasOtherStatusColumn = otherColumns.has("trangthaiduyet") || otherColumns.has("trangthai")
+    const otherStatusColumn = resolveOtherStatusColumn(otherColumns)
 
     const [timeResult, otherResult] = await Promise.all([
       pool
@@ -83,10 +119,11 @@ export async function GET(request: NextRequest) {
         .request()
         .input("maGV", session.maGV)
         .query(`
-          SELECT MaNVK, MaGV, ${otherNameColumn} AS TenNVK, GiaTri
+          SELECT ${otherIdColumn} AS preferenceId, MaGV, ${otherNameColumn} AS TenNVK, GiaTri,
+                 ${hasOtherStatusColumn ? `CAST(${otherStatusColumn} AS NVARCHAR(50))` : "CAST(N'Chưa duyệt' AS NVARCHAR(50))"} AS TrangThaiDuyet
           FROM NGUYEN_VONG_KHAC
           WHERE MaGV = @maGV
-          ORDER BY MaNVK DESC
+          ORDER BY preferenceId DESC
         `),
     ])
 
@@ -99,10 +136,11 @@ export async function GET(request: NextRequest) {
     }))
 
     const otherPreferences = (otherResult.recordset || []).map((row: any) => ({
-      maNVK: String(row.MaNVK || "").trim(),
+      maNVK: String(row.preferenceId || "").trim(),
       maGV: String(row.MaGV || "").trim(),
       tenNV: String(row.TenNVK || "").trim(),
       giaTri: String(row.GiaTri || "").trim(),
+      trangThaiDuyet: normalizeApprovalStatus(row.TrangThaiDuyet),
     }))
 
     return NextResponse.json({
@@ -197,16 +235,42 @@ export async function POST(request: NextRequest) {
       }
 
       const otherNameColumn = resolveOtherNameColumn(otherColumns)
+      const otherIdColumn = resolveOtherIdColumn(otherColumns)
+      const hasOtherStatusColumn = otherColumns.has("trangthaiduyet") || otherColumns.has("trangthai")
+      const otherStatusColumn = resolveOtherStatusColumn(otherColumns)
+      const idIsIdentity = await isIdentityColumn(pool, "NGUYEN_VONG_KHAC", otherIdColumn)
+      const pendingStatus = "Chưa duyệt"
 
-      await pool
-        .request()
-        .input("maGV", session.maGV)
-        .input("tenNV", tenNV)
-        .input("giaTri", giaTri)
-        .query(`
-          INSERT INTO NGUYEN_VONG_KHAC (MaGV, ${otherNameColumn}, GiaTri)
-          VALUES (@maGV, @tenNV, @giaTri)
+      if (idIsIdentity) {
+        await pool
+          .request()
+          .input("maGV", session.maGV)
+          .input("tenNV", tenNV)
+          .input("giaTri", giaTri)
+          .input("approvalStatus", pendingStatus)
+          .query(`
+            INSERT INTO NGUYEN_VONG_KHAC (MaGV, ${otherNameColumn}, GiaTri${hasOtherStatusColumn ? `, ${otherStatusColumn}` : ""})
+            VALUES (@maGV, @tenNV, @giaTri${hasOtherStatusColumn ? ", @approvalStatus" : ""})
+          `)
+      } else {
+        const maxIdResult = await pool.request().query(`
+          SELECT ISNULL(MAX(${otherIdColumn}), 0) AS maxId
+          FROM NGUYEN_VONG_KHAC
         `)
+        const nextId = Number(maxIdResult.recordset?.[0]?.maxId || 0) + 1
+
+        await pool
+          .request()
+          .input("id", sql.Int, nextId)
+          .input("maGV", session.maGV)
+          .input("tenNV", tenNV)
+          .input("giaTri", giaTri)
+          .input("approvalStatus", pendingStatus)
+          .query(`
+            INSERT INTO NGUYEN_VONG_KHAC (${otherIdColumn}, MaGV, ${otherNameColumn}, GiaTri${hasOtherStatusColumn ? `, ${otherStatusColumn}` : ""})
+            VALUES (@id, @maGV, @tenNV, @giaTri${hasOtherStatusColumn ? ", @approvalStatus" : ""})
+          `)
+      }
 
       return NextResponse.json({ success: true }, { status: 201 })
     }
@@ -291,6 +355,8 @@ export async function PUT(request: NextRequest) {
       const otherColumns = await getTableColumns(pool, "NGUYEN_VONG_KHAC")
       const otherNameColumn = resolveOtherNameColumn(otherColumns)
       const otherIdColumn = resolveOtherIdColumn(otherColumns)
+      const hasOtherStatusColumn = otherColumns.has("trangthaiduyet") || otherColumns.has("trangthai")
+      const otherStatusColumn = resolveOtherStatusColumn(otherColumns)
 
       const result = await pool
         .request()
@@ -298,10 +364,12 @@ export async function PUT(request: NextRequest) {
         .input("maGV", session.maGV)
         .input("tenNV", tenNV)
         .input("giaTri", giaTri)
+        .input("approvalStatus", "Chưa duyệt")
         .query(`
           UPDATE NGUYEN_VONG_KHAC
           SET ${otherNameColumn} = @tenNV,
               GiaTri = @giaTri
+              ${hasOtherStatusColumn ? `, ${otherStatusColumn} = @approvalStatus` : ""}
           WHERE ${otherIdColumn} = @id AND MaGV = @maGV
         `)
 

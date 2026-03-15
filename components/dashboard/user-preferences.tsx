@@ -20,6 +20,7 @@ type PreferenceData = {
     maNVK: string
     tenNV: string
     giaTri: string
+    trangThaiDuyet: string
   }>
 }
 
@@ -33,6 +34,18 @@ const fetcher = async (url: string) => {
     throw new Error(payload.error || "Không thể tải dữ liệu")
   }
   return payload.data as PreferenceData
+}
+
+const getApprovalStatusClassName = (status: string) => {
+  if (status === "Đã duyệt") return "text-emerald-700"
+  if (status === "Không duyệt") return "text-red-600"
+  return "text-red-600"
+}
+
+const getApprovalStatusLabel = (status: string) => {
+  if (status === "Đã duyệt") return "Đã duyệt"
+  if (status === "Không duyệt") return "Không duyệt"
+  return "Chưa duyệt"
 }
 
 export function UserPreferencesModule() {
@@ -363,6 +376,9 @@ export function UserPreferencesModule() {
                   <li key={item.maNVK} className="rounded border p-3">
                     <p className="font-medium">{item.tenNV}</p>
                     <p className="text-muted-foreground">Mức độ ưu tiên: {item.giaTri}</p>
+                    <p className={getApprovalStatusClassName(item.trangThaiDuyet)}>
+                      Trạng thái: {getApprovalStatusLabel(item.trangThaiDuyet)}
+                    </p>
                     <div className="mt-3 flex gap-2">
                       <Button type="button" variant="outline" size="sm" onClick={() => updateOtherPreference(item)}>
                         Sửa

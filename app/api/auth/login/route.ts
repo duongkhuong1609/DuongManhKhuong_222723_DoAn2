@@ -16,6 +16,16 @@ const sha256 = (value: string) => createHash("sha256").update(value).digest("hex
 
 const normalizeHash = (value: string) => String(value || "").trim().toLowerCase()
 
+const normalizeStatus = (value: string) =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+
+const isDisabledInstructorStatus = (value: string) => normalizeStatus(value) === "vo hieu hoa"
+
 export async function POST(request: Request) {
   let pool: any
   try {
@@ -43,6 +53,7 @@ export async function POST(request: Request) {
           gv.MaGV AS instructorCode,
           gv.TenGV AS instructorName,
           gv.EmailGV AS instructorEmail,
+          gv.TrangThai AS instructorStatus,
           k.TenKhoa AS department
         FROM TAI_KHOAN tk
         LEFT JOIN GIANG_VIEN gv
@@ -62,6 +73,13 @@ export async function POST(request: Request) {
 
     if (!dbHash || inputHash !== dbHash) {
       return NextResponse.json({ success: false, error: "Tài khoản hoặc mật khẩu không đúng" }, { status: 401 })
+    }
+
+    if (isDisabledInstructorStatus(String(account.instructorStatus || ""))) {
+      return NextResponse.json(
+        { success: false, error: "Tài khoản đã bị vô hiệu hóa" },
+        { status: 403 }
+      )
     }
 
     const role: AuthRole = String(account.Quyen || "user").trim().toLowerCase() === "admin" ? "admin" : "user"

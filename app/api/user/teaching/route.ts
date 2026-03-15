@@ -11,6 +11,11 @@ const dbConfig = {
   options: { encrypt: false, trustServerCertificate: true },
 }
 
+const CURRENT_TEACHING_STATUS_SQL = `(
+  LTRIM(RTRIM(ISNULL(CAST(ld.TrangThai AS NVARCHAR(50)), ''))) IN (N'Đang diễn ra', N'2')
+  OR UPPER(LTRIM(RTRIM(ISNULL(CAST(ld.TrangThai AS NVARCHAR(50)), '')))) IN (N'ĐANG DIỄN RA', N'DANG DIEN RA')
+)`
+
 export async function GET(request: NextRequest) {
   let pool: any
   try {
@@ -49,6 +54,7 @@ export async function GET(request: NextRequest) {
         LEFT JOIN MON mon ON mon.MaMon = ld.MaMon
         LEFT JOIN PHONG phong ON phong.MaPhong = ld.MaPhong
         WHERE ld.MaGV = @maGV
+          AND ${CURRENT_TEACHING_STATUS_SQL}
         ORDER BY ld.NgayDay DESC, ld.MaLD DESC
       `)
 
