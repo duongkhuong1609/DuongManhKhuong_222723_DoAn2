@@ -774,26 +774,6 @@ export function TimetableView({ userMode = false }: { userMode?: boolean }) {
         </CardContent>
       </Card>
 
-      {/* Legend */}
-      <Card className="border-border/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Chú thích màu sắc</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-3">
-            {Object.entries(courseColors).length === 0 && (
-              <span className="text-sm text-muted-foreground">Màu môn học sẽ hiển thị khi cấu hình danh mục môn.</span>
-            )}
-            {Object.entries(courseColors).map(([course, color]) => (
-              <div key={course} className="flex items-center gap-2">
-                <div className={cn("w-4 h-4 rounded border", color)} />
-                <span className="text-sm text-muted-foreground">{course}</span>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
       <Dialog open={isCoursesDialogOpen} onOpenChange={setIsCoursesDialogOpen}>
         <DialogContent className="sm:max-w-[620px]">
           <DialogHeader>
