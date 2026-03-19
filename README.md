@@ -1,43 +1,20 @@
-
-
+Đường link video demo hệ thống:....
 ## Tổng Quan Hệ Thống
 
-Hệ thống này là nền tảng quản lý lịch học tập trung, được thiết kế để:
-
-- **Quản lý dữ liệu tập trung**: Lưu trữ thông tin giảng viên, phòng học, môn học, và lịch dạy
-- **Cung cấp API đầy đủ**: Cho phép các thuật toán bên ngoài (bao gồm thuật toán tiến hóa) truy cập và xử lý dữ liệu
-- **Hỗ trợ tối ưu hóa**: Lịch học có thể được tối ưu hóa bằng các thuật toán tiến hóa để tìm giải pháp tốt nhất
+Hệ thống quản lý lịch dạy, lớp học, giảng viên, phòng học, học kỳ, môn học.
+- Cung cấp API cho các thuật toán tối ưu hóa (ví dụ: thuật toán tiến hóa) để xếp lịch tự động.
+- Giao diện dashboard cho phép xem, tạo, chỉnh sửa lịch dạy, lớp học, phòng, giảng viên.
+- Hỗ trợ các chức năng: kiểm tra xung đột, tối ưu phòng, cân bằng tải giảng viên, tôn trọng nguyện vọng.
 
 ---
 
-## Cơ Sở Dữ Liệu Trực Quan
+## Cơ sở dữ liệu
 
-### 7 Models Chính
-
-| Model | Mục Đích | Trường Quan Trọng |
-|-------|---------|------------------|
-| **Semester** | Kỳ học | code, name, startDate, endDate, isActive |
-| **Instructor** | Giảng viên | code, name, email, teachingNotes, maxHoursPerWeek |
-| **Room** | Phòng học | code, building, capacity, type |
-| **Course** | Môn học | code, name, department, credits |
-| **Timeslot** | Tiết học | code, startTime, endTime, period |
-| **Class** | Lớp học | code, courseId, instructorId, semesterId |
-| **Schedule** | Lịch dạy | classId, roomId, timeslotId, dayOfWeek |
-
-### Sơ Đồ Quan Hệ
-
-```
-Semester (kỳ học)
-  ├─ Class (lớp học)
-  │   ├─ Course (môn học)
-  │   └─ Instructor (giảng viên)
-  │       └─ teachingNotes (sở thích dạy)
-  │
-  └─ Schedule (lịch dạy)
-      ├─ Room (phòng học)
-      ├─ Timeslot (tiết học)
-      └─ Class (lớp học)
-```
+- Sử dụng Prisma ORM, SQL Server.
+- Các bảng chính: Semester (Kỳ học), Instructor (Giảng viên), Room (Phòng học), Course (Môn học), Timeslot (Tiết học), Class (Lớp học), Schedule (Lịch dạy).
+- Mỗi bảng có các trường quan trọng như: code, name, status, thời gian, quan hệ khóa ngoại.
+- Seed dữ liệu mẫu cho các bảng chính (giảng viên, học kỳ, phòng, môn học...).
+- Scripts tiện ích: setup-database.js (tạo bảng), drop-new-tables.js (xóa bảng an toàn).
 
 ---
 
@@ -84,9 +61,7 @@ node scripts\drop-new-tables.js
 
 Các bảng không tồn tại sẽ bị bỏ qua và script in ra thông báo những gì đã được xử lý.
 
-Sử dụng khi bạn muốn cơ sở dữ liệu chỉ giữ lại các bảng cũ hơn, không dùng schema mới.
-
-Dưới đây là **phần mô tả CSDL để đưa vào README**, đã bỏ hoàn toàn kiểu dữ liệu như bạn yêu cầu.
+Sử dụng khi muốn cơ sở dữ liệu chỉ giữ lại các bảng cũ hơn, không dùng schema mới.
 
 ---
 
