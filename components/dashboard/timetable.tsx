@@ -773,7 +773,7 @@ export function TimetableView({ userMode = false }: { userMode?: boolean }) {
           </div>
         </CardContent>
       </Card>
-
+      
       <Dialog open={isCoursesDialogOpen} onOpenChange={setIsCoursesDialogOpen}>
         <DialogContent className="sm:max-w-[620px]">
           <DialogHeader>
