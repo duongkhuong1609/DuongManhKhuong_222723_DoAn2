@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
+import { MSSQL_DB_CONFIG } from "@/lib/db-config"
 const sql = require('mssql')
 
-const dbConfig = {
-  server: 'localhost',
-  instanceName: 'SQLEXPRESS',
-  database: 'LAP_LICH_TU_DONG',
-  authentication: { type: 'default', options: { userName: 'sa', password: '123456' } },
-  options: { encrypt: false, trustServerCertificate: true }
-}
+const dbConfig = MSSQL_DB_CONFIG
 
 export async function GET(request: NextRequest) {
   try {

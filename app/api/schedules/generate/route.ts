@@ -1,4 +1,6 @@
+import { MSSQL_DB_CONFIG } from "@/lib/db-config"
 ﻿import { NextRequest, NextResponse } from "next/server"
+import { getMssqlPool } from "@/lib/mssql"
 
 type StepStatus = "pending" | "running" | "completed" | "error"
 type JobStatus = "running" | "completed" | "error"
@@ -40,11 +42,7 @@ type JobState = {
 const sql = require("mssql")
 
 const dbConfig = {
-  server: "localhost",
-  instanceName: "SQLEXPRESS",
-  database: "LAP_LICH_TU_DONG",
-  authentication: { type: "default", options: { userName: "sa", password: "123456" } },
-  options: { encrypt: false, trustServerCertificate: true },
+  ...MSSQL_DB_CONFIG,
   requestTimeout: 120000,
 }
 
@@ -658,7 +656,7 @@ const runGeneration = async (job: JobState, payload: GenerationPayload) => {
   try {
     updateStep(job, 0, "running", "Đang tải dữ liệu nguồn...", 8)
 
-    pool = await new sql.ConnectionPool(dbConfig).connect()
+    pool = await getMssqlPool(dbConfig)
 
     const allMajorsMode = payload.majorId === "all"
 
@@ -3027,10 +3025,6 @@ const runGeneration = async (job: JobState, payload: GenerationPayload) => {
     job.error = message
     job.finishedAt = new Date().toISOString()
   } finally {
-    if (pool) {
-      await pool.close()
-    }
-
     setTimeout(() => {
       jobs.delete(job.id)
     }, 1000 * 60 * 30)
@@ -3052,14 +3046,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: true, data: sanitizeJobForResponse(job) })
     }
 
-    const pool = await new sql.ConnectionPool(dbConfig).connect()
+    const pool = await getMssqlPool(dbConfig)
 
     if (mode === "precheck") {
       const majorId = String(searchParams.get("majorId") || "").trim()
       const semesterIds = searchParams.getAll("semesterId").map((item) => String(item || "").trim()).filter(Boolean)
 
       if (!majorId) {
-        await pool.close()
         return NextResponse.json({ success: false, error: "Thiếu ngành để kiểm tra trước khi lập lịch" }, { status: 400 })
       }
 
@@ -3103,7 +3096,6 @@ export async function GET(request: NextRequest) {
 
       const majorName = String(majorResult.recordset?.[0]?.TenNganh || "").trim()
 
-      await pool.close()
       return NextResponse.json({
         success: true,
         data: {
@@ -3141,8 +3133,6 @@ export async function GET(request: NextRequest) {
       WHERE ${ONGOING_STATUS_SQL}
       ORDER BY TRY_CONVERT(INT, hk.NamHK) ASC, TRY_CONVERT(INT, hk.TenHK) ASC, hk.MaHK ASC
     `)
-
-    await pool.close()
 
     const majors = (majorResult.recordset || []).map((row: any) => ({
       id: String(row.MaNganh || "").trim(),

@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { decodeSession, SESSION_COOKIE_NAME } from "@/lib/auth-session"
+import { MSSQL_DB_CONFIG } from "@/lib/db-config"
 
 const sql = require("mssql")
 
-const dbConfig = {
-  server: "localhost",
-  instanceName: "SQLEXPRESS",
-  database: "LAP_LICH_TU_DONG",
-  authentication: { type: "default", options: { userName: "sa", password: "123456" } },
-  options: { encrypt: false, trustServerCertificate: true },
-}
+const dbConfig = MSSQL_DB_CONFIG
 
 const ALLOWED_WEEKDAYS = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"]
 const ALLOWED_SESSIONS = ["Sáng", "Chiều"]

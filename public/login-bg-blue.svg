@@ -1,0 +1,32 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="0.35" stop-color="#93c5fd"/>
+      <stop offset="0.7" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 180) rotate(22) scale(520 360)">
+      <stop stop-color="#ffffff" stop-opacity="0.52"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1570 900) rotate(-20) scale(620 380)">
+      <stop stop-color="#bfdbfe" stop-opacity="0.58"/>
+      <stop offset="1" stop-color="#bfdbfe" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" stroke="#ffffff" stroke-opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <circle cx="320" cy="180" r="480" fill="url(#glow1)"/>
+  <circle cx="1570" cy="900" r="560" fill="url(#glow2)"/>
+
+  <g opacity="0.2" stroke="#ffffff" stroke-width="2">
+    <path d="M-40 760C210 640 420 620 700 700C980 780 1250 820 1520 700C1710 615 1860 540 1980 500"/>
+    <path d="M-40 830C210 710 420 700 700 760C980 820 1250 870 1520 750C1710 665 1860 600 1980 560"/>
+    <path d="M-40 900C210 780 420 770 700 830C980 900 1250 940 1520 820C1710 735 1860 670 1980 630"/>
+  </g>
+</svg>

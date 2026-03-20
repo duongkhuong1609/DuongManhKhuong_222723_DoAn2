@@ -150,6 +150,7 @@ export default function LoginPage() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundColor: "#1d4ed8",
       }}
     >
       <div className="pointer-events-none absolute inset-0 bg-primary/40" />

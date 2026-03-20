@@ -2,15 +2,10 @@ import { NextResponse } from "next/server"
 import { createHash } from "crypto"
 import { encodeSession, SESSION_COOKIE_NAME } from "@/lib/auth-session"
 import type { AuthRole } from "@/lib/auth-session"
+import { MSSQL_DB_CONFIG } from "@/lib/db-config"
 const sql = require("mssql")
 
-const dbConfig = {
-  server: "localhost",
-  instanceName: "SQLEXPRESS",
-  database: "LAP_LICH_TU_DONG",
-  authentication: { type: "default", options: { userName: "sa", password: "123456" } },
-  options: { encrypt: false, trustServerCertificate: true },
-}
+const dbConfig = MSSQL_DB_CONFIG
 
 const sha256 = (value: string) => createHash("sha256").update(value).digest("hex")
 

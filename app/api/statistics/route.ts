@@ -1,15 +1,29 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getMssqlPool } from "@/lib/mssql"
+import { MSSQL_DB_CONFIG } from "@/lib/db-config"
 
 const sql = require("mssql")
 
 const STATS_REQUEST_TIMEOUT_MS = 60000
+const STATS_CACHE_TTL_MS = 30000
+
+type StatsCacheEntry = {
+  expiresAt: number
+  payload: any
+}
+
+const globalStatsCache = globalThis as typeof globalThis & {
+  __statisticsCache?: Map<string, StatsCacheEntry>
+}
+
+if (!globalStatsCache.__statisticsCache) {
+  globalStatsCache.__statisticsCache = new Map<string, StatsCacheEntry>()
+}
+
+const statisticsCache = globalStatsCache.__statisticsCache
 
 const dbConfig = {
-  server: "localhost",
-  instanceName: "SQLEXPRESS",
-  database: "LAP_LICH_TU_DONG",
-  authentication: { type: "default", options: { userName: "sa", password: "123456" } },
-  options: { encrypt: false, trustServerCertificate: true },
+  ...MSSQL_DB_CONFIG,
   requestTimeout: STATS_REQUEST_TIMEOUT_MS,
 }
 
@@ -124,12 +138,17 @@ const toConflictGroups = (slotMap: Map<string, any[]>): ConflictGroup[] => {
 }
 
 export async function GET(request: NextRequest) {
-  let pool: any
   try {
     const { searchParams } = new URL(request.url)
     const requestedYear = Number(searchParams.get("year") || 0)
+    const cacheKey = `year:${Number.isFinite(requestedYear) ? requestedYear : 0}`
+    const cached = statisticsCache.get(cacheKey)
 
-    pool = await new sql.ConnectionPool(dbConfig).connect()
+    if (cached && cached.expiresAt > Date.now()) {
+      return NextResponse.json(cached.payload)
+    }
+
+    const pool = await getMssqlPool(dbConfig)
 
     const currentYear = new Date().getFullYear()
     const yearSeedResult = await pool.request().query(`
@@ -413,7 +432,7 @@ export async function GET(request: NextRequest) {
       ? Math.round((matchedPreferences / evaluatedSchedules) * 1000) / 10
       : 0
 
-    return NextResponse.json({
+    const payload = {
       success: true,
       data: {
         filters: {
@@ -447,11 +466,16 @@ export async function GET(request: NextRequest) {
           subject: subjectConflictDetails,
         },
       },
+    }
+
+    statisticsCache.set(cacheKey, {
+      expiresAt: Date.now() + STATS_CACHE_TTL_MS,
+      payload,
     })
+
+    return NextResponse.json(payload)
   } catch (error) {
     console.error("Error fetching statistics:", error)
     return NextResponse.json({ success: false, error: "Lỗi khi tải thống kê" }, { status: 500 })
-  } finally {
-    if (pool) await pool.close()
   }
 }

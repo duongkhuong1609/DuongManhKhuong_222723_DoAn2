@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useDeferredValue } from "react"
 import { Plus, Search, Edit, Trash2, BookOpen, ChevronsUpDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -134,6 +134,7 @@ export function CoursesModule() {
   const [instructorsByCourse, setInstructorsByCourse] = useState<Record<number, Array<{ code: string; name: string; email: string; position: string; department: string }>>>({})
   const [loadingCourseInstructorId, setLoadingCourseInstructorId] = useState<number | null>(null)
   const [editingCourse, setEditingCourse] = useState<CourseEditState | null>(null)
+  const deferredSearchTerm = useDeferredValue(searchTerm)
   const [newCourse, setNewCourse] = useState({
     majorId: "",
     name: "",
@@ -195,7 +196,10 @@ export function CoursesModule() {
     }
   }, [])
 
-  const majorOptions = Array.from(new Set(courses.map((c) => c.major).filter(Boolean))) as string[]
+  const majorOptions = useMemo(
+    () => Array.from(new Set(courses.map((c) => c.major).filter(Boolean))) as string[],
+    [courses],
+  )
   const addMajorLabel = majors.find((major) => major.id === newCourse.majorId)?.name || "Chọn ngành"
   const addInstructorsLabel = newCourse.instructorCodes.length > 0
     ? `Đã chọn ${newCourse.instructorCodes.length} giảng viên`
@@ -204,31 +208,39 @@ export function CoursesModule() {
     ? `Đã chọn ${editingCourse.instructorCodes.length} giảng viên`
     : "Chọn giảng viên phụ trách"
   const yearOptions = Array.from({ length: 4 }, (_, index) => String(index + 1))
-  const semesterOptions = Array.from(
-    new Set(
-      courses
-        .filter((course) => {
-          if (!newCourse.majorId) return false
-          const courseYear = extractFirstNumber(course.year)
-          return String(course.majorId || '').trim() === String(newCourse.majorId).trim() && courseYear === Number(newCourse.year)
-        })
-        .map((course) => extractFirstNumber(course.semester))
-        .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
-    )
-  ).sort((a, b) => a - b)
+  const semesterOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          courses
+            .filter((course) => {
+              if (!newCourse.majorId) return false
+              const courseYear = extractFirstNumber(course.year)
+              return String(course.majorId || '').trim() === String(newCourse.majorId).trim() && courseYear === Number(newCourse.year)
+            })
+            .map((course) => extractFirstNumber(course.semester))
+            .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
+        )
+      ).sort((a, b) => a - b),
+    [courses, newCourse.majorId, newCourse.year],
+  )
 
-  const editSemesterOptions = Array.from(
-    new Set(
-      courses
-        .filter((course) => {
-          if (!editingCourse?.majorId) return false
-          const courseYear = extractFirstNumber(course.year)
-          return String(course.majorId || '').trim() === String(editingCourse.majorId).trim() && courseYear === Number(editingCourse.year)
-        })
-        .map((course) => extractFirstNumber(course.semester))
-        .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
-    )
-  ).sort((a, b) => a - b)
+  const editSemesterOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          courses
+            .filter((course) => {
+              if (!editingCourse?.majorId) return false
+              const courseYear = extractFirstNumber(course.year)
+              return String(course.majorId || '').trim() === String(editingCourse.majorId).trim() && courseYear === Number(editingCourse.year)
+            })
+            .map((course) => extractFirstNumber(course.semester))
+            .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
+        )
+      ).sort((a, b) => a - b),
+    [courses, editingCourse?.majorId, editingCourse?.year],
+  )
 
   const resetAddCourseForm = () => {
     setNewCourse({
@@ -387,56 +399,69 @@ export function CoursesModule() {
     }
   }
 
-  const filteredCourses = courses.filter(
-    (course) => {
-      const matchesSearch =
-        String(course.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        String(course.major || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        String(course.type || '').toLowerCase().includes(searchTerm.toLowerCase())
-      
-      const matchesMajor = selectedMajor === "" || course.major === selectedMajor
-      const courseType = String(course.type || '').toLowerCase()
-      const matchesType =
-        selectedCourseType === "" ||
-        (selectedCourseType === "Lý thuyết" && courseType.includes('lý thuyết')) ||
-        (selectedCourseType === "Thực hành" && courseType.includes('thực hành'))
+  const filteredCourses = useMemo(
+    () =>
+      courses.filter((course) => {
+        const keyword = deferredSearchTerm.toLowerCase()
+        const matchesSearch =
+          String(course.name || '').toLowerCase().includes(keyword) ||
+          String(course.major || '').toLowerCase().includes(keyword) ||
+          String(course.type || '').toLowerCase().includes(keyword)
 
-      const courseSemester = extractFirstNumber(course.semester)
-      const matchesSemester =
-        selectedSemesterFilter === "" ||
-        courseSemester === Number(selectedSemesterFilter)
-      
-      return matchesSearch && matchesMajor && matchesType && matchesSemester
-    }
+        const matchesMajor = selectedMajor === "" || course.major === selectedMajor
+        const courseType = String(course.type || '').toLowerCase()
+        const matchesType =
+          selectedCourseType === "" ||
+          (selectedCourseType === "Lý thuyết" && courseType.includes('lý thuyết')) ||
+          (selectedCourseType === "Thực hành" && courseType.includes('thực hành'))
+
+        const courseSemester = extractFirstNumber(course.semester)
+        const matchesSemester = selectedSemesterFilter === "" || courseSemester === Number(selectedSemesterFilter)
+
+        return matchesSearch && matchesMajor && matchesType && matchesSemester
+      }),
+    [courses, deferredSearchTerm, selectedMajor, selectedCourseType, selectedSemesterFilter],
   )
 
-  const semesterFilterOptions = Array.from(
-    new Set(
-      courses
-        .filter((course) => {
-          if (!selectedMajor) return false
-          return String(course.major || '').trim() === String(selectedMajor).trim()
-        })
-        .map((course) => extractFirstNumber(course.semester))
-        .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
-    )
-  ).sort((a, b) => a - b)
+  const semesterFilterOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          courses
+            .filter((course) => {
+              if (!selectedMajor) return false
+              return String(course.major || '').trim() === String(selectedMajor).trim()
+            })
+            .map((course) => extractFirstNumber(course.semester))
+            .filter((semesterNumber) => !Number.isNaN(semesterNumber) && semesterNumber >= 1 && semesterNumber <= 10)
+        )
+      ).sort((a, b) => a - b),
+    [courses, selectedMajor],
+  )
 
-  const displayCourses = selectedMajor
-    ? [...filteredCourses].sort((a, b) => {
-        const semesterA = parseSemesterOrder(String(a.semester || ''))
-        const semesterB = parseSemesterOrder(String(b.semester || ''))
+  const displayCourses = useMemo(
+    () =>
+      selectedMajor
+        ? [...filteredCourses].sort((a, b) => {
+            const semesterA = parseSemesterOrder(String(a.semester || ''))
+            const semesterB = parseSemesterOrder(String(b.semester || ''))
 
-        if (semesterA !== semesterB) return semesterA - semesterB
+            if (semesterA !== semesterB) return semesterA - semesterB
 
-        return String(a.name || '').localeCompare(String(b.name || ''), 'vi')
-      })
-    : filteredCourses
+            return String(a.name || '').localeCompare(String(b.name || ''), 'vi')
+          })
+        : filteredCourses,
+    [filteredCourses, selectedMajor],
+  )
 
   const selectedMajorCourseCount = selectedMajor ? displayCourses.length : 0
-  const selectedMajorTotalCredits = selectedMajor
-    ? displayCourses.reduce((sum, course) => sum + Number(course.credits || 0), 0)
-    : 0
+  const selectedMajorTotalCredits = useMemo(
+    () =>
+      selectedMajor
+        ? displayCourses.reduce((sum, course) => sum + Number(course.credits || 0), 0)
+        : 0,
+    [displayCourses, selectedMajor],
+  )
 
   useEffect(() => {
     if (!selectedMajor && selectedSemesterFilter !== "") {

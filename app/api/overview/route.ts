@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { decodeSession, SESSION_COOKIE_NAME } from "@/lib/auth-session"
+import { getMssqlPool } from "@/lib/mssql"
+import { MSSQL_DB_CONFIG } from "@/lib/db-config"
 
 const sql = require("mssql")
 
 const dbConfig = {
-  server: "localhost",
-  instanceName: "SQLEXPRESS",
-  database: "LAP_LICH_TU_DONG",
-  authentication: { type: "default", options: { userName: "sa", password: "123456" } },
-  options: { encrypt: false, trustServerCertificate: true },
+  ...MSSQL_DB_CONFIG,
   requestTimeout: 45000,
 }
 
@@ -45,7 +43,6 @@ const parseDate = (value: unknown) => {
 }
 
 export async function GET(request: NextRequest) {
-  let pool: any
   try {
     const rawSession = request.cookies.get(SESSION_COOKIE_NAME)?.value
     const session = decodeSession(rawSession)
@@ -58,7 +55,7 @@ export async function GET(request: NextRequest) {
     const requestedYear = Number(searchParams.get("year") || 0)
     const requestedSemesterId = String(searchParams.get("semesterId") || "all").trim()
 
-    pool = await new sql.ConnectionPool(dbConfig).connect()
+    const pool = await getMssqlPool(dbConfig)
 
     const currentYear = new Date().getFullYear()
 
@@ -224,7 +221,5 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Error loading overview data:", error)
     return NextResponse.json({ success: false, error: "Lỗi khi tải dữ liệu tổng quan" }, { status: 500 })
-  } finally {
-    if (pool) await pool.close()
   }
 }
