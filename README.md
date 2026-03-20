@@ -1,3 +1,4 @@
+Do hệ thống bao gồm các module xử lý dữ liệu lớn và giải thuật kiểm tra xung đột lịch trình có yêu cầu khắt khe về hiệu suất phần cứng. Do cấu hình giới hạn của môi trường deploy online dễ dẫn đến tình trạng ngắt kết nối (request timeout), em đã lựa chọn phương án thực nghiệm hệ thống tại môi trường cục bộ để tối ưu hóa tốc độ xử lý. Sau đây, em xin trình bày video demo để minh chứng cho khả năng vận hành thực tế của các thuật toán trong dự án.
 Đường link video demo hệ thống:....
 ## Tổng Quan Hệ Thống
 
