@@ -1,4 +1,4 @@
-- Đường link trang web hệ thống lập lịch: http://www.khuong222723.id.vn
+- Đường link trang web hệ thống lập lịch: http://202.92.4.201:3000/
 - tài khoản để test: 
 - Tên tài khoản (admin), mật khẩu (11111111)
 - Tên tài khoản (gv001), mật khẩu (12345678)
