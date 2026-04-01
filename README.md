@@ -2,7 +2,7 @@
 - tài khoản để test: 
 - Tên tài khoản (admin), mật khẩu (11111111)
 - Tên tài khoản (gv001), mật khẩu (12345678)
-Đường link video demo hệ thống:https://drive.google.com/file/d/1eT36I0FOYjU6I1LS1FqBj7uHL7iGMgQA/view?usp=sharing
+- Đường link video demo hệ thống:https://drive.google.com/file/d/1eT36I0FOYjU6I1LS1FqBj7uHL7iGMgQA/view?usp=sharing
 
 ## Tổng Quan Hệ Thống
 
